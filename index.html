@@ -113,6 +113,7 @@ svg .lbl { fill: var(--ink); }
 svg .axis { stroke: var(--line); }
 svg .bar { fill: var(--data-soft); }
 svg .bar.best { fill: var(--accent); }
+svg .bar.alt { fill: var(--data); }
 svg .ref { stroke: var(--muted); stroke-dasharray: 4 4; }
 svg .grid { stroke: var(--line); stroke-dasharray: 2 4; }
 svg .pt { fill: var(--data); }
@@ -436,16 +437,36 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <article class="entry" id="fair">
       <div class="entry-head"><h3>Fairness in AI</h3><span class="dates"><span class="fr">co-auteur, équipe de 4</span><span class="en">co-author, team of 4</span></span></div>
       <p class="role"><span class="fr">Suivre l'évolution du biais des médias après un changement de propriétaire</span><span class="en">Tracking media bias shifts after an ownership takeover</span></p>
-      <p class="fr">Un nouveau propriétaire change-t-il la façon dont un média parle de certains sujets ? Pour séparer l'effet du propriétaire de l'actualité générale, nous comparons le média ciblé à un groupe témoin de médias dont le propriétaire n'a pas changé, avant et après le rachat.</p>
-      <p class="en">Does a new owner change how an outlet covers certain subjects? To separate the owner's effect from the general news climate, we compare the target outlet with a control group of outlets whose owner did not change, before and after the takeover.</p>
+      <p class="fr">Un nouveau propriétaire change-t-il la façon dont un média parle de certains sujets ? Pour séparer l'effet du propriétaire de l'actualité générale, nous comparons le média ciblé à un groupe témoin de médias dont le propriétaire n'a pas changé, avant et après le rachat. Chaque article est annoté par deux LLM open source exécutés en local, pour vérifier que la conclusion ne dépend pas du modèle.</p>
+      <p class="en">Does a new owner change how an outlet covers certain subjects? To separate the owner's effect from the general news climate, we compare the target outlet with a control group of outlets whose owner did not change, before and after the takeover. Each article is annotated by two open-source LLMs run locally, to check that the conclusion does not depend on the model.</p>
       <figure class="fig">
         <div class="fig-box">
           <dl class="cases" id="case-box"></dl>
         </div>
         <div class="fig-actions"><button class="act" type="button" id="b-case"><span class="fr">Cas suivant</span><span class="en">Next case</span></button></div>
-        <figcaption><b>Fig. 7</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B en local donne un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, a local Mistral-7B returns a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
+        <figcaption><b>Fig. 7</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B et Llama 3.2 donnent un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, Mistral-7B and Llama 3.2 return a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
       </figure>
-      <p class="stack"><span>Mistral-7B</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
+      <dl class="kpis">
+        <div><dt><span class="fr">2 291</span><span class="en">2,291</span></dt><dd><span class="fr">articles collectés sur CC-News et annotés, sur 9 médias</span><span class="en">articles collected from CC-News and annotated, across 9 outlets</span></dd></div>
+        <div><dt><span class="fr">56,4 %</span><span class="en">56.4%</span></dt><dd><span class="fr">d'accord entre Mistral-7B et Llama 3.2 sur la position</span><span class="en">stance agreement between Mistral-7B and Llama 3.2</span></dd></div>
+        <div><dt><span class="fr">0,44</span><span class="en">0.44</span></dt><dd><span class="fr">corrélation de Pearson entre les sentiments des deux modèles</span><span class="en">Pearson correlation between the two models' sentiment</span></dd></div>
+        <div><dt><span class="fr">58 → 87 %</span><span class="en">58 → 87%</span></dt><dd><span class="fr">d'articles de NDTV favorables à Adani après le rachat</span><span class="en">of NDTV articles supportive of Adani after the takeover</span></dd></div>
+      </dl>
+      <figure class="fig">
+        <div class="fig-box"><div id="chart-did"></div></div>
+        <figcaption><b>Fig. 8</b> <span class="fr">Effet estimé du rachat sur le sentiment (δ), par sujet et par modèle. Un δ positif veut dire que le média ciblé est devenu plus favorable que le groupe témoin. Seul NDTV face à Adani est significatif (δ = 1,16, p = 0,016), et seulement avec Llama. Le Royaume-Uni n'apparaît pas : aucun article de The Independent sur l'Arabie saoudite après le rachat.</span><span class="en">Estimated effect of the takeover on sentiment (δ), per subject and model. A positive δ means the target outlet became more favorable than the control group. Only NDTV on Adani is significant (δ = 1.16, p = 0.016), and only with Llama. The UK is missing: no article from The Independent on Saudi Arabia after the takeover.</span></figcaption>
+      </figure>
+      <ul class="fr">
+        <li>Les deux modèles s'accordent quand Mistral répond « soutien » (88 %) ou « opposition » (81 %), mais presque jamais sur « neutre » (10 %) : c'est la principale source de désaccord.</li>
+        <li>Les résultats ne sont pas concluants : les effets marqués apparaissent sur les sujets avec le moins d'articles (40 pour Adani). Il faudrait plus de données par sujet et par période.</li>
+        <li>Pipeline reproductible : collecte filtrée par domaine, date et sujet, texte complet via newspaper3k avec repli sur la Wayback Machine, puis régressions par (cas, sujet). <a href="https://github.com/LubinLgp/T5-Tracking-Media-Bias-Shifts">Code sur GitHub</a>.</li>
+      </ul>
+      <ul class="en">
+        <li>The two models agree when Mistral answers "support" (88%) or "oppose" (81%), but almost never on "neutral" (10%): this is the main source of disagreement.</li>
+        <li>The results are not conclusive: the marked effects appear on the subjects with the fewest articles (40 for Adani). More data per subject and period would be needed.</li>
+        <li>Reproducible pipeline: collection filtered by domain, date and subject, full text via newspaper3k with a Wayback Machine fallback, then regressions per (case, subject). <a href="https://github.com/LubinLgp/T5-Tracking-Media-Bias-Shifts">Code on GitHub</a>.</li>
+      </ul>
+      <p class="stack"><span>Mistral-7B</span><span>Llama 3.2</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>newspaper3k</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
     </article>
   </div>
 
@@ -496,7 +517,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <div class="block-label"><span class="fr">Formation</span><span class="en">Education</span></div>
     <figure class="fig">
       <div class="fig-box"><div id="chart-time"></div></div>
-      <figcaption><b>Fig. 8</b> <span class="fr">Formation et stages de 2022 à 2027. Le trait vertical marque aujourd'hui ; la barre en pointillés est le stage que je recherche.</span><span class="en">Education and internships from 2022 to 2027. The vertical line marks today; the dashed bar is the internship I am looking for.</span></figcaption>
+      <figcaption><b>Fig. 9</b> <span class="fr">Formation et stages de 2022 à 2027. Le trait vertical marque aujourd'hui ; la barre en pointillés est le stage que je recherche.</span><span class="en">Education and internships from 2022 to 2027. The vertical line marks today; the dashed bar is the internship I am looking for.</span></figcaption>
     </figure>
     <article class="entry">
       <div class="entry-head"><h3>Université Paris-Saclay</h3><span class="dates"><span class="fr">sept. 2025 – août 2027</span><span class="en">Sep 2025 – Aug 2027</span></span></div>
@@ -594,6 +615,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     { n: "Mistral-7B", s: "llm", p: ["fair"] },
     { n: "LLM", s: "llm", p: ["lisn", "fair"] },
     { n: "Hugging Face", s: "llm", p: ["fair"] },
+    { n: "Llama 3.2", s: "llm", p: ["fair"] },
     { n: "Zero-shot prompting", s: "llm", p: ["fair"] },
     { n: "FastF1", s: "ingest", p: ["f1"] },
     { n: "Excel", s: "ingest", p: ["cre"] },
@@ -920,7 +942,43 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     document.getElementById("case-box").innerHTML = h;
   }
 
-  /* ---------- Timeline (Fig. 8) ---------- */
+  /* ---------- Fairness DiD (Fig. 8) ---------- */
+  // Source: Fairness in AI report, Table 4 (delta and p per case and subject, Mistral-7B and Llama 3.2).
+  var DID = [
+    { c: { fr: "États-Unis", en: "USA" }, s: "Border + Crisis", m: [0.59, 0.081], l: [-0.14, 0.637] },
+    { c: { fr: "États-Unis", en: "USA" }, s: "Donald Trump", m: [0.20, 0.064], l: [0.09, 0.358] },
+    { c: { fr: "Inde", en: "India" }, s: "Adani", m: [0.39, 0.534], l: [1.16, 0.016] },
+    { c: { fr: "Inde", en: "India" }, s: "Narendra Modi", m: [0.17, 0.091], l: [0.17, 0.090] },
+    { c: { fr: "Inde", en: "India" }, s: "Rahul Gandhi", m: [0.17, 0.326], l: [-0.23, 0.151] }
+  ];
+  function drawDid() {
+    var W = 620, left = 150, right = 96, top = 34, rowH = 50, H = top + DID.length * rowH + 30, plotW = W - left - right, lo = -0.4, hi = 1.3;
+    function X(v) { return left + (v - lo) / (hi - lo) * plotW; }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="DiD">';
+    s += '<rect class="bar" x="' + left + '" y="6" width="12" height="10" rx="2"/><text x="' + (left + 18) + '" y="15">Mistral-7B</text>';
+    s += '<rect class="bar alt" x="' + (left + 110) + '" y="6" width="12" height="10" rx="2"/><text x="' + (left + 128) + '" y="15">Llama 3.2</text>';
+    s += '<rect class="bar best" x="' + (left + 210) + '" y="6" width="12" height="10" rx="2"/><text x="' + (left + 228) + '" y="15">p &lt; 0' + (L() === "fr" ? "," : ".") + '05</text>';
+    [-0.25, 0, 0.25, 0.5, 0.75, 1, 1.25].forEach(function (v) {
+      s += '<line class="grid" x1="' + X(v) + '" x2="' + X(v) + '" y1="' + (top - 6) + '" y2="' + (H - 26) + '"/>';
+      s += '<text x="' + X(v) + '" y="' + (H - 8) + '" text-anchor="middle">' + num(v, 2) + '</text>';
+    });
+    DID.forEach(function (d, i) {
+      var y = top + i * rowH;
+      s += '<text class="lbl" x="' + (left - 12) + '" y="' + (y + 15) + '" text-anchor="end">' + d.s + '</text>';
+      s += '<text x="' + (left - 12) + '" y="' + (y + 30) + '" text-anchor="end">' + d.c[L()] + '</text>';
+      [["m", ""], ["l", " alt"]].forEach(function (k, j) {
+        var v = d[k[0]][0], pv = d[k[0]][1], yy = y + 4 + j * 18, x0 = X(0), x1 = X(v), sig = pv < 0.05;
+        s += '<rect class="bar' + (sig ? " best" : k[1]) + '" x="' + Math.min(x0, x1) + '" y="' + yy + '" width="' + Math.max(2, Math.abs(x1 - x0)) + '" height="14" rx="2"/>';
+        s += '<text class="lbl" x="' + (Math.max(x0, x1) + 6) + '" y="' + (yy + 11) + '">' + num(v) + '</text>';
+        s += '<text x="' + (W - 6) + '" y="' + (yy + 11) + '" text-anchor="end">p ' + num(pv, 3) + '</text>';
+      });
+    });
+    s += '<line class="axis" x1="' + X(0) + '" x2="' + X(0) + '" y1="' + (top - 6) + '" y2="' + (H - 26) + '" style="stroke:var(--muted)"/>';
+    s += '</svg>';
+    document.getElementById("chart-did").innerHTML = s;
+  }
+
+  /* ---------- Timeline (Fig. 9) ---------- */
   var SPANS = [
     { fr: "EPITA, Bachelor", en: "EPITA, B.Sc.", a: [2022, 8], b: [2025, 7], k: "edu" },
     { fr: "Paris-Saclay, Master", en: "Paris-Saclay, M.Sc.", a: [2025, 8], b: [2027, 7], k: "edu" },
@@ -1011,7 +1069,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     try { navigator.clipboard.writeText("sathyaerwangnanou@gmail.com").then(function () { b.dataset.ok = "1"; b.firstChild.textContent = "Copié"; b.lastChild.textContent = "Copied"; setTimeout(function () { b.firstChild.textContent = "Copier"; b.lastChild.textContent = "Copy"; }, 1600); }, function () {}); } catch (e) {}
   });
 
-  function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawTime(); drawSkills(); drawRoles(); }
+  function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawDid(); drawTime(); drawSkills(); drawRoles(); }
 
   function setLang(l) {
     html.setAttribute("data-lang", l); html.lang = l;
