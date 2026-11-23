@@ -205,14 +205,7 @@ svg .pt.best { fill: var(--accent); }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .tool { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 5px; padding: 3px 9px; cursor: pointer; transition: opacity .2s, border-color .2s, color .2s; }
 .tool:hover, .tool.hot { border-color: var(--accent); color: var(--accent); }
-.tracing .tool:not(.hot) { opacity: .3; }
-.trace-row { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--line); }
-.trace-row .k { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 16px; margin: 0 0 10px; }
-.pchips { display: flex; flex-wrap: wrap; gap: 8px; }
-.pchip { font-family: var(--body); font-size: 13.5px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 13px; cursor: pointer; }
-.pchip:hover { border-color: var(--ink); }
-.pchip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.trace-out { margin-top: 12px; font-size: 14.5px; color: var(--muted); min-height: 24px; }
+.trace-out { margin-top: 18px; font-size: 14.5px; color: var(--muted); min-height: 24px; }
 
 /* Education */
 .courses { columns: 2; column-gap: 32px; padding-left: 18px; margin: 10px 0 0; font-size: 15px; }
@@ -467,11 +460,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <div class="col block">
     <div class="block-label"><span class="fr">Compétences</span><span class="en">Skills</span></div>
     <div class="stages" id="stages"></div>
-    <div class="trace-row">
-      <p class="k"><span class="fr">Suivre un projet : choisissez-en un pour voir les outils qu'il utilise.</span><span class="en">Trace a project: pick one to see the tools it uses.</span></p>
-      <div class="pchips" id="pchips"></div>
-      <div class="trace-out" id="trace-out" aria-live="polite"></div>
-    </div>
+    <div class="trace-out" id="trace-out" aria-live="polite"></div>
   </div>
 
   <div class="col block">
@@ -896,8 +885,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     document.getElementById("chart-time").innerHTML = s;
   }
 
-  /* ---------- Skills and tracing ---------- */
-  var tracedProj = null;
+  /* ---------- Skills ---------- */
   function drawSkills() {
     var box = document.getElementById("stages");
     box.innerHTML = STAGES.map(function (st) {
@@ -905,35 +893,20 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         return '<button class="tool" type="button" data-p="' + t.p.join(" ") + '">' + esc(t.n) + '</button>';
       }).join("") + '</div></div>';
     }).join("");
-    var chips = document.getElementById("pchips");
-    chips.innerHTML = Object.keys(P).map(function (k) { return '<button class="pchip" type="button" data-k="' + k + '" aria-pressed="' + (tracedProj === k) + '">' + esc(P[k][L()]) + '</button>'; }).join("");
     box.querySelectorAll(".tool").forEach(function (b) {
-      b.addEventListener("mouseenter", function () { if (!tracedProj) showTool(b); });
-      b.addEventListener("focus", function () { if (!tracedProj) showTool(b); });
-      b.addEventListener("click", function () { tracedProj = null; syncChips(); showTool(b); });
-      b.addEventListener("mouseleave", function () { if (!tracedProj) out(""); });
+      b.addEventListener("mouseenter", function () { showTool(b); });
+      b.addEventListener("focus", function () { showTool(b); });
+      b.addEventListener("click", function () { showTool(b); });
+      b.addEventListener("mouseleave", function () { b.classList.remove("hot"); out(""); });
     });
-    chips.querySelectorAll(".pchip").forEach(function (c) {
-      c.addEventListener("click", function () { var k = c.getAttribute("data-k"); tracedProj = tracedProj === k ? null : k; syncChips(); traceProject(); });
-    });
-    traceProject();
+    out("");
   }
   function out(h) { document.getElementById("trace-out").innerHTML = h; }
   function showTool(b) {
     var ps = b.getAttribute("data-p").split(" ").filter(Boolean), fr = L() === "fr";
-    document.getElementById("stages").classList.remove("tracing");
     document.querySelectorAll(".tool").forEach(function (t) { t.classList.toggle("hot", t === b); });
     out(ps.length ? "<b>" + esc(b.textContent) + "</b> " + (fr ? "utilisé dans : " : "used in: ") + ps.map(function (k) { return esc(P[k][L()]); }).join(" · ")
       : "<b>" + esc(b.textContent) + "</b> " + (fr ? ": vu en cours, pas encore dans un projet présenté ici." : ": learned in courses, not yet in a project shown here."));
-  }
-  function syncChips() { document.querySelectorAll(".pchip").forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-k") === tracedProj); }); }
-  function traceProject() {
-    var box = document.getElementById("stages");
-    if (!tracedProj) { box.classList.remove("tracing"); document.querySelectorAll(".tool").forEach(function (t) { t.classList.remove("hot"); }); out(""); return; }
-    box.classList.add("tracing");
-    var n = 0;
-    document.querySelectorAll(".tool").forEach(function (t) { var hit = t.getAttribute("data-p").split(" ").indexOf(tracedProj) > -1; t.classList.toggle("hot", hit); if (hit) n++; });
-    out("<b>" + esc(P[tracedProj][L()]) + "</b> " + (L() === "fr" ? "utilise " + n + " des outils ci-dessus." : "uses " + n + " of the tools above."));
   }
 
   /* ---------- Role matcher ---------- */
