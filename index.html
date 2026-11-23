@@ -131,6 +131,16 @@ svg .pt.best { fill: var(--accent); }
 .paper .authors { font-size: 14px; color: var(--muted); margin: 0; }
 .paper .authors b { color: var(--ink); font-weight: 600; }
 
+/* Key figures */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 4px 0 22px; }
+@media (max-width: 640px) { .kpis { grid-template-columns: 1fr 1fr; } }
+.kpis div { border-top: 2px solid var(--accent); padding-top: 8px; }
+.kpis dt { font-family: var(--display); font-size: 30px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpis dd { margin: 4px 0 0; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+svg .band { fill: var(--accent); fill-opacity: .1; }
+svg .band-edge { stroke: var(--accent); stroke-opacity: .6; stroke-dasharray: 3 3; }
+svg .sep { stroke: var(--line); }
+
 /* Case switcher */
 .cases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; font-size: 14.5px; }
 @media (max-width: 560px) { .cases { grid-template-columns: 1fr; } }
@@ -347,23 +357,49 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
     <article class="entry" id="lisn">
       <div class="entry-head"><h3><span class="fr">Générateur de données synthétiques</span><span class="en">Synthetic data generator</span></h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
-      <p class="role"><span class="fr">Projet de recherche, Data Mining · LISN, Université Paris-Saclay · encadrant : Nadjib Lazaar</span><span class="en">Research project, Data Mining · LISN, Université Paris-Saclay · supervisor: Nadjib Lazaar</span></p>
-      <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données annotés pour tester les algorithmes. J'ai construit un générateur configurable de données transactionnelles qui combine un LLM, pour la cohérence sémantique, et un contrôle statistique des distributions.</p>
-      <p class="en">Frequent and High Utility Itemset Mining lack annotated datasets to test algorithms on. I built a configurable transactional data generator that combines an LLM, for semantic coherence, with statistical control of the distributions.</p>
+      <p class="role"><span class="fr">Projet de recherche (TER), Data Mining · LISN, Université Paris-Saclay · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">Research project (TER), Data Mining · LISN, Université Paris-Saclay · team of 6 · supervisor: Nadjib Lazaar</span></p>
+      <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
+      <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
       <figure class="fig">
         <div class="fig-box">
           <div class="pipe" id="pipe-lisn">
-            <div class="step"><span class="k">React / TS</span><span class="fr">L'utilisateur règle les paramètres</span><span class="en">The user sets parameters</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">FastAPI</span><span class="fr">L'API lance la génération</span><span class="en">The API starts generation</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">LLM + stats</span><span class="fr">Transactions générées et contrôlées</span><span class="en">Transactions generated and controlled</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">OFAT</span><span class="fr">Validation du réalisme</span><span class="en">Realism validation</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">FP-Growth · Eclat</span><span class="fr">Benchmark des algorithmes</span><span class="en">Algorithm benchmark</span></div>
+            <div class="step"><span class="k">GPT-4o · DeepSeek · Gemini</span><span class="fr">Le LLM nomme articles et catégories</span><span class="en">The LLM names items and categories</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">NumPy · SciPy</span><span class="fr">Fréquences en loi de puissance, longueurs asymétriques</span><span class="en">Power-law frequencies, skewed lengths</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">Pattern embedder</span><span class="fr">Motifs plantés au support exact</span><span class="en">Patterns planted at exact support</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">Assembler</span><span class="fr">Transactions assemblées</span><span class="en">Transactions assembled</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">SPMF</span><span class="fr">Validation en 4 étapes</span><span class="en">4-step validation</span></div>
           </div>
         </div>
         <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
-        <figcaption><b>Fig. 3</b> <span class="fr">L'application web de bout en bout, utilisable par des non-développeurs. OFAT : on fait varier un seul facteur à la fois.</span><span class="en">The end-to-end web application, usable by non-developers. OFAT: one factor is varied at a time.</span></figcaption>
+        <figcaption><b>Fig. 3</b> <span class="fr">Le pipeline hybride. La validation vérifie la structure, le réalisme statistique, la récupération des motifs plantés, puis l'effet de chaque paramètre (OFAT : un seul facteur varie à la fois).</span><span class="en">The hybrid pipeline. Validation checks structure, statistical realism, recovery of the planted patterns, then the effect of each parameter (OFAT: one factor varied at a time).</span></figcaption>
       </figure>
-      <p class="stack"><span>Python</span><span>LLM</span><span>FastAPI</span><span>React</span><span>TypeScript</span><span>FP-Growth</span><span>Eclat</span></p>
+      <dl class="kpis">
+        <div><dt>100 %</dt><dd><span class="fr">des motifs plantés retrouvés (5 sur 5 en FIM, 2 sur 2 en HUIM)</span><span class="en">of planted patterns recovered (5 of 5 in FIM, 2 of 2 in HUIM)</span></dd></div>
+        <div><dt>0 %</dt><dd><span class="fr">d'écart sur le nombre de transactions et d'articles ; 7 % sur la densité</span><span class="en">error on the number of transactions and items; 7% on density</span></dd></div>
+        <div><dt><span class="fr">1,68</span><span class="en">1.68</span></dt><dd><span class="fr">exposant de loi de puissance, dans la cible de 1,5 à 3</span><span class="en">power-law exponent, inside the 1.5 to 3 target</span></dd></div>
+        <div><dt>×521</dt><dd><span class="fr">temps FP-Growth de 100 à 50 000 transactions (9,7 ms → 5,1 s)</span><span class="en">FP-Growth runtime from 100 to 50,000 transactions (9.7 ms → 5.1 s)</span></dd></div>
+      </dl>
+      <p class="fr"><b>Ma part : l'étude des prompts.</b> Avec Maxime, j'ai testé quatre façons de faire générer les données par un LLM seul (minimal, narratif, few-shot, itératif). La structure était respectée, avec 0,5 à 3,5 % d'erreur, mais aucune variante ne passait le test de réalisme statistique. Ce résultat a conduit l'équipe à l'architecture hybride.</p>
+      <p class="en"><b>My part: the prompt study.</b> With Maxime, I tested four ways of having an LLM generate the data on its own (minimal, narrative, few-shot, iterative). Structure was respected, within 0.5 to 3.5% error, but no variant passed the statistical realism check. This result led the team to the hybrid architecture.</p>
+      <figure class="fig">
+        <div class="fig-box"><div id="chart-prompt"></div></div>
+        <div class="fig-actions">
+          <button class="act" type="button" id="p-skew" aria-pressed="true"><span class="fr">Asymétrie des longueurs</span><span class="en">Length skewness</span></button>
+          <button class="act" type="button" id="p-alpha" aria-pressed="false"><span class="fr">Exposant de loi de puissance α</span><span class="en">Power-law exponent α</span></button>
+        </div>
+        <figcaption><b>Fig. 4</b> <span class="fr">Quatre prompts LLM seuls contre le générateur hybride. Zone ombrée : la cible de réalisme (asymétrie ≥ 1, α entre 1,5 et 3). Les prompts produisent des longueurs presque symétriques et un α trop élevé ; seul l'hybride atteint la cible.</span><span class="en">Four LLM-only prompts against the hybrid generator. Shaded area: the realism target (skewness ≥ 1, α between 1.5 and 3). The prompts give nearly symmetric lengths and too high an α; only the hybrid reaches the target.</span></figcaption>
+      </figure>
+      <ul class="fr">
+        <li>En faisant varier un facteur à la fois : la taille de la base pilote surtout le temps de calcul, alors que la densité (0,01 → 0,40) triple le nombre de motifs extraits (102 → 301) et la longueur moyenne (3 → 25) le multiplie par plus de 8 (37 → 314).</li>
+        <li>FP-Growth et Eclat retrouvent autant de motifs ; Eclat est 9 à 16 % plus rapide selon la densité.</li>
+        <li>L'équipe a livré une application web (FastAPI, React) pour régler les paramètres et suivre la génération en direct, sans ligne de commande.</li>
+      </ul>
+      <ul class="en">
+        <li>Varying one factor at a time: database size mainly drives runtime, while density (0.01 → 0.40) triples the number of mined patterns (102 → 301) and average length (3 → 25) multiplies it by more than 8 (37 → 314).</li>
+        <li>FP-Growth and Eclat recover as many patterns; Eclat is 9 to 16% faster depending on density.</li>
+        <li>The team shipped a web application (FastAPI, React) to set parameters and follow generation live, with no command line.</li>
+      </ul>
+      <p class="stack"><span>Python</span><span>LLM</span><span>Prompt engineering</span><span>NumPy</span><span>SciPy</span><span>SPMF</span><span>FP-Growth</span><span>Eclat</span><span>FastAPI</span><span>React</span></p>
     </article>
 
     <article class="entry" id="inpaint">
@@ -379,12 +415,12 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
           <button class="act" type="button" id="b-det" aria-pressed="true"><span class="fr">Détection (ROC-AUC)</span><span class="en">Detection (ROC-AUC)</span></button>
           <button class="act" type="button" id="b-loc" aria-pressed="false"><span class="fr">Localisation (IoU)</span><span class="en">Localization (IoU)</span></button>
         </div>
-        <figcaption><b>Fig. 4</b> <span class="fr">Moyenne sur trois rééchantillonnages par photo source, pour éviter que deux versions d'une même image tombent dans des échantillons différents. Pointillés : hasard (ROC-AUC 0,50) ou masque aléatoire (IoU 0,06). Seul TruFor sépare vraiment les images modifiées.</span><span class="en">Mean over three resamples by source photo, so that versions of one image never land in different samples. Dashed line: chance (ROC-AUC 0.50) or a random mask (IoU 0.06). Only TruFor really separates edited images.</span></figcaption>
+        <figcaption><b>Fig. 5</b> <span class="fr">Moyenne sur trois rééchantillonnages par photo source, pour éviter que deux versions d'une même image tombent dans des échantillons différents. Pointillés : hasard (ROC-AUC 0,50) ou masque aléatoire (IoU 0,06). Seul TruFor sépare vraiment les images modifiées.</span><span class="en">Mean over three resamples by source photo, so that versions of one image never land in different samples. Dashed line: chance (ROC-AUC 0.50) or a random mask (IoU 0.06). Only TruFor really separates edited images.</span></figcaption>
       </figure>
       <figure class="fig">
         <div class="fig-box"><div id="chart-scatter"></div></div>
         <div class="fig-actions"><button class="act" type="button" id="b-thr" aria-pressed="false"><span class="fr">Abaisser le seuil de PSCC-Net à 0,2</span><span class="en">Lower PSCC-Net's threshold to 0.2</span></button></div>
-        <figcaption><b>Fig. 5</b> <span class="fr">Taille du modèle contre qualité de localisation. Le plus gros n'est pas le meilleur : AEROBLADE a le plus de paramètres et localise au niveau du hasard. Baisser le seuil de PSCC-Net fait passer son IoU de 0,21 à 0,33.</span><span class="en">Model size against localization quality. Bigger is not better: AEROBLADE has the most parameters and localizes at chance level. Lowering PSCC-Net's threshold raises its IoU from 0.21 to 0.33.</span></figcaption>
+        <figcaption><b>Fig. 6</b> <span class="fr">Taille du modèle contre qualité de localisation. Le plus gros n'est pas le meilleur : AEROBLADE a le plus de paramètres et localise au niveau du hasard. Baisser le seuil de PSCC-Net fait passer son IoU de 0,21 à 0,33.</span><span class="en">Model size against localization quality. Bigger is not better: AEROBLADE has the most parameters and localizes at chance level. Lowering PSCC-Net's threshold raises its IoU from 0.21 to 0.33.</span></figcaption>
       </figure>
       <ul class="fr">
         <li>TruFor atteint un ROC-AUC de 0,98 et un IoU de 0,72, avec des résultats proches sur Stable Diffusion 2 et sur Photoshop.</li>
@@ -407,7 +443,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
           <dl class="cases" id="case-box"></dl>
         </div>
         <div class="fig-actions"><button class="act" type="button" id="b-case"><span class="fr">Cas suivant</span><span class="en">Next case</span></button></div>
-        <figcaption><b>Fig. 6</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B en local donne un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, a local Mistral-7B returns a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
+        <figcaption><b>Fig. 7</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B en local donne un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, a local Mistral-7B returns a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
       </figure>
       <p class="stack"><span>Mistral-7B</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
     </article>
@@ -460,7 +496,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <div class="block-label"><span class="fr">Formation</span><span class="en">Education</span></div>
     <figure class="fig">
       <div class="fig-box"><div id="chart-time"></div></div>
-      <figcaption><b>Fig. 7</b> <span class="fr">Formation et stages de 2022 à 2027. Le trait vertical marque aujourd'hui ; la barre en pointillés est le stage que je recherche.</span><span class="en">Education and internships from 2022 to 2027. The vertical line marks today; the dashed bar is the internship I am looking for.</span></figcaption>
+      <figcaption><b>Fig. 8</b> <span class="fr">Formation et stages de 2022 à 2027. Le trait vertical marque aujourd'hui ; la barre en pointillés est le stage que je recherche.</span><span class="en">Education and internships from 2022 to 2027. The vertical line marks today; the dashed bar is the internship I am looking for.</span></figcaption>
     </figure>
     <article class="entry">
       <div class="entry-head"><h3>Université Paris-Saclay</h3><span class="dates"><span class="fr">sept. 2025 – août 2027</span><span class="en">Sep 2025 – Aug 2027</span></span></div>
@@ -782,7 +818,42 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     });
   }
 
-  /* ---------- Benchmark charts (Fig. 4, 5) ---------- */
+  /* ---------- Prompt study (Fig. 4) ---------- */
+  // Source: TER report, Table 5 (LLM-only prompts) and Section 6 (hybrid FIM: alpha 1.684, skewness 1.669).
+  var PROMPTS = [
+    { fr: "Minimal", en: "Minimal", a: 5.41, s: 0.27 },
+    { fr: "Narratif", en: "Narrative", a: 4.73, s: -0.02 },
+    { fr: "Few-shot", en: "Few-shot", a: 5.67, s: 0.07 },
+    { fr: "Itératif", en: "Iterative", a: 5.42, s: 0.17 },
+    { fr: "Hybride", en: "Hybrid", a: 1.684, s: 1.669, best: true }
+  ];
+  var promptMode = "s";
+  function drawPrompt() {
+    var sk = promptMode === "s", W = 620, left = 110, right = 60, top = 26, rowH = 40, H = top + PROMPTS.length * rowH + 40, plotW = W - left - right;
+    var lo = sk ? -0.25 : 0, hi = sk ? 2 : 6, ticks = sk ? [0, 0.5, 1, 1.5, 2] : [0, 1, 2, 3, 4, 5, 6], band = sk ? [1, 2] : [1.5, 3];
+    function X(v) { return left + (v - lo) / (hi - lo) * plotW; }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="' + (sk ? "Skewness" : "Alpha") + '">';
+    s += '<rect class="band" x="' + X(band[0]) + '" y="' + (top - 8) + '" width="' + (X(band[1]) - X(band[0])) + '" height="' + (H - top - 26) + '"/>';
+    s += '<line class="band-edge" x1="' + X(band[0]) + '" x2="' + X(band[0]) + '" y1="' + (top - 8) + '" y2="' + (H - 34) + '"/>';
+    if (!sk) s += '<line class="band-edge" x1="' + X(band[1]) + '" x2="' + X(band[1]) + '" y1="' + (top - 8) + '" y2="' + (H - 34) + '"/>';
+    s += '<text x="' + ((X(band[0]) + X(band[1])) / 2) + '" y="' + (top - 12) + '" text-anchor="middle">' + (L() === "fr" ? "cible" : "target") + '</text>';
+    ticks.forEach(function (v) {
+      s += '<line class="grid" x1="' + X(v) + '" x2="' + X(v) + '" y1="' + (top - 8) + '" y2="' + (H - 34) + '"/>';
+      s += '<text x="' + X(v) + '" y="' + (H - 16) + '" text-anchor="middle">' + num(v, v % 1 ? 1 : 0) + '</text>';
+    });
+    PROMPTS.forEach(function (d, i) {
+      var v = sk ? d.s : d.a, y = top + i * rowH + 6, x0 = X(0), x1 = X(v);
+      if (d.best) s += '<line class="sep" x1="12" x2="' + (W - 12) + '" y1="' + (y - 6) + '" y2="' + (y - 6) + '"/>';
+      s += '<text class="lbl" x="' + (left - 12) + '" y="' + (y + 17) + '" text-anchor="end">' + d[L()] + '</text>';
+      s += '<rect class="bar' + (d.best ? " best" : "") + '" x="' + Math.min(x0, x1) + '" y="' + y + '" width="' + Math.max(2, Math.abs(x1 - x0)) + '" height="24" rx="2"/>';
+      s += '<text class="lbl" x="' + (Math.max(x0, x1) + 8) + '" y="' + (y + 17) + '">' + num(v) + '</text>';
+    });
+    s += '<line class="axis" x1="' + X(0) + '" x2="' + X(0) + '" y1="' + (top - 8) + '" y2="' + (H - 34) + '"/>';
+    s += '</svg>';
+    document.getElementById("chart-prompt").innerHTML = s;
+  }
+
+  /* ---------- Benchmark charts (Fig. 5, 6) ---------- */
   // Source: report Tables 1-3 (TGIF test set, mean over three resamples).
   var BENCH = [
     { m: "TruFor", auc: 0.98, iou: 0.72, params: 68.7 },
@@ -832,7 +903,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     document.getElementById("chart-scatter").innerHTML = s;
   }
 
-  /* ---------- Fairness cases (Fig. 6) ---------- */
+  /* ---------- Fairness cases (Fig. 7) ---------- */
   // Source: Fairness in AI report, Tables 1 and 2.
   var CASES = [
     { region: { fr: "États-Unis", en: "USA" }, target: "CNN", ctrl: ["MSNBC", "Fox News"], event: { fr: "Fusion Warner Bros. Discovery, nouveau PDG", en: "Warner Bros. Discovery merger, new CEO" }, win: "2022", subj: ["Donald Trump", "Hunter Biden", "Border + Crisis/Migrants"] },
@@ -849,7 +920,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     document.getElementById("case-box").innerHTML = h;
   }
 
-  /* ---------- Timeline (Fig. 7) ---------- */
+  /* ---------- Timeline (Fig. 8) ---------- */
   var SPANS = [
     { fr: "EPITA, Bachelor", en: "EPITA, B.Sc.", a: [2022, 8], b: [2025, 7], k: "edu" },
     { fr: "Paris-Saclay, Master", en: "Paris-Saclay, M.Sc.", a: [2025, 8], b: [2027, 7], k: "edu" },
@@ -929,6 +1000,8 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   });
 
   /* ---------- Controls ---------- */
+  document.getElementById("p-skew").addEventListener("click", function () { promptMode = "s"; this.setAttribute("aria-pressed", "true"); document.getElementById("p-alpha").setAttribute("aria-pressed", "false"); drawPrompt(); });
+  document.getElementById("p-alpha").addEventListener("click", function () { promptMode = "a"; this.setAttribute("aria-pressed", "true"); document.getElementById("p-skew").setAttribute("aria-pressed", "false"); drawPrompt(); });
   document.getElementById("b-det").addEventListener("click", function () { benchMode = "auc"; this.setAttribute("aria-pressed", "true"); document.getElementById("b-loc").setAttribute("aria-pressed", "false"); drawBench(); });
   document.getElementById("b-loc").addEventListener("click", function () { benchMode = "iou"; this.setAttribute("aria-pressed", "true"); document.getElementById("b-det").setAttribute("aria-pressed", "false"); drawBench(); });
   document.getElementById("b-thr").addEventListener("click", function () { lowThr = !lowThr; this.setAttribute("aria-pressed", String(lowThr)); drawScatter(); drawBench(); });
@@ -938,7 +1011,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     try { navigator.clipboard.writeText("sathyaerwangnanou@gmail.com").then(function () { b.dataset.ok = "1"; b.firstChild.textContent = "Copié"; b.lastChild.textContent = "Copied"; setTimeout(function () { b.firstChild.textContent = "Copier"; b.lastChild.textContent = "Copy"; }, 1600); }, function () {}); } catch (e) {}
   });
 
-  function renderAll() { drawMap(); drawBench(); drawScatter(); drawCase(); drawTime(); drawSkills(); drawRoles(); }
+  function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawTime(); drawSkills(); drawRoles(); }
 
   function setLang(l) {
     html.setAttribute("data-lang", l); html.lang = l;
