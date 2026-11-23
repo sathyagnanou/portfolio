@@ -75,13 +75,18 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .stack span + span::before { content: " · "; color: var(--line); }
 
 /* Hero */
-.hero { padding: 64px 0 40px; }
+.hero { padding-top: 64px; padding-bottom: 40px; }
 .hero .descr { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--muted); margin: 10px 0 26px; }
 .hero p.intro { font-size: 19px; line-height: 1.6; margin: 0 0 24px; }
 .status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 26px; }
 .status .live { color: var(--ink); }
 .status .live::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #3fa66b; margin-right: 8px; vertical-align: 1px; }
 .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin: -12px 0 26px; }
+.tags span { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 4px 12px; }
+.btn svg { vertical-align: -2px; margin-right: 7px; }
+.cv-alt { margin: 12px 0 0; font-size: 13.5px; }
+.cv-alt a { color: var(--muted); }
 .btn { font-family: var(--body); font-size: 14px; font-weight: 500; padding: 9px 16px; border-radius: 6px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; cursor: pointer; }
 .btn:hover { color: var(--bg); opacity: .88; }
 .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
@@ -234,7 +239,7 @@ svg .sep { stroke: var(--line); }
 .langs b { font-weight: 600; }
 
 /* Contact */
-.contact { padding: 70px 0 30px; border-top: 1px solid var(--line); margin-top: 40px; }
+.contact { padding-top: 70px; padding-bottom: 30px; border-top: 1px solid var(--line); margin-top: 40px; }
 .contact h2 { font-size: clamp(46px, 8vw, 76px); }
 .links { display: grid; gap: 8px; font-size: 17px; margin: 18px 0 30px; }
 .links .k { font-family: var(--mono); font-size: 12px; color: var(--muted); display: inline-block; width: 90px; }
@@ -275,14 +280,18 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
   <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
   <div class="status">
-    <span class="live"><span class="fr">Recherche un stage de fin d'études</span><span class="en">Looking for an end-of-studies internship</span></span>
-    <span><span class="fr">6 mois, dès le 1er mars 2027</span><span class="en">6 months, from March 1st, 2027</span></span>
-    <span>Data Scientist · Data Analyst · Data Engineer · <span class="fr">IA</span><span class="en">AI</span></span>
+    <span class="live"><span class="fr">Recherche un stage de 6 mois – mars 2027</span><span class="en">Seeking a 6-month internship – March 2027</span></span>
+  </div>
+  <div class="tags">
+    <span>Machine Learning</span><span>LLMs</span><span>Computer Vision</span><span>Data Science</span>
   </div>
   <div class="btns">
-    <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Get in touch</span></a>
-    <a class="btn ghost" href="#travaux"><span class="fr">Voir les travaux</span><span class="en">See the work</span></a>
+    <a class="btn fr" href="cv/SathyaGNANOU_CV_FR.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Télécharger le CV</a>
+    <a class="btn en" href="cv/SathyaGNANOU_CV_EN.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Download CV</a>
+    <a class="btn ghost" href="https://github.com/sathyagnanou">GitHub</a>
+    <a class="btn ghost" href="#contact">Contact</a>
   </div>
+  <p class="cv-alt"><a class="fr" href="cv/SathyaGNANOU_CV_EN.pdf" download>CV en anglais</a><a class="en" href="cv/SathyaGNANOU_CV_FR.pdf" download>CV in French</a></p>
 </section>
 
 <!-- MAP -->
