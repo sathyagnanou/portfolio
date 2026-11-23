@@ -252,13 +252,14 @@ svg .sep { stroke: var(--line); }
 #map .deco, #map .sea-name { pointer-events: none; }
 
 /* Skills */
-.stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 26px; }
-@media (max-width: 760px) { .stages { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 460px) { .stages { grid-template-columns: 1fr; } }
+.stages { columns: 3; column-gap: 26px; }
+.stage { break-inside: avoid; display: inline-block; width: 100%; margin: 0 0 24px; }
+@media (max-width: 760px) { .stages { columns: 2; } }
+@media (max-width: 460px) { .stages { columns: 1; } }
 .stage h5 { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .tool { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 5px; padding: 3px 9px; cursor: pointer; transition: opacity .2s, border-color .2s, color .2s; }
-.stage-soft { grid-column: 1 / -1; }
+.stage-soft { display: block; column-span: all; margin-top: 4px; }
 .tool { text-align: left; }
 .softskill { font-family: var(--body); font-size: 13.5px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; color: var(--ink); }
 .tool:hover, .tool.hot { border-color: var(--accent); color: var(--accent); }
