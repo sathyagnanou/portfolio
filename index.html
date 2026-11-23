@@ -92,6 +92,9 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .hero .descr { grid-column: 1 / 7; grid-row: 1; align-self: end; position: relative; font-family: var(--display); font-style: italic; font-size: clamp(20px, 2cqw, 26px); color: var(--muted); margin: 0 0 4px; }
 .hero h1 { grid-column: 1 / 7; grid-row: 2; align-self: center; position: relative; font-size: min(10.4cqw, 150px); line-height: .95; letter-spacing: -.035em; white-space: nowrap; }
 .hero-text { grid-column: 1 / 6; grid-row: 3 / 6; align-self: start; position: relative; padding: 22px 12px 8px 0; }
+.hero .status { margin-bottom: 22px; }
+.hero .status .live { font-family: var(--body); font-size: clamp(20px, 2.1cqw, 26px); font-weight: 600; letter-spacing: -.01em; color: var(--ink); }
+.hero .status .live::before { width: 12px; height: 12px; margin-right: 12px; vertical-align: 3px; box-shadow: 0 0 0 4px color-mix(in srgb, #3fa66b 22%, transparent); }
 .hero p.intro { font-size: clamp(18px, 1.85cqw, 23px); line-height: 1.55; margin: 0 0 22px; }
 .hero-photo { grid-column: 7 / 9; grid-row: 2 / 4; position: relative; margin: 0; }
 .hero-photo picture { display: block; height: 100%; }
