@@ -163,6 +163,9 @@ svg .sep { stroke: var(--line); }
 .pcard p { margin: 4px 0 0; font-size: 15px; }
 .pcard .stack { margin-top: auto; padding-top: 10px; }
 
+.map-wide { max-width: 1240px; }
+.map-info { min-height: 26px; margin: 12px 2px 0; font-size: 15px; color: var(--muted); }
+.map-info b { color: var(--ink); font-weight: 600; }
 /* Map: a cartographic map. Regions = themes, cities = projects, villages = tools. */
 #map { padding: 0; overflow-x: auto; }
 #map svg { display: block; width: 100%; height: auto; min-width: 680px; border-radius: 9px; }
@@ -183,15 +186,15 @@ svg .sep { stroke: var(--line); }
 #map .border { fill: none; stroke: var(--muted); stroke-width: .8; stroke-dasharray: 6 3 1.5 3; opacity: .7; pointer-events: none; }
 #map .coast { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; pointer-events: none; }
 #map .halo { paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; stroke-linejoin: round; }
-#map .rname { font-family: var(--display); font-style: italic; font-size: 13.5px; letter-spacing: .16em; fill: var(--muted); stroke-opacity: .7; }
+#map .rname { font-family: var(--display); font-style: italic; font-size: 14.5px; letter-spacing: .16em; fill: var(--muted); stroke-opacity: .7; }
 #map .road { fill: none; stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 2 3; stroke-linecap: round; transition: stroke .2s, stroke-width .2s, opacity .2s; }
 #map .road.hot { stroke: var(--accent); stroke-width: 2.2; stroke-dasharray: none; }
 #map .hit { fill: transparent; }
 #map .vil { fill: var(--data); stroke: var(--paper); stroke-width: 1; }
-#map .vname { font-family: var(--mono); font-size: 10.5px; fill: var(--ink); }
+#map .vname { font-family: var(--mono); font-size: 12px; fill: var(--ink); }
 #map .city { fill: var(--paper); stroke: var(--ink); stroke-width: 1.6; }
 #map .city-dot { fill: var(--ink); }
-#map .cname { font-family: var(--display); font-weight: 500; font-size: 15px; fill: var(--ink); }
+#map .cname { font-family: var(--display); font-weight: 500; font-size: 16.5px; fill: var(--ink); }
 #map .node { cursor: pointer; transition: opacity .2s; }
 #map .node:focus { outline: none; }
 #map .node.hot .vname, #map .node.hot .cname, #map .node.hot .rname { fill: var(--accent); }
@@ -209,7 +212,7 @@ svg .sep { stroke: var(--line); }
 #map .rose-n { fill: var(--accent); }
 #map .rose-ring { fill: none; stroke: var(--ink); stroke-width: .7; opacity: .6; }
 #map .rose-l { font-family: var(--display); font-size: 15px; font-weight: 500; fill: var(--ink); }
-#map .sea-name { font-family: var(--display); font-style: italic; font-size: 17px; letter-spacing: .22em; fill: var(--data); opacity: .8; }
+#map .sea-name { font-family: var(--display); font-style: italic; font-size: 17px; letter-spacing: .12em; fill: var(--data); opacity: .8; }
 #map .sb-a { fill: var(--ink); } #map .sb-b { fill: var(--paper); stroke: var(--ink); stroke-width: .8; }
 #map .deco, #map .sea-name { pointer-events: none; }
 
@@ -295,7 +298,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 </section>
 
 <!-- MAP -->
-<section class="wide" id="map-sec" aria-labelledby="map-h" style="padding-top:30px">
+<section class="wide map-wide" id="map-sec" aria-labelledby="map-h" style="padding-top:30px">
   <div class="col" style="padding:0">
     <div class="kicker"><span class="fr">Vue d'ensemble</span><span class="en">Overview</span></div>
     <h2 id="map-h"><span class="fr">La carte</span><span class="en">The map</span></h2>
@@ -303,6 +306,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   </div>
   <figure class="fig">
     <div class="fig-box" id="map"></div>
+    <p class="map-info" id="map-info" aria-live="polite"></p>
     <figcaption><b>Fig. 1</b> <span class="fr">Chaque route relie un outil à un projet où je l'ai réellement utilisé. Une ville posée près d'une frontière touche plusieurs thèmes.</span><span class="en">Each road links a tool to a project where I actually used it. A city near a border belongs to several themes.</span></figcaption>
   </figure>
 </section>
@@ -668,7 +672,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   var GEO = {
     // Region seeds (a Voronoi cell per theme, clipped to the continent) and label positions.
     site: { vision: [215, 175], llm: [430, 210], mining: [650, 150], eval: [170, 345], stats: [485, 372], web: [745, 290], ml: [320, 470], bi: [560, 495], eng: [740, 450] },
-    lab: { vision: [200, 172], llm: [470, 98], mining: [690, 132], eval: [165, 368], stats: [578, 338], web: [805, 282], ml: [282, 472], bi: [560, 545], eng: [782, 470] },
+    lab: { vision: [200, 172], llm: [470, 98], mining: [690, 132], eval: [186, 372], stats: [578, 338], web: [805, 282], ml: [282, 472], bi: [560, 545], eng: [754, 446] },
     tint: { vision: 0, llm: 1, mining: 2, eval: 2, stats: 3, web: 2, ml: 1, bi: 2, eng: 0 },
     // Cities: [x, y, label side]
     city: { fair: [440, 255, "r"], lisn: [600, 235, "r"], inp: [230, 250, "r"], had: [250, 390, "r"], bird: [490, 375, "r"], f1: [420, 460, "r"], cre: [545, 470, "r"], kle: [700, 380, "r"] },
@@ -677,7 +681,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       "Python": [530, 288, "r"], "Difference-in-Differences": [400, 316, "l"], "FP-Growth · Eclat": [640, 172, "r"], "FastAPI": [672, 204, "r"],
       "React": [655, 276, "r"], "ROC-AUC · IoU": [150, 292, "r"], "Pretrained vision models": [240, 207, "r"], "Hyperparameter tuning": [190, 432, "r"],
       "Scikit-learn": [470, 507, "r"], "FastF1": [362, 505, "l"], "Matplotlib": [455, 422, "r"], "Bootstrap · LOESS": [548, 407, "r"],
-      "Excel": [605, 507, "r"], "Grist": [640, 440, "r"], ".NET": [772, 342, "r"], "PostgreSQL": [752, 415, "r"]
+      "Excel": [605, 507, "r"], "Grist": [626, 440, "r"], ".NET": [772, 342, "r"], "PostgreSQL": [752, 415, "r"]
     }
   };
   var MAP_TOOLS = Object.keys(GEO.vil);
@@ -772,7 +776,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
     // Villages (tools).
     tools.forEach(function (t, i) {
-      var v = GEO.vil[t.n], left = v[2] === "l", w = t.n.length * 6.4 + 14;
+      var v = GEO.vil[t.n], left = v[2] === "l", w = t.n.length * 7.3 + 14;
       s += '<g class="node tool" tabindex="0" data-id="t' + i + '"><rect class="hit" x="' + (left ? v[0] - w + 4 : v[0] - 6) + '" y="' + (v[1] - 9) + '" width="' + (w + 2) + '" height="18"/>';
       s += '<rect class="vil" x="' + (v[0] - 3.5) + '" y="' + (v[1] - 3.5) + '" width="7" height="7"/>';
       s += '<text class="vname halo" x="' + (v[0] + (left ? -8 : 8)) + '" y="' + (v[1] + 4) + '" text-anchor="' + (left ? "end" : "start") + '">' + esc(t.n) + '</text></g>';
@@ -780,7 +784,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
     // Cities (projects).
     projs.forEach(function (pk) {
-      var c = GEO.city[pk], left = c[2] === "l", name = P[pk][L()], w = name.length * 7.6 + 20;
+      var c = GEO.city[pk], left = c[2] === "l", name = P[pk][L()], w = name.length * 8.4 + 20;
       s += '<g class="node proj" tabindex="0" data-id="p-' + pk + '"><rect class="hit" x="' + (left ? c[0] - w + 8 : c[0] - 9) + '" y="' + (c[1] - 11) + '" width="' + w + '" height="22"/>';
       s += '<circle class="city" cx="' + c[0] + '" cy="' + c[1] + '" r="6.5"/><circle class="city-dot" cx="' + c[0] + '" cy="' + c[1] + '" r="2.6"/>';
       s += '<text class="cname halo" x="' + (c[0] + (left ? -11 : 11)) + '" y="' + (c[1] + 5) + '" text-anchor="' + (left ? "end" : "start") + '">' + esc(name) + '</text></g>';
@@ -800,10 +804,10 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     s += '<text class="rose-l" x="' + ccx + '" y="' + (ccy - 42) + '" text-anchor="middle">N</text></g>';
 
     // Sea name and scale bar.
-    s += '<text class="sea-name" x="128" y="566" text-anchor="middle">' + (fr ? "Mer des Données" : "Sea of Data") + '</text>';
+    s += '<text class="sea-name" x="112" y="578" text-anchor="middle">' + (fr ? "Mer des Données" : "Sea of Data") + '</text>';
     s += '<g class="deco">';
-    for (k = 0; k < 4; k++) s += '<rect class="' + (k % 2 ? "sb-b" : "sb-a") + '" x="' + (40 + k * 30) + '" y="590" width="30" height="5"/>';
-    s += '<text class="scale-l" x="40" y="584">' + (fr ? "ÉCHELLE LIBRE" : "NOT TO SCALE") + '</text></g>';
+    for (k = 0; k < 4; k++) s += '<rect class="' + (k % 2 ? "sb-b" : "sb-a") + '" x="' + (40 + k * 30) + '" y="602" width="30" height="5"/>';
+    s += '<text class="scale-l" x="40" y="596">' + (fr ? "ÉCHELLE LIBRE" : "NOT TO SCALE") + '</text></g>';
 
     // Legend.
     var lx = 776, ly = 520;
@@ -834,11 +838,23 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         var nid = n.getAttribute("data-id"), c = nid.charAt(0), k2 = nid.replace(/^[tph]-?/, "");
         n.classList.toggle("hot", c === "t" ? !!hotT[k2] : c === "p" ? !!hotP[k2] : !!hotH[k2]);
       });
+      var lT = Object.keys(hotT).map(function (i) { return esc(tools[i].n); }).join(" · ");
+      var lP = Object.keys(hotP).map(function (k) { return esc(P[k][L()]); }).join(" · ");
+      var lH = Object.keys(hotH).map(function (k) { return esc(TH[k][L()]); }).join(" · ");
+      var name = kind === "t" ? esc(tools[key].n) : kind === "p" ? esc(P[key][L()]) : esc(TH[key][L()]);
+      var parts = kind === "t" ? [[fr ? "projets" : "projects", lP], [fr ? "thèmes" : "themes", lH]]
+        : kind === "p" ? [[fr ? "outils" : "tools", lT], [fr ? "thèmes" : "themes", lH]]
+        : [[fr ? "projets" : "projects", lP], [fr ? "outils" : "tools", lT]];
+      info.innerHTML = "<b>" + name + "</b> — " + parts.filter(function (x) { return x[1]; }).map(function (x) { return x[0] + (fr ? " : " : ": ") + x[1]; }).join(" — ");
     }
+    var info = document.getElementById("map-info");
+    function hint() { info.textContent = fr ? "Survolez ou touchez un lieu pour voir ses liens." : "Hover or tap a place to see its links."; }
     function clear() {
       box.classList.remove("focus");
       box.querySelectorAll(".hot").forEach(function (n) { n.classList.remove("hot"); });
+      hint();
     }
+    hint();
     box.querySelectorAll(".node").forEach(function (n) {
       var id = n.getAttribute("data-id");
       n.addEventListener("mouseenter", function () { clear(); focus(id); });
