@@ -76,6 +76,13 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 
 /* Hero */
 .hero { padding-top: 64px; padding-bottom: 40px; }
+.hero.col { max-width: 1000px; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 48px; align-items: start; }
+.hero-photo { display: block; margin: 0; }
+.hero-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); }
+@media (max-width: 719px) {
+  .hero.col { grid-template-columns: 1fr; gap: 22px; }
+  .hero-photo { order: -1; width: 160px; justify-self: center; }
+}
 .hero .descr { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--muted); margin: 10px 0 26px; }
 .hero p.intro { font-size: 19px; line-height: 1.6; margin: 0 0 24px; }
 .status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 26px; }
@@ -280,22 +287,28 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
 <!-- HERO -->
 <section class="hero col" aria-labelledby="name">
-  <h1 id="name">Sathya Gnanou</h1>
-  <p class="descr"><span class="fr">Data Science, Machine Learning et IA</span><span class="en">Data Science, Machine Learning and AI</span></p>
-  <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
-  <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
-  <div class="status">
-    <span class="live"><span class="fr">Recherche un stage de 6 mois – mars 2027</span><span class="en">Seeking a 6-month internship – March 2027</span></span>
+  <div class="hero-text">
+    <h1 id="name">Sathya Gnanou</h1>
+    <p class="descr"><span class="fr">Data Science, Machine Learning et IA</span><span class="en">Data Science, Machine Learning and AI</span></p>
+    <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
+    <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
+    <div class="status">
+      <span class="live"><span class="fr">Recherche un stage de 6 mois – mars 2027</span><span class="en">Seeking a 6-month internship – March 2027</span></span>
+    </div>
+    <div class="tags">
+      <span>Machine Learning</span><span>LLMs</span><span>Computer Vision</span><span>Data Science</span>
+    </div>
+    <div class="btns">
+      <a class="btn" href="cv/SathyaGNANOU_CV_FR.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en français</span><span class="en">Download CV in French</span></a>
+      <a class="btn" href="cv/SathyaGNANOU_CV_EN.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en anglais</span><span class="en">Download CV in English</span></a>
+      <a class="btn ghost" href="https://github.com/sathyagnanou">GitHub</a>
+      <a class="btn ghost" href="#contact">Contact</a>
+    </div>
   </div>
-  <div class="tags">
-    <span>Machine Learning</span><span>LLMs</span><span>Computer Vision</span><span>Data Science</span>
-  </div>
-  <div class="btns">
-    <a class="btn" href="cv/SathyaGNANOU_CV_FR.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en français</span><span class="en">Download CV in French</span></a>
-    <a class="btn" href="cv/SathyaGNANOU_CV_EN.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en anglais</span><span class="en">Download CV in English</span></a>
-    <a class="btn ghost" href="https://github.com/sathyagnanou">GitHub</a>
-    <a class="btn ghost" href="#contact">Contact</a>
-  </div>
+  <picture class="hero-photo">
+    <source srcset="images/sathya.webp" type="image/webp">
+    <img id="hero-photo-img" src="images/sathya.jpg" width="600" height="750" alt="Photo de Sathya Gnanou" loading="eager" decoding="async">
+  </picture>
 </section>
 
 <!-- MAP -->
@@ -1111,6 +1124,8 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
   function setLang(l) {
     html.setAttribute("data-lang", l); html.lang = l;
+    var ph = document.getElementById("hero-photo-img");
+    if (ph) ph.alt = l === "fr" ? "Photo de Sathya Gnanou" : "Photo of Sathya Gnanou";
     document.getElementById("tog-lang").textContent = l === "fr" ? "EN" : "FR";
     try { localStorage.setItem("sg-lang", l); } catch (e) {}
     renderAll();
