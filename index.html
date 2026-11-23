@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" data-lang="fr">
+<html lang="fr" data-lang="fr" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1152,7 +1152,6 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     var ph = document.getElementById("hero-photo-img");
     if (ph) ph.alt = l === "fr" ? "Photo de Sathya Gnanou" : "Photo of Sathya Gnanou";
     document.getElementById("tog-lang").textContent = l === "fr" ? "EN" : "FR";
-    try { localStorage.setItem("sg-lang", l); } catch (e) {}
     renderAll();
   }
   document.getElementById("tog-lang").addEventListener("click", function () { setLang(L() === "fr" ? "en" : "fr"); });
@@ -1169,15 +1168,12 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   }
   document.getElementById("tog-theme").addEventListener("click", function () {
     html.setAttribute("data-theme", isDark() ? "light" : "dark");
-    try { localStorage.setItem("sg-theme", html.getAttribute("data-theme")); } catch (e) {}
     syncThemeBtn();
   });
 
-  var savedL = null, savedT = null;
-  try { savedL = localStorage.getItem("sg-lang"); savedT = localStorage.getItem("sg-theme"); } catch (e) {}
-  if (savedT === "dark" || savedT === "light") html.setAttribute("data-theme", savedT);
+  // Always open in light mode and in French; the toggles still work during the visit.
   syncThemeBtn();
-  setLang(savedL === "en" ? "en" : "fr");
+  setLang("fr");
 })();
 </script>
 </body>
