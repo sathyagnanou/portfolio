@@ -128,7 +128,7 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .block { margin-bottom: 64px; }
 .block-label { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 26px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .entry { margin: 0 0 52px; }
-#lisn ~ .entry { border-top: 1px solid var(--line); padding-top: 44px; }
+#inpaint ~ .entry { border-top: 1px solid var(--line); padding-top: 44px; }
 .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 .role { color: var(--muted); font-size: 15.5px; margin: 0 0 14px; }
 .entry p { margin: 0 0 12px; }
@@ -370,6 +370,54 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <div class="col block">
     <div class="block-label"><span class="fr">Expérience</span><span class="en">Experience</span></div>
 
+    <article class="entry" id="lisn">
+      <div class="entry-head"><h3>Synthetic Data Generation for Frequent &amp; High-Utility Itemset Mining</h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
+      <p class="role"><span class="fr">Stage de recherche (TER), Data Mining · LISN, Université Paris-Saclay · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">Research internship (TER), Data Mining · LISN, Université Paris-Saclay · team of 6 · supervisor: Nadjib Lazaar</span></p>
+      <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
+      <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
+      <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
+      <figure class="fig">
+        <div class="fig-box">
+          <div class="pipe" id="pipe-lisn">
+            <div class="step"><span class="k">GPT-4o · DeepSeek · Gemini</span><span class="fr">Le LLM nomme articles et catégories</span><span class="en">The LLM names items and categories</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">NumPy · SciPy</span><span class="fr">Fréquences en loi de puissance, longueurs asymétriques</span><span class="en">Power-law frequencies, skewed lengths</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">Pattern embedder</span><span class="fr">Motifs plantés au support exact</span><span class="en">Patterns planted at exact support</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">Assembler</span><span class="fr">Transactions assemblées</span><span class="en">Transactions assembled</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">SPMF</span><span class="fr">Validation en 4 étapes</span><span class="en">4-step validation</span></div>
+          </div>
+        </div>
+        <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
+        <figcaption><b>Fig. 2</b> <span class="fr">Le pipeline hybride. La validation vérifie la structure, le réalisme statistique, la récupération des motifs plantés, puis l'effet de chaque paramètre (OFAT : un seul facteur varie à la fois).</span><span class="en">The hybrid pipeline. Validation checks structure, statistical realism, recovery of the planted patterns, then the effect of each parameter (OFAT: one factor varied at a time).</span></figcaption>
+      </figure>
+      <dl class="kpis">
+        <div><dt>100 %</dt><dd><span class="fr">des motifs plantés retrouvés (5 sur 5 en FIM, 2 sur 2 en HUIM)</span><span class="en">of planted patterns recovered (5 of 5 in FIM, 2 of 2 in HUIM)</span></dd></div>
+        <div><dt>0 %</dt><dd><span class="fr">d'écart sur le nombre de transactions et d'articles ; 7 % sur la densité</span><span class="en">error on the number of transactions and items; 7% on density</span></dd></div>
+        <div><dt><span class="fr">1,68</span><span class="en">1.68</span></dt><dd><span class="fr">exposant de loi de puissance, dans la cible de 1,5 à 3</span><span class="en">power-law exponent, inside the 1.5 to 3 target</span></dd></div>
+        <div><dt>×521</dt><dd><span class="fr">temps FP-Growth de 100 à 50 000 transactions (9,7 ms → 5,1 s)</span><span class="en">FP-Growth runtime from 100 to 50,000 transactions (9.7 ms → 5.1 s)</span></dd></div>
+      </dl>
+      <p class="fr">Pourquoi un générateur hybride ? Quatre prompts testés avec un LLM seul (minimal, narratif, few-shot, itératif) respectaient la structure, avec 0,5 à 3,5 % d'erreur, mais aucun ne passait le test de réalisme statistique.</p>
+      <p class="en">Why a hybrid generator? Four prompts tested with an LLM alone (minimal, narrative, few-shot, iterative) respected the structure, within 0.5 to 3.5% error, but none passed the statistical realism check.</p>
+      <figure class="fig">
+        <div class="fig-box"><div id="chart-prompt"></div></div>
+        <div class="fig-actions">
+          <button class="act" type="button" id="p-skew" aria-pressed="true"><span class="fr">Asymétrie des longueurs</span><span class="en">Length skewness</span></button>
+          <button class="act" type="button" id="p-alpha" aria-pressed="false"><span class="fr">Exposant de loi de puissance α</span><span class="en">Power-law exponent α</span></button>
+        </div>
+        <figcaption><b>Fig. 3</b> <span class="fr">Quatre prompts LLM seuls contre le générateur hybride. Zone ombrée : la cible de réalisme (asymétrie ≥ 1, α entre 1,5 et 3). Les prompts produisent des longueurs presque symétriques et un α trop élevé ; seul l'hybride atteint la cible.</span><span class="en">Four LLM-only prompts against the hybrid generator. Shaded area: the realism target (skewness ≥ 1, α between 1.5 and 3). The prompts give nearly symmetric lengths and too high an α; only the hybrid reaches the target.</span></figcaption>
+      </figure>
+      <ul class="fr">
+        <li>En faisant varier un facteur à la fois : la taille de la base pilote surtout le temps de calcul, alors que la densité (0,01 → 0,40) triple le nombre de motifs extraits (102 → 301) et la longueur moyenne (3 → 25) le multiplie par plus de 8 (37 → 314).</li>
+        <li>FP-Growth et Eclat retrouvent autant de motifs ; Eclat est 9 à 16 % plus rapide selon la densité.</li>
+        <li>L'équipe a livré une application web (FastAPI, React) pour régler les paramètres et suivre la génération en direct, sans ligne de commande.</li>
+      </ul>
+      <ul class="en">
+        <li>Varying one factor at a time: database size mainly drives runtime, while density (0.01 → 0.40) triples the number of mined patterns (102 → 301) and average length (3 → 25) multiplies it by more than 8 (37 → 314).</li>
+        <li>FP-Growth and Eclat recover as many patterns; Eclat is 9 to 16% faster depending on density.</li>
+        <li>The team shipped a web application (FastAPI, React) to set parameters and follow generation live, with no command line.</li>
+      </ul>
+      <p class="stack"><span>Python</span><span>LLM</span><span>Prompt engineering</span><span>NumPy</span><span>SciPy</span><span>SPMF</span><span>FP-Growth</span><span>Eclat</span><span>FastAPI</span><span>React</span></p>
+    </article>
+
     <article class="entry">
       <div class="entry-head"><h3>Académie de Créteil</h3><span class="dates"><span class="fr">mai – juil. 2026</span><span class="en">May – Jul 2026</span></span></div>
       <p class="role">Data Analyst, <span class="fr">stagiaire</span><span class="en">intern</span> · Créteil</p>
@@ -386,7 +434,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
           </div>
         </div>
         <div class="fig-actions"><button class="act" type="button" data-run="pipe-cre"><span class="fr">Suivre une donnée</span><span class="en">Follow one record</span></button></div>
-        <figcaption><b>Fig. 2</b> <span class="fr">Le chemin d'une donnée, de la source au tableau de bord utilisé par les équipes.</span><span class="en">The path of one record, from the source to the dashboard the teams use.</span></figcaption>
+        <figcaption><b>Fig. 4</b> <span class="fr">Le chemin d'une donnée, de la source au tableau de bord utilisé par les équipes.</span><span class="en">The path of one record, from the source to the dashboard the teams use.</span></figcaption>
       </figure>
       <ul class="fr">
         <li>Conception de plus de 3 tableaux de bord Grist pour le suivi des projets et de l'activité interne, adoptés en production.</li>
@@ -428,53 +476,6 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <div class="col block">
     <div class="block-label"><span class="fr">Recherche</span><span class="en">Research</span></div>
 
-    <article class="entry" id="lisn">
-      <div class="entry-head"><h3>Synthetic Data Generation for Frequent &amp; High-Utility Itemset Mining</h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
-      <p class="role"><span class="fr">Stage de recherche (TER), Data Mining · LISN, Université Paris-Saclay · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">Research internship (TER), Data Mining · LISN, Université Paris-Saclay · team of 6 · supervisor: Nadjib Lazaar</span></p>
-      <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
-      <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
-      <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
-      <figure class="fig">
-        <div class="fig-box">
-          <div class="pipe" id="pipe-lisn">
-            <div class="step"><span class="k">GPT-4o · DeepSeek · Gemini</span><span class="fr">Le LLM nomme articles et catégories</span><span class="en">The LLM names items and categories</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">NumPy · SciPy</span><span class="fr">Fréquences en loi de puissance, longueurs asymétriques</span><span class="en">Power-law frequencies, skewed lengths</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">Pattern embedder</span><span class="fr">Motifs plantés au support exact</span><span class="en">Patterns planted at exact support</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">Assembler</span><span class="fr">Transactions assemblées</span><span class="en">Transactions assembled</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">SPMF</span><span class="fr">Validation en 4 étapes</span><span class="en">4-step validation</span></div>
-          </div>
-        </div>
-        <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
-        <figcaption><b>Fig. 3</b> <span class="fr">Le pipeline hybride. La validation vérifie la structure, le réalisme statistique, la récupération des motifs plantés, puis l'effet de chaque paramètre (OFAT : un seul facteur varie à la fois).</span><span class="en">The hybrid pipeline. Validation checks structure, statistical realism, recovery of the planted patterns, then the effect of each parameter (OFAT: one factor varied at a time).</span></figcaption>
-      </figure>
-      <dl class="kpis">
-        <div><dt>100 %</dt><dd><span class="fr">des motifs plantés retrouvés (5 sur 5 en FIM, 2 sur 2 en HUIM)</span><span class="en">of planted patterns recovered (5 of 5 in FIM, 2 of 2 in HUIM)</span></dd></div>
-        <div><dt>0 %</dt><dd><span class="fr">d'écart sur le nombre de transactions et d'articles ; 7 % sur la densité</span><span class="en">error on the number of transactions and items; 7% on density</span></dd></div>
-        <div><dt><span class="fr">1,68</span><span class="en">1.68</span></dt><dd><span class="fr">exposant de loi de puissance, dans la cible de 1,5 à 3</span><span class="en">power-law exponent, inside the 1.5 to 3 target</span></dd></div>
-        <div><dt>×521</dt><dd><span class="fr">temps FP-Growth de 100 à 50 000 transactions (9,7 ms → 5,1 s)</span><span class="en">FP-Growth runtime from 100 to 50,000 transactions (9.7 ms → 5.1 s)</span></dd></div>
-      </dl>
-      <p class="fr">Pourquoi un générateur hybride ? Quatre prompts testés avec un LLM seul (minimal, narratif, few-shot, itératif) respectaient la structure, avec 0,5 à 3,5 % d'erreur, mais aucun ne passait le test de réalisme statistique.</p>
-      <p class="en">Why a hybrid generator? Four prompts tested with an LLM alone (minimal, narrative, few-shot, iterative) respected the structure, within 0.5 to 3.5% error, but none passed the statistical realism check.</p>
-      <figure class="fig">
-        <div class="fig-box"><div id="chart-prompt"></div></div>
-        <div class="fig-actions">
-          <button class="act" type="button" id="p-skew" aria-pressed="true"><span class="fr">Asymétrie des longueurs</span><span class="en">Length skewness</span></button>
-          <button class="act" type="button" id="p-alpha" aria-pressed="false"><span class="fr">Exposant de loi de puissance α</span><span class="en">Power-law exponent α</span></button>
-        </div>
-        <figcaption><b>Fig. 4</b> <span class="fr">Quatre prompts LLM seuls contre le générateur hybride. Zone ombrée : la cible de réalisme (asymétrie ≥ 1, α entre 1,5 et 3). Les prompts produisent des longueurs presque symétriques et un α trop élevé ; seul l'hybride atteint la cible.</span><span class="en">Four LLM-only prompts against the hybrid generator. Shaded area: the realism target (skewness ≥ 1, α between 1.5 and 3). The prompts give nearly symmetric lengths and too high an α; only the hybrid reaches the target.</span></figcaption>
-      </figure>
-      <ul class="fr">
-        <li>En faisant varier un facteur à la fois : la taille de la base pilote surtout le temps de calcul, alors que la densité (0,01 → 0,40) triple le nombre de motifs extraits (102 → 301) et la longueur moyenne (3 → 25) le multiplie par plus de 8 (37 → 314).</li>
-        <li>FP-Growth et Eclat retrouvent autant de motifs ; Eclat est 9 à 16 % plus rapide selon la densité.</li>
-        <li>L'équipe a livré une application web (FastAPI, React) pour régler les paramètres et suivre la génération en direct, sans ligne de commande.</li>
-      </ul>
-      <ul class="en">
-        <li>Varying one factor at a time: database size mainly drives runtime, while density (0.01 → 0.40) triples the number of mined patterns (102 → 301) and average length (3 → 25) multiplies it by more than 8 (37 → 314).</li>
-        <li>FP-Growth and Eclat recover as many patterns; Eclat is 9 to 16% faster depending on density.</li>
-        <li>The team shipped a web application (FastAPI, React) to set parameters and follow generation live, with no command line.</li>
-      </ul>
-      <p class="stack"><span>Python</span><span>LLM</span><span>Prompt engineering</span><span>NumPy</span><span>SciPy</span><span>SPMF</span><span>FP-Growth</span><span>Eclat</span><span>FastAPI</span><span>React</span></p>
-    </article>
 
     <article class="entry" id="inpaint">
       <div class="paper">
@@ -972,7 +973,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     });
   }
 
-  /* ---------- Prompt study (Fig. 4) ---------- */
+  /* ---------- Prompt study (Fig. 3) ---------- */
   // Source: TER report, Table 5 (LLM-only prompts) and Section 6 (hybrid FIM: alpha 1.684, skewness 1.669).
   var PROMPTS = [
     { fr: "Minimal", en: "Minimal", a: 5.41, s: 0.27 },
