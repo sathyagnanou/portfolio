@@ -130,6 +130,7 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .entry { margin: 0 0 52px; }
 #inpaint ~ .entry { border-top: 1px solid var(--line); padding-top: 44px; }
 .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.entry p.project { font-family: var(--display); font-style: italic; font-size: 19px; line-height: 1.35; margin: -6px 0 16px; }
 .role { color: var(--muted); font-size: 15.5px; margin: 0 0 14px; }
 .entry p { margin: 0 0 12px; }
 .entry ul { margin: 0 0 8px; padding-left: 20px; }
@@ -371,8 +372,9 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <div class="block-label"><span class="fr">Expérience</span><span class="en">Experience</span></div>
 
     <article class="entry" id="lisn">
-      <div class="entry-head"><h3>Synthetic Data Generation for Frequent &amp; High-Utility Itemset Mining</h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
-      <p class="role"><span class="fr">Stage de recherche (TER), Data Mining · LISN, Université Paris-Saclay · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">Research internship (TER), Data Mining · LISN, Université Paris-Saclay · team of 6 · supervisor: Nadjib Lazaar</span></p>
+      <div class="entry-head"><h3><span class="fr">Stagiaire en IA générative</span><span class="en">Generative AI intern</span></h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
+      <p class="role"><span class="fr">LISN, Université Paris-Saclay · stage de recherche (TER) · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">LISN, Université Paris-Saclay · research internship (TER) · team of 6 · supervisor: Nadjib Lazaar</span></p>
+      <p class="project">Synthetic Data Generation for Frequent &amp; High-Utility Itemset Mining</p>
       <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
       <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
       <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
@@ -419,8 +421,8 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     </article>
 
     <article class="entry">
-      <div class="entry-head"><h3>Académie de Créteil</h3><span class="dates"><span class="fr">mai – juil. 2026</span><span class="en">May – Jul 2026</span></span></div>
-      <p class="role">Data Analyst, <span class="fr">stagiaire</span><span class="en">intern</span> · Créteil</p>
+      <div class="entry-head"><h3>Data Analyst, <span class="fr">stagiaire</span><span class="en">intern</span></h3><span class="dates"><span class="fr">mai – juil. 2026</span><span class="en">May – Jul 2026</span></span></div>
+      <p class="role">Académie de Créteil · Créteil</p>
       <p class="fr">Au sein du service numérique du rectorat de Créteil, j'ai contribué au suivi des projets de l'équipe et à la mise en place d'une vision globale des applications utilisées. Mon travail visait à faciliter le suivi de l'avancement des projets, à centraliser les informations et à améliorer leur visibilité auprès des équipes.</p>
       <p class="en">In the digital services department of the Créteil rectorate, I helped track the team's projects and build an overall view of the applications in use. My work aimed to make project progress easier to follow, centralize information and improve its visibility for the teams.</p>
       <figure class="fig">
@@ -452,8 +454,8 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     </article>
 
     <article class="entry">
-      <div class="entry-head"><h3>Klesia</h3><span class="dates"><span class="fr">fév. – août 2025</span><span class="en">Feb – Aug 2025</span></span></div>
-      <p class="role"><span class="fr">Développeur full-stack, stagiaire</span><span class="en">Full-stack developer, intern</span> · Montreuil</p>
+      <div class="entry-head"><h3><span class="fr">Développeur full-stack, stagiaire</span><span class="en">Full-stack developer, intern</span></h3><span class="dates"><span class="fr">fév. – août 2025</span><span class="en">Feb – Aug 2025</span></span></div>
+      <p class="role">Klesia · Montreuil</p>
       <p class="fr">KLESIA est un groupe de protection sociale spécialisé dans l'assurance santé, la prévoyance et la retraite complémentaire. Au sein de ses équipes informatiques, j'ai participé au développement du back-office d'une application interne destinée aux équipes de gestion.</p>
       <p class="en">KLESIA is a social protection group specialized in health insurance, provident cover and supplementary pensions. Within its IT teams, I took part in developing the back office of an internal application used by management teams.</p>
       <p class="fr">Mes principales contributions :</p>
