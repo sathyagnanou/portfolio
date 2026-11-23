@@ -129,11 +129,11 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .block-label { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 26px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .entry { margin: 0 0 52px; }
 #inpaint ~ .entry { border-top: 1px solid var(--line); padding-top: 44px; }
-details.more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 13px; color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; margin: 2px 0 0; }
+details.more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-size: 16px; font-weight: 600; color: var(--ink); border: 1px solid var(--ink); border-radius: 999px; padding: 10px 20px; margin: 4px 0 0; }
 details.more > summary::-webkit-details-marker { display: none; }
-details.more > summary::before { content: "+"; font-size: 15px; line-height: 1; }
+details.more > summary::before { content: "+"; font-size: 19px; line-height: 1; }
 details.more[open] > summary::before { content: "−"; }
-details.more > summary:hover { border-color: var(--accent); }
+details.more > summary:hover { border-color: var(--accent); color: var(--accent); }
 details.more[open] > summary { margin-bottom: 20px; }
 details.more:not([open]) .c, details.more[open] .o { display: none; }
 .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
