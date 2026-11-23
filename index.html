@@ -129,6 +129,13 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .block-label { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; margin: 0 0 26px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
 .entry { margin: 0 0 52px; }
 #inpaint ~ .entry { border-top: 1px solid var(--line); padding-top: 44px; }
+details.more > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 13px; color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; margin: 2px 0 0; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before { content: "+"; font-size: 15px; line-height: 1; }
+details.more[open] > summary::before { content: "−"; }
+details.more > summary:hover { border-color: var(--accent); }
+details.more[open] > summary { margin-bottom: 20px; }
+details.more:not([open]) .c, details.more[open] .o { display: none; }
 .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 .entry p.project { font-family: var(--display); font-style: italic; font-size: 19px; line-height: 1.35; margin: -6px 0 16px; }
 .role { color: var(--muted); font-size: 15.5px; margin: 0 0 14px; }
@@ -375,49 +382,52 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       <div class="entry-head"><h3><span class="fr">Stagiaire en IA générative</span><span class="en">Generative AI intern</span></h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
       <p class="role"><span class="fr">LISN, Université Paris-Saclay · stage de recherche (TER) · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">LISN, Université Paris-Saclay · research internship (TER) · team of 6 · supervisor: Nadjib Lazaar</span></p>
       <p class="project">Synthetic Data Generation for Frequent &amp; High-Utility Itemset Mining</p>
-      <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
       <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
       <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
-      <figure class="fig">
-        <div class="fig-box">
-          <div class="pipe" id="pipe-lisn">
-            <div class="step"><span class="k">GPT-4o · DeepSeek · Gemini</span><span class="fr">Le LLM nomme articles et catégories</span><span class="en">The LLM names items and categories</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">NumPy · SciPy</span><span class="fr">Fréquences en loi de puissance, longueurs asymétriques</span><span class="en">Power-law frequencies, skewed lengths</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">Pattern embedder</span><span class="fr">Motifs plantés au support exact</span><span class="en">Patterns planted at exact support</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">Assembler</span><span class="fr">Transactions assemblées</span><span class="en">Transactions assembled</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">SPMF</span><span class="fr">Validation en 4 étapes</span><span class="en">4-step validation</span></div>
-          </div>
-        </div>
-        <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
-        <figcaption><b>Fig. 2</b> <span class="fr">Le pipeline hybride. La validation vérifie la structure, le réalisme statistique, la récupération des motifs plantés, puis l'effet de chaque paramètre (OFAT : un seul facteur varie à la fois).</span><span class="en">The hybrid pipeline. Validation checks structure, statistical realism, recovery of the planted patterns, then the effect of each parameter (OFAT: one factor varied at a time).</span></figcaption>
-      </figure>
       <dl class="kpis">
         <div><dt>100 %</dt><dd><span class="fr">des motifs plantés retrouvés (5 sur 5 en FIM, 2 sur 2 en HUIM)</span><span class="en">of planted patterns recovered (5 of 5 in FIM, 2 of 2 in HUIM)</span></dd></div>
         <div><dt>0 %</dt><dd><span class="fr">d'écart sur le nombre de transactions et d'articles ; 7 % sur la densité</span><span class="en">error on the number of transactions and items; 7% on density</span></dd></div>
         <div><dt><span class="fr">1,68</span><span class="en">1.68</span></dt><dd><span class="fr">exposant de loi de puissance, dans la cible de 1,5 à 3</span><span class="en">power-law exponent, inside the 1.5 to 3 target</span></dd></div>
         <div><dt>×521</dt><dd><span class="fr">temps FP-Growth de 100 à 50 000 transactions (9,7 ms → 5,1 s)</span><span class="en">FP-Growth runtime from 100 to 50,000 transactions (9.7 ms → 5.1 s)</span></dd></div>
       </dl>
-      <p class="fr">Pourquoi un générateur hybride ? Quatre prompts testés avec un LLM seul (minimal, narratif, few-shot, itératif) respectaient la structure, avec 0,5 à 3,5 % d'erreur, mais aucun ne passait le test de réalisme statistique.</p>
-      <p class="en">Why a hybrid generator? Four prompts tested with an LLM alone (minimal, narrative, few-shot, iterative) respected the structure, within 0.5 to 3.5% error, but none passed the statistical realism check.</p>
-      <figure class="fig">
-        <div class="fig-box"><div id="chart-prompt"></div></div>
-        <div class="fig-actions">
-          <button class="act" type="button" id="p-skew" aria-pressed="true"><span class="fr">Asymétrie des longueurs</span><span class="en">Length skewness</span></button>
-          <button class="act" type="button" id="p-alpha" aria-pressed="false"><span class="fr">Exposant de loi de puissance α</span><span class="en">Power-law exponent α</span></button>
-        </div>
-        <figcaption><b>Fig. 3</b> <span class="fr">Quatre prompts LLM seuls contre le générateur hybride. Zone ombrée : la cible de réalisme (asymétrie ≥ 1, α entre 1,5 et 3). Les prompts produisent des longueurs presque symétriques et un α trop élevé ; seul l'hybride atteint la cible.</span><span class="en">Four LLM-only prompts against the hybrid generator. Shaded area: the realism target (skewness ≥ 1, α between 1.5 and 3). The prompts give nearly symmetric lengths and too high an α; only the hybrid reaches the target.</span></figcaption>
-      </figure>
-      <ul class="fr">
-        <li>En faisant varier un facteur à la fois : la taille de la base pilote surtout le temps de calcul, alors que la densité (0,01 → 0,40) triple le nombre de motifs extraits (102 → 301) et la longueur moyenne (3 → 25) le multiplie par plus de 8 (37 → 314).</li>
-        <li>FP-Growth et Eclat retrouvent autant de motifs ; Eclat est 9 à 16 % plus rapide selon la densité.</li>
-        <li>L'équipe a livré une application web (FastAPI, React) pour régler les paramètres et suivre la génération en direct, sans ligne de commande.</li>
-      </ul>
-      <ul class="en">
-        <li>Varying one factor at a time: database size mainly drives runtime, while density (0.01 → 0.40) triples the number of mined patterns (102 → 301) and average length (3 → 25) multiplies it by more than 8 (37 → 314).</li>
-        <li>FP-Growth and Eclat recover as many patterns; Eclat is 9 to 16% faster depending on density.</li>
-        <li>The team shipped a web application (FastAPI, React) to set parameters and follow generation live, with no command line.</li>
-      </ul>
-      <p class="stack"><span>Python</span><span>LLM</span><span>Prompt engineering</span><span>NumPy</span><span>SciPy</span><span>SPMF</span><span>FP-Growth</span><span>Eclat</span><span>FastAPI</span><span>React</span></p>
+      <details class="more">
+        <summary><span class="fr"><span class="o">Lire la suite</span><span class="c">Réduire</span></span><span class="en"><span class="o">Read more</span><span class="c">Show less</span></span></summary>
+        <figure class="fig">
+          <div class="fig-box">
+            <div class="pipe" id="pipe-lisn">
+              <div class="step"><span class="k">GPT-4o · DeepSeek · Gemini</span><span class="fr">Le LLM nomme articles et catégories</span><span class="en">The LLM names items and categories</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">NumPy · SciPy</span><span class="fr">Fréquences en loi de puissance, longueurs asymétriques</span><span class="en">Power-law frequencies, skewed lengths</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">Pattern embedder</span><span class="fr">Motifs plantés au support exact</span><span class="en">Patterns planted at exact support</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">Assembler</span><span class="fr">Transactions assemblées</span><span class="en">Transactions assembled</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">SPMF</span><span class="fr">Validation en 4 étapes</span><span class="en">4-step validation</span></div>
+            </div>
+          </div>
+          <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
+          <figcaption><b>Fig. 2</b> <span class="fr">Le pipeline hybride. La validation vérifie la structure, le réalisme statistique, la récupération des motifs plantés, puis l'effet de chaque paramètre (OFAT : un seul facteur varie à la fois).</span><span class="en">The hybrid pipeline. Validation checks structure, statistical realism, recovery of the planted patterns, then the effect of each parameter (OFAT: one factor varied at a time).</span></figcaption>
+        </figure>
+        <p class="fr">Pourquoi un générateur hybride ? Quatre prompts testés avec un LLM seul (minimal, narratif, few-shot, itératif) respectaient la structure, avec 0,5 à 3,5 % d'erreur, mais aucun ne passait le test de réalisme statistique.</p>
+        <p class="en">Why a hybrid generator? Four prompts tested with an LLM alone (minimal, narrative, few-shot, iterative) respected the structure, within 0.5 to 3.5% error, but none passed the statistical realism check.</p>
+        <figure class="fig">
+          <div class="fig-box"><div id="chart-prompt"></div></div>
+          <div class="fig-actions">
+            <button class="act" type="button" id="p-skew" aria-pressed="true"><span class="fr">Asymétrie des longueurs</span><span class="en">Length skewness</span></button>
+            <button class="act" type="button" id="p-alpha" aria-pressed="false"><span class="fr">Exposant de loi de puissance α</span><span class="en">Power-law exponent α</span></button>
+          </div>
+          <figcaption><b>Fig. 3</b> <span class="fr">Quatre prompts LLM seuls contre le générateur hybride. Zone ombrée : la cible de réalisme (asymétrie ≥ 1, α entre 1,5 et 3). Les prompts produisent des longueurs presque symétriques et un α trop élevé ; seul l'hybride atteint la cible.</span><span class="en">Four LLM-only prompts against the hybrid generator. Shaded area: the realism target (skewness ≥ 1, α between 1.5 and 3). The prompts give nearly symmetric lengths and too high an α; only the hybrid reaches the target.</span></figcaption>
+        </figure>
+        <ul class="fr">
+          <li>En faisant varier un facteur à la fois : la taille de la base pilote surtout le temps de calcul, alors que la densité (0,01 → 0,40) triple le nombre de motifs extraits (102 → 301) et la longueur moyenne (3 → 25) le multiplie par plus de 8 (37 → 314).</li>
+          <li>FP-Growth et Eclat retrouvent autant de motifs ; Eclat est 9 à 16 % plus rapide selon la densité.</li>
+          <li>L'équipe a livré une application web (FastAPI, React) pour régler les paramètres et suivre la génération en direct, sans ligne de commande.</li>
+        </ul>
+        <ul class="en">
+          <li>Varying one factor at a time: database size mainly drives runtime, while density (0.01 → 0.40) triples the number of mined patterns (102 → 301) and average length (3 → 25) multiplies it by more than 8 (37 → 314).</li>
+          <li>FP-Growth and Eclat recover as many patterns; Eclat is 9 to 16% faster depending on density.</li>
+          <li>The team shipped a web application (FastAPI, React) to set parameters and follow generation live, with no command line.</li>
+        </ul>
+        <p class="stack"><span>Python</span><span>LLM</span><span>Prompt engineering</span><span>NumPy</span><span>SciPy</span><span>SPMF</span><span>FP-Growth</span><span>Eclat</span><span>FastAPI</span><span>React</span></p>
+        <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
+      </details>
     </article>
 
     <article class="entry">
@@ -425,32 +435,35 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       <p class="role">Académie de Créteil · Créteil</p>
       <p class="fr">Au sein du service numérique du rectorat de Créteil, j'ai contribué au suivi des projets de l'équipe et à la mise en place d'une vision globale des applications utilisées. Mon travail visait à faciliter le suivi de l'avancement des projets, à centraliser les informations et à améliorer leur visibilité auprès des équipes.</p>
       <p class="en">In the digital services department of the Créteil rectorate, I helped track the team's projects and build an overall view of the applications in use. My work aimed to make project progress easier to follow, centralize information and improve its visibility for the teams.</p>
-      <figure class="fig">
-        <div class="fig-box">
-          <div class="pipe" id="pipe-cre">
-            <div class="step"><span class="k">01</span><span class="fr">Excel et sources internes</span><span class="en">Excel and internal sources</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">02</span><span class="fr">Nettoyage et structuration</span><span class="en">Cleaning and structuring</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">03</span><span class="fr">Tableaux de bord Grist</span><span class="en">Grist dashboards</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">04</span><span class="fr">Rapports KPI automatisés</span><span class="en">Automated KPI reports</span></div><div class="arrow">→</div>
-            <div class="step"><span class="k">05</span><span class="fr">Équipes métier</span><span class="en">Business teams</span></div>
+      <details class="more">
+        <summary><span class="fr"><span class="o">Lire la suite</span><span class="c">Réduire</span></span><span class="en"><span class="o">Read more</span><span class="c">Show less</span></span></summary>
+        <figure class="fig">
+          <div class="fig-box">
+            <div class="pipe" id="pipe-cre">
+              <div class="step"><span class="k">01</span><span class="fr">Excel et sources internes</span><span class="en">Excel and internal sources</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">02</span><span class="fr">Nettoyage et structuration</span><span class="en">Cleaning and structuring</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">03</span><span class="fr">Tableaux de bord Grist</span><span class="en">Grist dashboards</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">04</span><span class="fr">Rapports KPI automatisés</span><span class="en">Automated KPI reports</span></div><div class="arrow">→</div>
+              <div class="step"><span class="k">05</span><span class="fr">Équipes métier</span><span class="en">Business teams</span></div>
+            </div>
           </div>
-        </div>
-        <div class="fig-actions"><button class="act" type="button" data-run="pipe-cre"><span class="fr">Suivre une donnée</span><span class="en">Follow one record</span></button></div>
-        <figcaption><b>Fig. 4</b> <span class="fr">Le chemin d'une donnée, de la source au tableau de bord utilisé par les équipes.</span><span class="en">The path of one record, from the source to the dashboard the teams use.</span></figcaption>
-      </figure>
-      <ul class="fr">
-        <li>Conception de plus de 3 tableaux de bord Grist pour le suivi des projets et de l'activité interne, adoptés en production.</li>
-        <li>Réalisation d'une cartographie applicative rassemblant les applications des trois rectorats d'Île-de-France (Créteil, Paris, Versailles).</li>
-        <li>Nettoyage et structuration des données issues d'Excel et de sources internes, et automatisation des rapports KPI.</li>
-        <li>Recueil des besoins des agents et des responsables, puis rédaction de spécifications, en environnement Agile.</li>
-      </ul>
-      <ul class="en">
-        <li>Built 3+ Grist dashboards to track projects and internal activity, adopted in production.</li>
-        <li>Built an application map bringing together the applications of the three Île-de-France rectorates (Créteil, Paris, Versailles).</li>
-        <li>Cleaned and structured data from Excel and internal sources, and automated KPI reports.</li>
-        <li>Gathered needs from staff and managers, then wrote specifications in an Agile setting.</li>
-      </ul>
-      <p class="stack"><span>Grist</span><span>Excel</span><span>KPI</span><span>Agile</span></p>
+          <div class="fig-actions"><button class="act" type="button" data-run="pipe-cre"><span class="fr">Suivre une donnée</span><span class="en">Follow one record</span></button></div>
+          <figcaption><b>Fig. 4</b> <span class="fr">Le chemin d'une donnée, de la source au tableau de bord utilisé par les équipes.</span><span class="en">The path of one record, from the source to the dashboard the teams use.</span></figcaption>
+        </figure>
+        <ul class="fr">
+          <li>Conception de plus de 3 tableaux de bord Grist pour le suivi des projets et de l'activité interne, adoptés en production.</li>
+          <li>Réalisation d'une cartographie applicative rassemblant les applications des trois rectorats d'Île-de-France (Créteil, Paris, Versailles).</li>
+          <li>Nettoyage et structuration des données issues d'Excel et de sources internes, et automatisation des rapports KPI.</li>
+          <li>Recueil des besoins des agents et des responsables, puis rédaction de spécifications, en environnement Agile.</li>
+        </ul>
+        <ul class="en">
+          <li>Built 3+ Grist dashboards to track projects and internal activity, adopted in production.</li>
+          <li>Built an application map bringing together the applications of the three Île-de-France rectorates (Créteil, Paris, Versailles).</li>
+          <li>Cleaned and structured data from Excel and internal sources, and automated KPI reports.</li>
+          <li>Gathered needs from staff and managers, then wrote specifications in an Agile setting.</li>
+        </ul>
+        <p class="stack"><span>Grist</span><span>Excel</span><span>KPI</span><span>Agile</span></p>
+      </details>
     </article>
 
     <article class="entry">
@@ -458,19 +471,22 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       <p class="role">Klesia · Montreuil</p>
       <p class="fr">KLESIA est un groupe de protection sociale spécialisé dans l'assurance santé, la prévoyance et la retraite complémentaire. Au sein de ses équipes informatiques, j'ai participé au développement du back-office d'une application interne destinée aux équipes de gestion.</p>
       <p class="en">KLESIA is a social protection group specialized in health insurance, provident cover and supplementary pensions. Within its IT teams, I took part in developing the back office of an internal application used by management teams.</p>
-      <p class="fr">Mes principales contributions :</p>
-      <p class="en">My main contributions:</p>
-      <ul class="fr">
-        <li><b>Développement applicatif :</b> conception de fonctionnalités côté serveur en .NET et développement des interfaces associées en Vue.js, dans le cadre d'une organisation Agile.</li>
-        <li><b>Gestion des données :</b> fiabilisation de l'intégration des données dans PostgreSQL et utilisation de DBeaver pour faciliter leur manipulation et limiter les erreurs.</li>
-        <li><b>Environnement de production :</b> découverte des exigences liées au développement et à la maintenance d'une application utilisée en conditions réelles, dans un secteur réglementé où la fiabilité et la traçabilité des données sont essentielles.</li>
-      </ul>
-      <ul class="en">
-        <li><b>Application development:</b> designed server-side features in .NET and built the matching interfaces in Vue.js, within an Agile organization.</li>
-        <li><b>Data management:</b> made data integration in PostgreSQL more reliable, using DBeaver to make data handling easier and reduce errors.</li>
-        <li><b>Production environment:</b> learned what it takes to develop and maintain an application used in real conditions, in a regulated sector where data reliability and traceability are essential.</li>
-      </ul>
-      <p class="stack"><span>.NET</span><span>Vue.js</span><span>PostgreSQL</span><span>DBeaver</span><span>Agile</span></p>
+      <details class="more">
+        <summary><span class="fr"><span class="o">Lire la suite</span><span class="c">Réduire</span></span><span class="en"><span class="o">Read more</span><span class="c">Show less</span></span></summary>
+        <p class="fr">Mes principales contributions :</p>
+        <p class="en">My main contributions:</p>
+        <ul class="fr">
+          <li><b>Développement applicatif :</b> conception de fonctionnalités côté serveur en .NET et développement des interfaces associées en Vue.js, dans le cadre d'une organisation Agile.</li>
+          <li><b>Gestion des données :</b> fiabilisation de l'intégration des données dans PostgreSQL et utilisation de DBeaver pour faciliter leur manipulation et limiter les erreurs.</li>
+          <li><b>Environnement de production :</b> découverte des exigences liées au développement et à la maintenance d'une application utilisée en conditions réelles, dans un secteur réglementé où la fiabilité et la traçabilité des données sont essentielles.</li>
+        </ul>
+        <ul class="en">
+          <li><b>Application development:</b> designed server-side features in .NET and built the matching interfaces in Vue.js, within an Agile organization.</li>
+          <li><b>Data management:</b> made data integration in PostgreSQL more reliable, using DBeaver to make data handling easier and reduce errors.</li>
+          <li><b>Production environment:</b> learned what it takes to develop and maintain an application used in real conditions, in a regulated sector where data reliability and traceability are essential.</li>
+        </ul>
+        <p class="stack"><span>.NET</span><span>Vue.js</span><span>PostgreSQL</span><span>DBeaver</span><span>Agile</span></p>
+      </details>
     </article>
   </div>
 
@@ -484,31 +500,34 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         <p class="title">What Is the Best Small AI Model for Inpainting-Based Synthetic Image Detection and Localization?</p>
         <p class="authors"><span class="fr">Co-auteur, équipe de 5 · cours Frugal AI · Université Paris-Saclay</span><span class="en">Co-author, team of 5 · Frugal AI course · Université Paris-Saclay</span></p>
       </div>
-      <p class="paper-link"><a href="papers/Inpainting-Based-Synthetic-Image.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 12 p.)</span><span class="en">Read the report (PDF, 12 pp.)</span></a></p>
       <p class="fr">L'inpainting remplace une seule zone d'une vraie photo. Un modèle forensique doit dire si l'image a été modifiée, et où. Les détecteurs publiés sont difficiles à comparer, car chacun est évalué sur ses propres données. Nous avons évalué quatre modèles pré-entraînés de familles différentes sous un seul protocole, sur le jeu de test TGIF (Stable Diffusion 2 et Photoshop).</p>
       <p class="en">Inpainting replaces one region of a real photo. A forensic model must tell whether the image was edited, and where. Published detectors are hard to compare, since each is evaluated on its own data. We evaluated four pretrained models from different families under one protocol, on the TGIF test set (Stable Diffusion 2 and Photoshop).</p>
-      <figure class="fig">
-        <div class="fig-box"><div id="chart-bench"></div></div>
-        <div class="fig-actions">
-          <button class="act" type="button" id="b-det" aria-pressed="true"><span class="fr">Détection (ROC-AUC)</span><span class="en">Detection (ROC-AUC)</span></button>
-          <button class="act" type="button" id="b-loc" aria-pressed="false"><span class="fr">Localisation (IoU)</span><span class="en">Localization (IoU)</span></button>
-        </div>
-        <figcaption><b>Fig. 5</b> <span class="fr">Moyenne sur trois rééchantillonnages par photo source, pour éviter que deux versions d'une même image tombent dans des échantillons différents. Pointillés : hasard (ROC-AUC 0,50) ou masque aléatoire (IoU 0,06). Seul TruFor sépare vraiment les images modifiées.</span><span class="en">Mean over three resamples by source photo, so that versions of one image never land in different samples. Dashed line: chance (ROC-AUC 0.50) or a random mask (IoU 0.06). Only TruFor really separates edited images.</span></figcaption>
-      </figure>
-      <figure class="fig">
-        <div class="fig-box"><div id="chart-scatter"></div></div>
-        <div class="fig-actions"><button class="act" type="button" id="b-thr" aria-pressed="false"><span class="fr">Abaisser le seuil de PSCC-Net à 0,2</span><span class="en">Lower PSCC-Net's threshold to 0.2</span></button></div>
-        <figcaption><b>Fig. 6</b> <span class="fr">Taille du modèle contre qualité de localisation. Le plus gros n'est pas le meilleur : AEROBLADE a le plus de paramètres et localise au niveau du hasard. Baisser le seuil de PSCC-Net fait passer son IoU de 0,21 à 0,33.</span><span class="en">Model size against localization quality. Bigger is not better: AEROBLADE has the most parameters and localizes at chance level. Lowering PSCC-Net's threshold raises its IoU from 0.21 to 0.33.</span></figcaption>
-      </figure>
-      <ul class="fr">
-        <li>TruFor atteint un ROC-AUC de 0,98 et un IoU de 0,72, avec des résultats proches sur Stable Diffusion 2 et sur Photoshop.</li>
-        <li>Coût mesuré pour chaque modèle : paramètres, GFLOPs, latence et mémoire GPU. Code publié sous licence MIT.</li>
-      </ul>
-      <ul class="en">
-        <li>TruFor reaches ROC-AUC 0.98 and IoU 0.72, with close results on Stable Diffusion 2 and on Photoshop.</li>
-        <li>Cost measured for each model: parameters, GFLOPs, latency and GPU memory. Code released under the MIT license.</li>
-      </ul>
-      <p class="stack"><span>Computer Vision</span><span>TruFor</span><span>PSCC-Net</span><span>ForMa</span><span>AEROBLADE</span><span>ROC-AUC</span><span>IoU</span></p>
+      <details class="more">
+        <summary><span class="fr"><span class="o">Lire la suite</span><span class="c">Réduire</span></span><span class="en"><span class="o">Read more</span><span class="c">Show less</span></span></summary>
+        <figure class="fig">
+          <div class="fig-box"><div id="chart-bench"></div></div>
+          <div class="fig-actions">
+            <button class="act" type="button" id="b-det" aria-pressed="true"><span class="fr">Détection (ROC-AUC)</span><span class="en">Detection (ROC-AUC)</span></button>
+            <button class="act" type="button" id="b-loc" aria-pressed="false"><span class="fr">Localisation (IoU)</span><span class="en">Localization (IoU)</span></button>
+          </div>
+          <figcaption><b>Fig. 5</b> <span class="fr">Moyenne sur trois rééchantillonnages par photo source, pour éviter que deux versions d'une même image tombent dans des échantillons différents. Pointillés : hasard (ROC-AUC 0,50) ou masque aléatoire (IoU 0,06). Seul TruFor sépare vraiment les images modifiées.</span><span class="en">Mean over three resamples by source photo, so that versions of one image never land in different samples. Dashed line: chance (ROC-AUC 0.50) or a random mask (IoU 0.06). Only TruFor really separates edited images.</span></figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-box"><div id="chart-scatter"></div></div>
+          <div class="fig-actions"><button class="act" type="button" id="b-thr" aria-pressed="false"><span class="fr">Abaisser le seuil de PSCC-Net à 0,2</span><span class="en">Lower PSCC-Net's threshold to 0.2</span></button></div>
+          <figcaption><b>Fig. 6</b> <span class="fr">Taille du modèle contre qualité de localisation. Le plus gros n'est pas le meilleur : AEROBLADE a le plus de paramètres et localise au niveau du hasard. Baisser le seuil de PSCC-Net fait passer son IoU de 0,21 à 0,33.</span><span class="en">Model size against localization quality. Bigger is not better: AEROBLADE has the most parameters and localizes at chance level. Lowering PSCC-Net's threshold raises its IoU from 0.21 to 0.33.</span></figcaption>
+        </figure>
+        <ul class="fr">
+          <li>TruFor atteint un ROC-AUC de 0,98 et un IoU de 0,72, avec des résultats proches sur Stable Diffusion 2 et sur Photoshop.</li>
+          <li>Coût mesuré pour chaque modèle : paramètres, GFLOPs, latence et mémoire GPU. Code publié sous licence MIT.</li>
+        </ul>
+        <ul class="en">
+          <li>TruFor reaches ROC-AUC 0.98 and IoU 0.72, with close results on Stable Diffusion 2 and on Photoshop.</li>
+          <li>Cost measured for each model: parameters, GFLOPs, latency and GPU memory. Code released under the MIT license.</li>
+        </ul>
+        <p class="stack"><span>Computer Vision</span><span>TruFor</span><span>PSCC-Net</span><span>ForMa</span><span>AEROBLADE</span><span>ROC-AUC</span><span>IoU</span></p>
+        <p class="paper-link"><a href="papers/Inpainting-Based-Synthetic-Image.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 12 p.)</span><span class="en">Read the report (PDF, 12 pp.)</span></a></p>
+      </details>
     </article>
 
     <article class="entry" id="fair">
@@ -516,37 +535,40 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         <p class="title">Tracking Media Bias Shifts: A Longitudinal Analysis of Political Stance Dynamics After Ownership Takeover</p>
         <p class="authors"><span class="fr">Co-auteur, équipe de 4 · cours Fairness in AI · Université Paris-Saclay</span><span class="en">Co-author, team of 4 · Fairness in AI course · Université Paris-Saclay</span></p>
       </div>
-      <p class="paper-link"><a href="papers/Tracking-Media-Bias-Shifts.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 11 p.)</span><span class="en">Read the report (PDF, 11 pp.)</span></a></p>
       <p class="fr">Un nouveau propriétaire change-t-il la façon dont un média parle de certains sujets ? Pour séparer l'effet du propriétaire de l'actualité générale, nous comparons le média ciblé à un groupe témoin de médias dont le propriétaire n'a pas changé, avant et après le rachat. Chaque article est annoté par deux LLM open source exécutés en local, pour vérifier que la conclusion ne dépend pas du modèle.</p>
       <p class="en">Does a new owner change how an outlet covers certain subjects? To separate the owner's effect from the general news climate, we compare the target outlet with a control group of outlets whose owner did not change, before and after the takeover. Each article is annotated by two open-source LLMs run locally, to check that the conclusion does not depend on the model.</p>
-      <figure class="fig">
-        <div class="fig-box">
-          <dl class="cases" id="case-box"></dl>
-        </div>
-        <div class="fig-actions"><button class="act" type="button" id="b-case"><span class="fr">Cas suivant</span><span class="en">Next case</span></button></div>
-        <figcaption><b>Fig. 7</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B et Llama 3.2 donnent un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, Mistral-7B and Llama 3.2 return a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
-      </figure>
       <dl class="kpis">
         <div><dt><span class="fr">2 291</span><span class="en">2,291</span></dt><dd><span class="fr">articles collectés sur CC-News et annotés, sur 9 médias</span><span class="en">articles collected from CC-News and annotated, across 9 outlets</span></dd></div>
         <div><dt><span class="fr">56,4 %</span><span class="en">56.4%</span></dt><dd><span class="fr">d'accord entre Mistral-7B et Llama 3.2 sur la position</span><span class="en">stance agreement between Mistral-7B and Llama 3.2</span></dd></div>
         <div><dt><span class="fr">0,44</span><span class="en">0.44</span></dt><dd><span class="fr">corrélation de Pearson entre les sentiments des deux modèles</span><span class="en">Pearson correlation between the two models' sentiment</span></dd></div>
         <div><dt><span class="fr">58 → 87 %</span><span class="en">58 → 87%</span></dt><dd><span class="fr">d'articles de NDTV favorables à Adani après le rachat</span><span class="en">of NDTV articles supportive of Adani after the takeover</span></dd></div>
       </dl>
-      <figure class="fig">
-        <div class="fig-box"><div id="chart-did"></div></div>
-        <figcaption><b>Fig. 8</b> <span class="fr">Effet estimé du rachat sur le sentiment (δ), par sujet et par modèle. Un δ positif veut dire que le média ciblé est devenu plus favorable que le groupe témoin. Seul NDTV face à Adani est significatif (δ = 1,16, p = 0,016), et seulement avec Llama. Le Royaume-Uni n'apparaît pas : aucun article de The Independent sur l'Arabie saoudite après le rachat.</span><span class="en">Estimated effect of the takeover on sentiment (δ), per subject and model. A positive δ means the target outlet became more favorable than the control group. Only NDTV on Adani is significant (δ = 1.16, p = 0.016), and only with Llama. The UK is missing: no article from The Independent on Saudi Arabia after the takeover.</span></figcaption>
-      </figure>
-      <ul class="fr">
-        <li>Les deux modèles s'accordent quand Mistral répond « soutien » (88 %) ou « opposition » (81 %), mais presque jamais sur « neutre » (10 %) : c'est la principale source de désaccord.</li>
-        <li>Les résultats ne sont pas concluants : les effets marqués apparaissent sur les sujets avec le moins d'articles (40 pour Adani). Il faudrait plus de données par sujet et par période.</li>
-        <li>Pipeline reproductible : collecte filtrée par domaine, date et sujet, texte complet via newspaper3k avec repli sur la Wayback Machine, puis régressions par (cas, sujet).</li>
-      </ul>
-      <ul class="en">
-        <li>The two models agree when Mistral answers "support" (88%) or "oppose" (81%), but almost never on "neutral" (10%): this is the main source of disagreement.</li>
-        <li>The results are not conclusive: the marked effects appear on the subjects with the fewest articles (40 for Adani). More data per subject and period would be needed.</li>
-        <li>Reproducible pipeline: collection filtered by domain, date and subject, full text via newspaper3k with a Wayback Machine fallback, then regressions per (case, subject).</li>
-      </ul>
-      <p class="stack"><span>Mistral-7B</span><span>Llama 3.2</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>newspaper3k</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
+      <details class="more">
+        <summary><span class="fr"><span class="o">Lire la suite</span><span class="c">Réduire</span></span><span class="en"><span class="o">Read more</span><span class="c">Show less</span></span></summary>
+        <figure class="fig">
+          <div class="fig-box">
+            <dl class="cases" id="case-box"></dl>
+          </div>
+          <div class="fig-actions"><button class="act" type="button" id="b-case"><span class="fr">Cas suivant</span><span class="en">Next case</span></button></div>
+          <figcaption><b>Fig. 7</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B et Llama 3.2 donnent un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, Mistral-7B and Llama 3.2 return a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
+        </figure>
+        <figure class="fig">
+          <div class="fig-box"><div id="chart-did"></div></div>
+          <figcaption><b>Fig. 8</b> <span class="fr">Effet estimé du rachat sur le sentiment (δ), par sujet et par modèle. Un δ positif veut dire que le média ciblé est devenu plus favorable que le groupe témoin. Seul NDTV face à Adani est significatif (δ = 1,16, p = 0,016), et seulement avec Llama. Le Royaume-Uni n'apparaît pas : aucun article de The Independent sur l'Arabie saoudite après le rachat.</span><span class="en">Estimated effect of the takeover on sentiment (δ), per subject and model. A positive δ means the target outlet became more favorable than the control group. Only NDTV on Adani is significant (δ = 1.16, p = 0.016), and only with Llama. The UK is missing: no article from The Independent on Saudi Arabia after the takeover.</span></figcaption>
+        </figure>
+        <ul class="fr">
+          <li>Les deux modèles s'accordent quand Mistral répond « soutien » (88 %) ou « opposition » (81 %), mais presque jamais sur « neutre » (10 %) : c'est la principale source de désaccord.</li>
+          <li>Les résultats ne sont pas concluants : les effets marqués apparaissent sur les sujets avec le moins d'articles (40 pour Adani). Il faudrait plus de données par sujet et par période.</li>
+          <li>Pipeline reproductible : collecte filtrée par domaine, date et sujet, texte complet via newspaper3k avec repli sur la Wayback Machine, puis régressions par (cas, sujet).</li>
+        </ul>
+        <ul class="en">
+          <li>The two models agree when Mistral answers "support" (88%) or "oppose" (81%), but almost never on "neutral" (10%): this is the main source of disagreement.</li>
+          <li>The results are not conclusive: the marked effects appear on the subjects with the fewest articles (40 for Adani). More data per subject and period would be needed.</li>
+          <li>Reproducible pipeline: collection filtered by domain, date and subject, full text via newspaper3k with a Wayback Machine fallback, then regressions per (case, subject).</li>
+        </ul>
+        <p class="stack"><span>Mistral-7B</span><span>Llama 3.2</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>newspaper3k</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
+        <p class="paper-link"><a href="papers/Tracking-Media-Bias-Shifts.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 11 p.)</span><span class="en">Read the report (PDF, 11 pp.)</span></a></p>
+      </details>
     </article>
   </div>
 
