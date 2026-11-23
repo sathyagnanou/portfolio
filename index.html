@@ -131,6 +131,9 @@ svg .pt.best { fill: var(--accent); }
 .step.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
 .arrow { flex: 0 0 26px; display: grid; place-items: center; color: var(--muted); font-family: var(--mono); }
 
+.paper-link { margin: -6px 0 16px; font-family: var(--mono); font-size: 12.5px; }
+.paper-link a { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; text-decoration: none; color: var(--ink); }
+.paper-link a:hover { border-color: var(--accent); color: var(--accent); }
 /* Paper card */
 .paper { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 0 0 18px; }
 .paper .title { font-family: var(--display); font-size: 22px; line-height: 1.3; margin: 0 0 6px; }
@@ -372,6 +375,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <article class="entry" id="lisn">
       <div class="entry-head"><h3><span class="fr">Générateur de données synthétiques</span><span class="en">Synthetic data generator</span></h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
       <p class="role"><span class="fr">Projet de recherche (TER), Data Mining · LISN, Université Paris-Saclay · équipe de 6 · encadrant : Nadjib Lazaar</span><span class="en">Research project (TER), Data Mining · LISN, Université Paris-Saclay · team of 6 · supervisor: Nadjib Lazaar</span></p>
+      <p class="paper-link"><a href="papers/TER_Report.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 23 p.)</span><span class="en">Read the report (PDF, 23 pp.)</span></a></p>
       <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données réalistes, avec des motifs connus, pour comparer les algorithmes. Les générateurs classiques comme QUEST tirent des longueurs de transaction selon une loi de Poisson, alors que les données réelles suivent une loi de puissance. En équipe de six, nous avons construit un générateur hybride : un LLM fournit la sémantique (noms d'articles, catégories, co-occurrences), un module statistique impose les distributions, et des motifs plantés servent de vérité terrain.</p>
       <p class="en">Frequent and High Utility Itemset Mining lack realistic datasets with known patterns to compare algorithms on. Classic generators such as QUEST draw transaction lengths from a Poisson law, while real data follow a power law. As a team of six, we built a hybrid generator: an LLM provides the semantics (item names, categories, co-occurrences), a statistical module enforces the distributions, and planted patterns serve as ground truth.</p>
       <figure class="fig">
@@ -421,6 +425,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         <p class="title">What Is the Best Small AI Model for Inpainting-Based Synthetic Image Detection and Localization?</p>
         <p class="authors">W. H. Amar, H. Hosseinpour, D. Chojnacka, Y. El Otmani, <b>S. Gnanou</b> · Université Paris-Saclay</p>
       </div>
+      <p class="paper-link"><a href="papers/Inpainting-Based-Synthetic-Image.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 12 p.)</span><span class="en">Read the report (PDF, 12 pp.)</span></a></p>
       <p class="fr">L'inpainting remplace une seule zone d'une vraie photo. Un modèle forensique doit dire si l'image a été modifiée, et où. Les détecteurs publiés sont difficiles à comparer, car chacun est évalué sur ses propres données. Nous avons évalué quatre modèles pré-entraînés de familles différentes sous un seul protocole, sur le jeu de test TGIF (Stable Diffusion 2 et Photoshop).</p>
       <p class="en">Inpainting replaces one region of a real photo. A forensic model must tell whether the image was edited, and where. Published detectors are hard to compare, since each is evaluated on its own data. We evaluated four pretrained models from different families under one protocol, on the TGIF test set (Stable Diffusion 2 and Photoshop).</p>
       <figure class="fig">
@@ -450,6 +455,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     <article class="entry" id="fair">
       <div class="entry-head"><h3>Fairness in AI</h3><span class="dates"><span class="fr">co-auteur, équipe de 4</span><span class="en">co-author, team of 4</span></span></div>
       <p class="role"><span class="fr">Suivre l'évolution du biais des médias après un changement de propriétaire</span><span class="en">Tracking media bias shifts after an ownership takeover</span></p>
+      <p class="paper-link"><a href="papers/Tracking-Media-Bias-Shifts.pdf" target="_blank" rel="noopener"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16"><path d="M4 1.5h5.5L13 5v9.5H4zM9.5 1.5V5H13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="fr">Lire le rapport (PDF, 11 p.)</span><span class="en">Read the report (PDF, 11 pp.)</span></a></p>
       <p class="fr">Un nouveau propriétaire change-t-il la façon dont un média parle de certains sujets ? Pour séparer l'effet du propriétaire de l'actualité générale, nous comparons le média ciblé à un groupe témoin de médias dont le propriétaire n'a pas changé, avant et après le rachat. Chaque article est annoté par deux LLM open source exécutés en local, pour vérifier que la conclusion ne dépend pas du modèle.</p>
       <p class="en">Does a new owner change how an outlet covers certain subjects? To separate the owner's effect from the general news climate, we compare the target outlet with a control group of outlets whose owner did not change, before and after the takeover. Each article is annotated by two open-source LLMs run locally, to check that the conclusion does not depend on the model.</p>
       <figure class="fig">
