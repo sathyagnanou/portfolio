@@ -218,6 +218,14 @@ svg .pt.best { fill: var(--accent); }
 .courses { columns: 2; column-gap: 32px; padding-left: 18px; margin: 10px 0 0; font-size: 15px; }
 @media (max-width: 560px) { .courses { columns: 1; } }
 .courses li { break-inside: avoid; margin-bottom: 4px; }
+.allc { margin-top: 6px; }
+.allc summary { cursor: pointer; font-family: var(--mono); font-size: 12.5px; color: var(--accent); width: fit-content; }
+.allc summary:hover { color: var(--ink); }
+.cgroups { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; margin-top: 16px; }
+@media (max-width: 560px) { .cgroups { grid-template-columns: 1fr; } }
+.cgroups h5 { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.cgroups ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+.cgroups li { margin-bottom: 3px; }
 .langs { display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 15px; }
 .langs b { font-weight: 600; }
 
@@ -497,6 +505,19 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       <p class="role">Bachelor of Science in Computer Science · Kremlin-Bicêtre</p>
       <p class="fr">Développement logiciel (Python, Java, C#, JavaScript), bases de données SQL et NoSQL, APIs, réseaux et cloud.</p>
       <p class="en">Software development (Python, Java, C#, JavaScript), SQL and NoSQL databases, APIs, networks and cloud.</p>
+      <details class="allc">
+        <summary><span class="fr">Voir les 67 cours</span><span class="en">See all 67 courses</span></summary>
+        <div class="cgroups">
+          <div><h5><span class="fr">Données et bases de données</span><span class="en">Data and databases</span></h5><ul><li>Introduction to Relational Databases</li><li>Intermediate Relational Databases</li><li>Relational Databases Design for Production</li><li>Introduction to NoSQL Databases</li><li>Data Protection (GDPR)</li></ul></div>
+          <div><h5><span class="fr">Mathématiques et algorithmique</span><span class="en">Maths and algorithmics</span></h5><ul><li>Algebra 1</li><li>Algebra 2</li><li>Probabilities and Statistics 1</li><li>Probabilities and Statistics 2</li><li>Mathematics Applied to Digital Engineering 1</li><li>Mathematics Applied to Digital Engineering 2</li><li>Mathematical Tools Applied to Computer Science</li><li>Algorithmics and Data Structures</li><li>Advanced Algorithmics and Data Structures</li><li>Algorithmic Complexity and Optimization</li></ul></div>
+          <div><h5><span class="fr">Programmation</span><span class="en">Programming</span></h5><ul><li>Introduction to Programming with Python</li><li>Intermediate Python</li><li>Design Patterns Applications in Python</li><li>Python for Web Application</li><li>Java Application Development</li><li>Microservices with Python</li><li>Microservices with Java</li><li>Microsoft and .NET Ecosystem</li></ul></div>
+          <div><h5><span class="fr">Web et mobile</span><span class="en">Web and mobile</span></h5><ul><li>Introduction to Web Programming</li><li>Web Application Development with PHP</li><li>Advanced Web Development</li><li>Server-side JavaScript</li><li>Advanced JavaScript Programming</li><li>Front-End Framework</li><li>Introduction to Native Mobile Applications (Android)</li><li>iOS Development</li></ul></div>
+          <div><h5><span class="fr">Systèmes, réseaux et cloud</span><span class="en">Systems, networks and cloud</span></h5><ul><li>Principles and Architecture of Information Systems</li><li>Introduction to Linux</li><li>Fundamentals of Microsoft Windows Operating System</li><li>Shell Programming on Windows and Linux</li><li>Introduction to Computer Networks</li><li>Introduction to Enterprise Networks</li><li>Distributed Architectures: Principles and Implementation</li><li>Cloud Computing</li><li>DevOps Approach</li><li>Principles and Tools for Information Systems Load Management</li><li>Principles of Software Industrialization</li><li>Versioning and Collaborative Tools for Developers</li></ul></div>
+          <div><h5><span class="fr">Sécurité</span><span class="en">Security</span></h5><ul><li>Software Security Principles</li><li>Implementation of Web Security Protocols</li><li>IAM Fundamentals</li></ul></div>
+          <div><h5><span class="fr">Projets et vie professionnelle</span><span class="en">Projects and professional</span></h5><ul><li>Research Initiation Workshop 1</li><li>Research Initiation Workshop 2</li><li>S2 Project: First Full-Stack Application</li><li>S3 Project: Operational Web Application</li><li>Final Project</li><li>Implementation of a Project from Design to Delivery</li><li>Project Management Introduction and Tools</li><li>Agile Fundamentals</li><li>Internship (2 months)</li></ul></div>
+          <div><h5><span class="fr">Langues et communication</span><span class="en">Languages and communication</span></h5><ul><li>French for BSc S1</li><li>French for BSc S2</li><li>French for BSc S3</li><li>French for BSc S4</li><li>French for BSc S5</li><li>General French 4</li><li>General French 5</li><li>Communication for Business</li><li>Corporate Social Responsibility</li><li>Business Creation and Development</li><li>Tools for Career Development</li><li>Cultural Integration Workshop</li></ul></div>
+        </div>
+      </details>
     </article>
     <div class="langs">
       <span><b><span class="fr">Anglais</span><span class="en">English</span></b> C2</span>
