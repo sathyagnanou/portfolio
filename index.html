@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="fr" data-lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sathya Gnanou Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a research paper you scroll through. Narrow reading column, figures that break out wider, "Fig. n" captions, three parts. */
+:root {
+  --bg: #fafaf6;
+  --paper: #ffffff;
+  --ink: #1d1c19;
+  --muted: #6b6861;
+  --line: #e2dfd4;
+  --accent: #c4561e;
+  --data: #2f6b73;
+  --data-soft: #9fc2c6;
+  --mark: rgba(239, 196, 92, .45);
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121315; --paper: #1a1c1f; --ink: #ebe8e1; --muted: #9b978e; --line: #2c2f33;
+    --accent: #ec8a52; --data: #7fb9c0; --data-soft: #3c6267; --mark: rgba(239, 196, 92, .22);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121315; --paper: #1a1c1f; --ink: #ebe8e1; --muted: #9b978e; --line: #2c2f33;
+  --accent: #ec8a52; --data: #7fb9c0; --data-soft: #3c6267; --mark: rgba(239, 196, 92, .22);
+  color-scheme: dark;
+}
+html[data-lang="fr"] .en, html[data-lang="en"] .fr { display: none !important; }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16.5px; line-height: 1.65; }
+a { color: var(--ink); text-decoration-color: var(--accent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+mark { background: linear-gradient(transparent 38%, var(--mark) 38%, var(--mark) 92%, transparent 92%); color: inherit; padding: 0 1px; }
+
+.col { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+.wide { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 480px) { .col, .wide { padding: 0 16px; } }
+
+/* Nav */
+.topbar { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 20; }
+.topbar .wide { display: flex; align-items: center; gap: 22px; height: 54px; }
+.loc { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-right: auto; }
+.topbar nav { display: flex; gap: 20px; font-size: 14px; }
+.topbar nav a { text-decoration: none; color: var(--muted); }
+.topbar nav a:hover { color: var(--ink); }
+@media (max-width: 760px) { .topbar nav { display: none; } }
+.toggles { display: flex; gap: 8px; }
+.tog { background: none; border: 1px solid var(--line); color: var(--muted); font-family: var(--mono); font-size: 11.5px; border-radius: 999px; padding: 5px 11px; cursor: pointer; }
+.tog:hover { color: var(--ink); border-color: var(--muted); }
+
+/* Type */
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(52px, 9vw, 92px); line-height: 1; letter-spacing: -.02em; margin: 0; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(36px, 6vw, 54px); line-height: 1.05; letter-spacing: -.01em; margin: 6px 0 8px; text-wrap: balance; }
+h3 { font-family: var(--display); font-weight: 500; font-size: 26px; line-height: 1.2; margin: 0 0 4px; text-wrap: balance; }
+h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; text-wrap: balance; }
+.kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.sub { color: var(--muted); font-size: 17px; margin: 0; max-width: 60ch; }
+.dates { font-family: var(--mono); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stack { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 10px 0 0; }
+.stack span + span::before { content: " · "; color: var(--line); }
+
+/* Hero */
+.hero { padding: 64px 0 40px; }
+.hero .descr { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--muted); margin: 10px 0 26px; }
+.hero p.intro { font-size: 19px; line-height: 1.6; margin: 0 0 24px; }
+.status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 26px; }
+.status .live { color: var(--ink); }
+.status .live::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #3fa66b; margin-right: 8px; vertical-align: 1px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { font-family: var(--body); font-size: 14px; font-weight: 500; padding: 9px 16px; border-radius: 6px; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; cursor: pointer; }
+.btn:hover { color: var(--bg); opacity: .88; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+/* Parts */
+.part { padding: 70px 0 20px; }
+.part-head { margin-bottom: 36px; }
+.block { margin-bottom: 64px; }
+.block-label { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 22px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.entry { margin: 0 0 52px; }
+.entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.role { color: var(--muted); font-size: 15.5px; margin: 0 0 14px; }
+.entry p { margin: 0 0 12px; }
+.entry ul { margin: 0 0 8px; padding-left: 20px; }
+.entry li { margin: 0 0 6px; }
+
+/* Figures */
+figure.fig { margin: 22px 0 22px; }
+.fig-box { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; overflow-x: auto; }
+figcaption { font-family: var(--display); font-style: italic; font-size: 16px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+figcaption b { font-style: italic; font-weight: 600; color: var(--ink); }
+.fig-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.act { font-family: var(--mono); font-size: 12px; background: transparent; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+.act:hover { border-color: var(--accent); color: var(--accent); }
+.act[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+svg text { font-family: var(--mono); fill: var(--muted); font-size: 11px; }
+svg .lbl { fill: var(--ink); }
+svg .axis { stroke: var(--line); }
+svg .bar { fill: var(--data-soft); }
+svg .bar.best { fill: var(--accent); }
+svg .ref { stroke: var(--muted); stroke-dasharray: 4 4; }
+svg .grid { stroke: var(--line); stroke-dasharray: 2 4; }
+svg .pt { fill: var(--data); }
+svg .pt.best { fill: var(--accent); }
+
+/* Pipeline diagrams */
+.pipe { display: flex; align-items: stretch; gap: 0; min-width: 560px; }
+.step { flex: 1; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 13.5px; background: var(--bg); transition: border-color .3s, background .3s; }
+.step .k { font-family: var(--mono); font-size: 11px; color: var(--muted); display: block; margin-bottom: 2px; }
+.step.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+.arrow { flex: 0 0 26px; display: grid; place-items: center; color: var(--muted); font-family: var(--mono); }
+
+/* Paper card */
+.paper { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 0 0 18px; }
+.paper .title { font-family: var(--display); font-size: 22px; line-height: 1.3; margin: 0 0 6px; }
+.paper .authors { font-size: 14px; color: var(--muted); margin: 0; }
+.paper .authors b { color: var(--ink); font-weight: 600; }
+
+/* Case switcher */
+.cases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; font-size: 14.5px; }
+@media (max-width: 560px) { .cases { grid-template-columns: 1fr; } }
+.cases dt { font-family: var(--mono); font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.cases dd { margin: 2px 0 0; }
+.vs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.outlet { border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; font-size: 13.5px; }
+.outlet.target { border-color: var(--accent); color: var(--accent); }
+
+/* Project grid */
+.pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 720px) { .pgrid { grid-template-columns: 1fr; } }
+.pcard { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 6px; }
+.pcard p { margin: 4px 0 0; font-size: 15px; }
+.pcard .stack { margin-top: auto; padding-top: 10px; }
+
+/* Map */
+#map svg { display: block; width: 100%; height: auto; min-width: 680px; }
+#map .edge { stroke: var(--line); stroke-width: 1.2; fill: none; transition: stroke .2s, stroke-width .2s, opacity .2s; }
+#map .edge.hot { stroke: var(--accent); stroke-width: 1.8; }
+#map.focus .edge:not(.hot) { opacity: .25; }
+#map .node rect { fill: var(--paper); stroke: var(--line); }
+#map .node text { fill: var(--ink); font-size: 11.5px; }
+#map .node.proj rect { fill: var(--bg); stroke: var(--ink); }
+#map .node.theme text { font-family: var(--display); font-style: italic; font-size: 14px; }
+#map .node.theme rect { stroke: transparent; fill: transparent; }
+#map .node { cursor: pointer; }
+#map .node.hot rect { stroke: var(--accent); }
+#map .node.hot text { fill: var(--accent); }
+#map.focus .node:not(.hot) { opacity: .35; }
+.colhead { font-family: var(--mono); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+
+/* Skills */
+.stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 26px; }
+@media (max-width: 760px) { .stages { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .stages { grid-template-columns: 1fr; } }
+.stage h5 { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 5px; padding: 3px 9px; cursor: pointer; transition: opacity .2s, border-color .2s, color .2s; }
+.tool:hover, .tool.hot { border-color: var(--accent); color: var(--accent); }
+.tracing .tool:not(.hot) { opacity: .3; }
+.trace-row { margin-top: 26px; padding-top: 18px; border-top: 1px dashed var(--line); }
+.trace-row .k { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 16px; margin: 0 0 10px; }
+.pchips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pchip { font-family: var(--body); font-size: 13.5px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 13px; cursor: pointer; }
+.pchip:hover { border-color: var(--ink); }
+.pchip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.trace-out { margin-top: 12px; font-size: 14.5px; color: var(--muted); min-height: 24px; }
+
+/* Education */
+.courses { columns: 2; column-gap: 32px; padding-left: 18px; margin: 10px 0 0; font-size: 15px; }
+@media (max-width: 560px) { .courses { columns: 1; } }
+.courses li { break-inside: avoid; margin-bottom: 4px; }
+.langs { display: flex; flex-wrap: wrap; gap: 6px 26px; font-size: 15px; }
+.langs b { font-weight: 600; }
+
+/* Contact */
+.contact { padding: 70px 0 30px; border-top: 1px solid var(--line); margin-top: 40px; }
+.contact h2 { font-size: clamp(46px, 8vw, 76px); }
+.links { display: grid; gap: 8px; font-size: 17px; margin: 18px 0 30px; }
+.links .k { font-family: var(--mono); font-size: 12px; color: var(--muted); display: inline-block; width: 90px; }
+.copy { margin-left: 10px; font-family: var(--mono); font-size: 11px; border: 1px solid var(--line); background: none; color: var(--muted); border-radius: 5px; padding: 2px 8px; cursor: pointer; }
+.copy:hover { color: var(--ink); border-color: var(--muted); }
+.matcher { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.matcher .q { font-family: var(--display); font-size: 21px; margin: 0 0 12px; }
+.match-out { margin-top: 16px; font-size: 15px; }
+.match-out ol { margin: 6px 0 0; padding-left: 20px; }
+.match-out li { margin-bottom: 4px; }
+footer { padding: 36px 0 50px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wide">
+    <span class="loc">Paris, France</span>
+    <nav aria-label="Sections">
+      <a href="#map-sec"><span class="fr">Carte</span><span class="en">Map</span></a>
+      <a href="#travaux"><span class="fr">Travaux</span><span class="en">Work</span></a>
+      <a href="#parcours"><span class="fr">Parcours</span><span class="en">Background</span></a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="toggles">
+      <button class="tog" id="tog-lang" type="button" aria-label="Switch language">EN</button>
+      <button class="tog" id="tog-theme" type="button"><span class="fr">Sombre</span><span class="en">Dark</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero col" aria-labelledby="name">
+  <h1 id="name">Sathya Gnanou</h1>
+  <p class="descr"><span class="fr">Data Science, Machine Learning et IA</span><span class="en">Data Science, Machine Learning and AI</span></p>
+  <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
+  <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
+  <div class="status">
+    <span class="live"><span class="fr">Recherche un stage de fin d'études</span><span class="en">Looking for an end-of-studies internship</span></span>
+    <span><span class="fr">6 mois, dès le 1er mars 2027</span><span class="en">6 months, from March 1st, 2027</span></span>
+    <span>Data Scientist · Data Analyst · Data Engineer · <span class="fr">IA</span><span class="en">AI</span></span>
+  </div>
+  <div class="btns">
+    <a class="btn" href="#contact"><span class="fr">Me contacter</span><span class="en">Get in touch</span></a>
+    <a class="btn ghost" href="#travaux"><span class="fr">Voir les travaux</span><span class="en">See the work</span></a>
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="wide" id="map-sec" aria-labelledby="map-h" style="padding-top:30px">
+  <div class="col" style="padding:0">
+    <div class="kicker"><span class="fr">Vue d'ensemble</span><span class="en">Overview</span></div>
+    <h2 id="map-h"><span class="fr">La carte</span><span class="en">The map</span></h2>
+    <p class="sub"><span class="fr">Les outils à gauche, les projets au centre, les thèmes à droite. Survolez ou touchez un élément pour suivre ses liens.</span><span class="en">Tools on the left, projects in the middle, themes on the right. Hover or tap any item to follow its links.</span></p>
+  </div>
+  <figure class="fig">
+    <div class="fig-box" id="map"></div>
+    <figcaption><b>Fig. 1</b> <span class="fr">Chaque trait relie un outil à un projet où je l'ai réellement utilisé, puis le projet à son thème.</span><span class="en">Each line links a tool to a project where I actually used it, then the project to its theme.</span></figcaption>
+  </figure>
+</section>
+
+<!-- PART 1 -->
+<section class="part" id="travaux" aria-labelledby="p1-h">
+  <div class="col part-head">
+    <div class="kicker"><span class="fr">Partie 1 sur 2</span><span class="en">Part 1 of 2</span></div>
+    <h2 id="p1-h"><span class="fr">Travaux</span><span class="en">Work</span></h2>
+    <p class="sub"><span class="fr">Stages, recherche et projets, avec ce qu'on a mesuré.</span><span class="en">Internships, research and projects, with what we measured.</span></p>
+  </div>
+
+  <!-- Experience -->
+  <div class="col block">
+    <div class="block-label"><span class="fr">Expérience</span><span class="en">Experience</span></div>
+
+    <article class="entry">
+      <div class="entry-head"><h3>Académie de Créteil</h3><span class="dates"><span class="fr">mai – juil. 2026</span><span class="en">May – Jul 2026</span></span></div>
+      <p class="role">Data Analyst, <span class="fr">stagiaire</span><span class="en">intern</span> · Créteil</p>
+      <figure class="fig">
+        <div class="fig-box">
+          <div class="pipe" id="pipe-cre">
+            <div class="step"><span class="k">01</span><span class="fr">Excel et sources internes</span><span class="en">Excel and internal sources</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">02</span><span class="fr">Nettoyage et structuration</span><span class="en">Cleaning and structuring</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">03</span><span class="fr">Tableaux de bord Grist</span><span class="en">Grist dashboards</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">04</span><span class="fr">Rapports KPI automatisés</span><span class="en">Automated KPI reports</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">05</span><span class="fr">Équipes métier</span><span class="en">Business teams</span></div>
+          </div>
+        </div>
+        <div class="fig-actions"><button class="act" type="button" data-run="pipe-cre"><span class="fr">Suivre une donnée</span><span class="en">Follow one record</span></button></div>
+        <figcaption><b>Fig. 2</b> <span class="fr">Le chemin d'une donnée, de la source au tableau de bord utilisé par les équipes.</span><span class="en">The path of one record, from the source to the dashboard the teams use.</span></figcaption>
+      </figure>
+      <ul class="fr">
+        <li>Plus de 3 tableaux de bord Grist et des rapports KPI automatisés, adoptés en production.</li>
+        <li>Recueil des besoins des parties prenantes et rédaction de spécifications, en environnement Agile.</li>
+      </ul>
+      <ul class="en">
+        <li>3+ Grist dashboards and automated KPI reports, adopted in production.</li>
+        <li>Gathered stakeholder needs and wrote specifications in an Agile setting.</li>
+      </ul>
+      <p class="stack"><span>Grist</span><span>Excel</span><span>KPI</span><span>Agile</span></p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><h3>Klesia</h3><span class="dates"><span class="fr">fév. – août 2025</span><span class="en">Feb – Aug 2025</span></span></div>
+      <p class="role"><span class="fr">Développeur full-stack, stagiaire</span><span class="en">Full-stack developer, intern</span> · Montreuil</p>
+      <ul class="fr">
+        <li>Fonctionnalités d'applications internes en .NET (backend) et Vue.js (front-end), livrées sans régression majeure en équipe Agile.</li>
+        <li>Intégration de données PostgreSQL fiabilisée, avec moins d'erreurs de manipulation (DBeaver).</li>
+      </ul>
+      <ul class="en">
+        <li>Internal application features in .NET (backend) and Vue.js (front-end), delivered without major regressions in an Agile team.</li>
+        <li>More reliable PostgreSQL data integration, with fewer handling errors (DBeaver).</li>
+      </ul>
+      <p class="stack"><span>.NET</span><span>Vue.js</span><span>PostgreSQL</span><span>DBeaver</span><span>Agile</span></p>
+    </article>
+  </div>
+
+  <!-- Research -->
+  <div class="col block">
+    <div class="block-label"><span class="fr">Recherche</span><span class="en">Research</span></div>
+
+    <article class="entry" id="lisn">
+      <div class="entry-head"><h3><span class="fr">Générateur de données synthétiques</span><span class="en">Synthetic data generator</span></h3><span class="dates"><span class="fr">jan. – mai 2026</span><span class="en">Jan – May 2026</span></span></div>
+      <p class="role"><span class="fr">Projet de recherche, Data Mining · LISN, Université Paris-Saclay · encadrant : Nadjib Lazaar</span><span class="en">Research project, Data Mining · LISN, Université Paris-Saclay · supervisor: Nadjib Lazaar</span></p>
+      <p class="fr">Le Frequent et le High Utility Itemset Mining manquent de jeux de données annotés pour tester les algorithmes. J'ai construit un générateur configurable de données transactionnelles qui combine un LLM, pour la cohérence sémantique, et un contrôle statistique des distributions.</p>
+      <p class="en">Frequent and High Utility Itemset Mining lack annotated datasets to test algorithms on. I built a configurable transactional data generator that combines an LLM, for semantic coherence, with statistical control of the distributions.</p>
+      <figure class="fig">
+        <div class="fig-box">
+          <div class="pipe" id="pipe-lisn">
+            <div class="step"><span class="k">React / TS</span><span class="fr">L'utilisateur règle les paramètres</span><span class="en">The user sets parameters</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">FastAPI</span><span class="fr">L'API lance la génération</span><span class="en">The API starts generation</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">LLM + stats</span><span class="fr">Transactions générées et contrôlées</span><span class="en">Transactions generated and controlled</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">OFAT</span><span class="fr">Validation du réalisme</span><span class="en">Realism validation</span></div><div class="arrow">→</div>
+            <div class="step"><span class="k">FP-Growth · Eclat</span><span class="fr">Benchmark des algorithmes</span><span class="en">Algorithm benchmark</span></div>
+          </div>
+        </div>
+        <div class="fig-actions"><button class="act" type="button" data-run="pipe-lisn"><span class="fr">Lancer une génération</span><span class="en">Run a generation</span></button></div>
+        <figcaption><b>Fig. 3</b> <span class="fr">L'application web de bout en bout, utilisable par des non-développeurs. OFAT : on fait varier un seul facteur à la fois.</span><span class="en">The end-to-end web application, usable by non-developers. OFAT: one factor is varied at a time.</span></figcaption>
+      </figure>
+      <p class="stack"><span>Python</span><span>LLM</span><span>FastAPI</span><span>React</span><span>TypeScript</span><span>FP-Growth</span><span>Eclat</span></p>
+    </article>
+
+    <article class="entry" id="inpaint">
+      <div class="paper">
+        <p class="title">What Is the Best Small AI Model for Inpainting-Based Synthetic Image Detection and Localization?</p>
+        <p class="authors">W. H. Amar, H. Hosseinpour, D. Chojnacka, Y. El Otmani, <b>S. Gnanou</b> · Université Paris-Saclay</p>
+      </div>
+      <p class="fr">L'inpainting remplace une seule zone d'une vraie photo. Un modèle forensique doit dire si l'image a été modifiée, et où. Les détecteurs publiés sont difficiles à comparer, car chacun est évalué sur ses propres données. Nous avons évalué quatre modèles pré-entraînés de familles différentes sous un seul protocole, sur le jeu de test TGIF (Stable Diffusion 2 et Photoshop).</p>
+      <p class="en">Inpainting replaces one region of a real photo. A forensic model must tell whether the image was edited, and where. Published detectors are hard to compare, since each is evaluated on its own data. We evaluated four pretrained models from different families under one protocol, on the TGIF test set (Stable Diffusion 2 and Photoshop).</p>
+      <figure class="fig">
+        <div class="fig-box"><div id="chart-bench"></div></div>
+        <div class="fig-actions">
+          <button class="act" type="button" id="b-det" aria-pressed="true"><span class="fr">Détection (ROC-AUC)</span><span class="en">Detection (ROC-AUC)</span></button>
+          <button class="act" type="button" id="b-loc" aria-pressed="false"><span class="fr">Localisation (IoU)</span><span class="en">Localization (IoU)</span></button>
+        </div>
+        <figcaption><b>Fig. 4</b> <span class="fr">Moyenne sur trois rééchantillonnages par photo source, pour éviter que deux versions d'une même image tombent dans des échantillons différents. Pointillés : hasard (ROC-AUC 0,50) ou masque aléatoire (IoU 0,06). Seul TruFor sépare vraiment les images modifiées.</span><span class="en">Mean over three resamples by source photo, so that versions of one image never land in different samples. Dashed line: chance (ROC-AUC 0.50) or a random mask (IoU 0.06). Only TruFor really separates edited images.</span></figcaption>
+      </figure>
+      <figure class="fig">
+        <div class="fig-box"><div id="chart-scatter"></div></div>
+        <div class="fig-actions"><button class="act" type="button" id="b-thr" aria-pressed="false"><span class="fr">Abaisser le seuil de PSCC-Net à 0,2</span><span class="en">Lower PSCC-Net's threshold to 0.2</span></button></div>
+        <figcaption><b>Fig. 5</b> <span class="fr">Taille du modèle contre qualité de localisation. Le plus gros n'est pas le meilleur : AEROBLADE a le plus de paramètres et localise au niveau du hasard. Baisser le seuil de PSCC-Net fait passer son IoU de 0,21 à 0,33.</span><span class="en">Model size against localization quality. Bigger is not better: AEROBLADE has the most parameters and localizes at chance level. Lowering PSCC-Net's threshold raises its IoU from 0.21 to 0.33.</span></figcaption>
+      </figure>
+      <ul class="fr">
+        <li>TruFor atteint un ROC-AUC de 0,98 et un IoU de 0,72, avec des résultats proches sur Stable Diffusion 2 et sur Photoshop.</li>
+        <li>Coût mesuré pour chaque modèle : paramètres, GFLOPs, latence et mémoire GPU. Code publié sous licence MIT.</li>
+      </ul>
+      <ul class="en">
+        <li>TruFor reaches ROC-AUC 0.98 and IoU 0.72, with close results on Stable Diffusion 2 and on Photoshop.</li>
+        <li>Cost measured for each model: parameters, GFLOPs, latency and GPU memory. Code released under the MIT license.</li>
+      </ul>
+      <p class="stack"><span>Computer Vision</span><span>TruFor</span><span>PSCC-Net</span><span>ForMa</span><span>AEROBLADE</span><span>ROC-AUC</span><span>IoU</span></p>
+    </article>
+
+    <article class="entry" id="fair">
+      <div class="entry-head"><h3>Fairness in AI</h3><span class="dates"><span class="fr">co-auteur, équipe de 4</span><span class="en">co-author, team of 4</span></span></div>
+      <p class="role"><span class="fr">Suivre l'évolution du biais des médias après un changement de propriétaire</span><span class="en">Tracking media bias shifts after an ownership takeover</span></p>
+      <p class="fr">Un nouveau propriétaire change-t-il la façon dont un média parle de certains sujets ? Pour séparer l'effet du propriétaire de l'actualité générale, nous comparons le média ciblé à un groupe témoin de médias dont le propriétaire n'a pas changé, avant et après le rachat.</p>
+      <p class="en">Does a new owner change how an outlet covers certain subjects? To separate the owner's effect from the general news climate, we compare the target outlet with a control group of outlets whose owner did not change, before and after the takeover.</p>
+      <figure class="fig">
+        <div class="fig-box">
+          <dl class="cases" id="case-box"></dl>
+        </div>
+        <div class="fig-actions"><button class="act" type="button" id="b-case"><span class="fr">Cas suivant</span><span class="en">Next case</span></button></div>
+        <figcaption><b>Fig. 6</b> <span class="fr">Les trois études de cas. Pour chaque article, Mistral-7B en local donne un sentiment entre −1 et 1, des adjectifs de framing et une position (soutien, neutre, opposition). Une régression Difference-in-Differences estime ensuite l'effet par cas et par sujet.</span><span class="en">The three case studies. For each article, a local Mistral-7B returns a sentiment between −1 and 1, framing adjectives and a stance (support, neutral, oppose). A Difference-in-Differences regression then estimates the effect per case and subject.</span></figcaption>
+      </figure>
+      <p class="stack"><span>Mistral-7B</span><span>Zero-shot prompting</span><span>Hugging Face (CC-News)</span><span>Jupyter</span><span>Difference-in-Differences</span></p>
+    </article>
+  </div>
+
+  <!-- Projects -->
+  <div class="wide block">
+    <div class="col" style="padding:0"><div class="block-label"><span class="fr">Projets</span><span class="en">Projects</span></div></div>
+    <div class="pgrid">
+      <article class="pcard">
+        <span class="dates"><span class="fr">Projet personnel</span><span class="en">Personal project</span></span>
+        <h4><span class="fr">Prédiction et visualisation de courses de F1</span><span class="en">F1 race prediction and visualization</span></h4>
+        <p class="fr">Données de télémétrie collectées avec FastF1, modèles supervisés pour prédire les résultats, et cartes de circuits colorées par vitesse, freinage et accélération.</p>
+        <p class="en">Telemetry collected with FastF1, supervised models to predict results, and circuit maps colored by speed, braking and acceleration.</p>
+        <p class="stack"><span>FastF1</span><span>Scikit-learn</span><span>Matplotlib</span><span>Pandas</span></p>
+      </article>
+      <article class="pcard">
+        <span class="dates">Deep Learning · Master</span>
+        <h4>End-to-End Memory Networks</h4>
+        <p class="fr">Implémentation from scratch d'un réseau à mémoire explicite (Sukhbaatar et al., 2015), entraîné et évalué sur du question answering à raisonnement multi-hop.</p>
+        <p class="en">From-scratch implementation of an explicit-memory network (Sukhbaatar et al., 2015), trained and evaluated on multi-hop question answering.</p>
+        <p class="stack"><span>Deep Learning</span><span>Attention</span><span>NLP</span></p>
+      </article>
+      <article class="pcard">
+        <span class="dates">Challenge HADACA3</span>
+        <h4><span class="fr">Déconvolution multi-omique</span><span class="en">Multi-omics deconvolution</span></h4>
+        <p class="fr">Estimer la composition cellulaire de tissus à partir de données RNA-seq et de méthylation, avec des références single-cell et une optimisation des hyperparamètres.</p>
+        <p class="en">Estimating the cell composition of tissues from RNA-seq and methylation data, with single-cell references and hyperparameter tuning.</p>
+        <p class="stack"><span>Machine Learning</span><span>RNA-seq</span><span>single-cell</span></p>
+      </article>
+      <article class="pcard">
+        <span class="dates"><span class="fr">Statistiques · Master</span><span class="en">Statistics · Master's</span></span>
+        <h4><span class="fr">Biodiversité des oiseaux</span><span class="en">Bird biodiversity</span></h4>
+        <p class="fr">Tendances par régression locale (LOESS), incertitude estimée par bootstrap, et tests de Pearson et de Kruskal-Wallis entre groupes.</p>
+        <p class="en">Trends with local regression (LOESS), uncertainty estimated by bootstrap, and Pearson and Kruskal-Wallis tests between groups.</p>
+        <p class="stack"><span>Bootstrap</span><span>LOESS</span><span>Kruskal-Wallis</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PART 2 -->
+<section class="part" id="parcours" aria-labelledby="p2-h">
+  <div class="col part-head">
+    <div class="kicker"><span class="fr">Partie 2 sur 2</span><span class="en">Part 2 of 2</span></div>
+    <h2 id="p2-h"><span class="fr">Parcours</span><span class="en">Background</span></h2>
+    <p class="sub"><span class="fr">Les outils, classés par étape du pipeline, puis la formation.</span><span class="en">Tools, grouped by pipeline stage, then education.</span></p>
+  </div>
+
+  <div class="col block">
+    <div class="block-label"><span class="fr">Compétences</span><span class="en">Skills</span></div>
+    <div class="stages" id="stages"></div>
+    <div class="trace-row">
+      <p class="k"><span class="fr">Suivre un projet : choisissez-en un pour voir les outils qu'il utilise.</span><span class="en">Trace a project: pick one to see the tools it uses.</span></p>
+      <div class="pchips" id="pchips"></div>
+      <div class="trace-out" id="trace-out" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="col block">
+    <div class="block-label"><span class="fr">Formation</span><span class="en">Education</span></div>
+    <figure class="fig">
+      <div class="fig-box"><div id="chart-time"></div></div>
+      <figcaption><b>Fig. 7</b> <span class="fr">Formation et stages de 2022 à 2027. Le trait vertical marque aujourd'hui ; la barre en pointillés est le stage que je recherche.</span><span class="en">Education and internships from 2022 to 2027. The vertical line marks today; the dashed bar is the internship I am looking for.</span></figcaption>
+    </figure>
+    <article class="entry">
+      <div class="entry-head"><h3>Université Paris-Saclay</h3><span class="dates"><span class="fr">sept. 2025 – août 2027</span><span class="en">Sep 2025 – Aug 2027</span></span></div>
+      <p class="role">Master of Science in Data Science · Gif-sur-Yvette</p>
+      <ul class="courses">
+        <li>Foundations of Machine Learning</li>
+        <li>Hands-on Machine Learning</li>
+        <li>Interactive Machine Learning</li>
+        <li>Deep Learning</li>
+        <li>Hands-on NLP</li>
+        <li>Information Theory</li>
+        <li>Applied Statistics</li>
+        <li>Math for Data Science</li>
+        <li>Relational Databases</li>
+        <li>Advanced Databases</li>
+        <li>Distributed Systems for Massive Data Management</li>
+        <li>Large-scale Distributed Data Processing</li>
+        <li>Constraint Programming</li>
+        <li>Virtual Human</li>
+      </ul>
+    </article>
+    <article class="entry">
+      <div class="entry-head"><h3>EPITA</h3><span class="dates"><span class="fr">sept. 2022 – août 2025</span><span class="en">Sep 2022 – Aug 2025</span></span></div>
+      <p class="role">Bachelor of Science in Computer Science · Kremlin-Bicêtre</p>
+      <p class="fr">Développement logiciel (Python, Java, C#, JavaScript), bases de données SQL et NoSQL, APIs, réseaux et cloud.</p>
+      <p class="en">Software development (Python, Java, C#, JavaScript), SQL and NoSQL databases, APIs, networks and cloud.</p>
+    </article>
+    <div class="langs">
+      <span><b><span class="fr">Anglais</span><span class="en">English</span></b> C2</span>
+      <span><b><span class="fr">Français</span><span class="en">French</span></b> C2</span>
+      <span><b><span class="fr">Tamoul</span><span class="en">Tamil</span></b> B2</span>
+      <span><b>Hindi</b> B1</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact col" id="contact" aria-labelledby="c-h">
+  <h2 id="c-h"><span class="fr">À vous de jouer.</span><span class="en">Your move.</span></h2>
+  <div class="links">
+    <div><span class="k">Email</span><a href="mailto:sathyaerwangnanou@gmail.com">sathyaerwangnanou@gmail.com</a><button class="copy" type="button" id="copy"><span class="fr">Copier</span><span class="en">Copy</span></button></div>
+    <div><span class="k">LinkedIn</span><a href="https://linkedin.com/in/sathya-gnanou">linkedin.com/in/sathya-gnanou</a></div>
+    <div><span class="k">GitHub</span><a href="https://github.com/sathyagnanou">github.com/sathyagnanou</a></div>
+  </div>
+  <div class="matcher">
+    <p class="q"><span class="fr">Vous recrutez pour quel poste ?</span><span class="en">Which role are you hiring for?</span></p>
+    <div class="fig-actions" id="roles" style="margin-top:0"></div>
+    <div class="match-out" id="match-out" aria-live="polite"></div>
+  </div>
+  <footer>
+    <span>© 2026 Sathya Gnanou</span>
+    <a href="#top"><span class="fr">Retour en haut</span><span class="en">Back to the top</span></a>
+  </footer>
+</section>
+</main>
+
+<script>
+(function () {
+  var html = document.documentElement;
+  function L() { return html.getAttribute("data-lang"); }
+  function num(v, d) { var s = v.toFixed(d == null ? 2 : d); return L() === "fr" ? s.replace(".", ",") : s; }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+  /* ---------- Data ---------- */
+  var P = {
+    cre: { fr: "Académie de Créteil", en: "Académie de Créteil", theme: ["bi"] },
+    kle: { fr: "Klesia", en: "Klesia", theme: ["web", "eng"] },
+    lisn: { fr: "Générateur LISN", en: "LISN generator", theme: ["llm", "web", "mining"] },
+    inp: { fr: "Benchmark inpainting", en: "Inpainting benchmark", theme: ["vision", "eval"] },
+    fair: { fr: "Fairness in AI", en: "Fairness in AI", theme: ["llm", "stats"] },
+    f1: { fr: "Prédiction F1", en: "F1 prediction", theme: ["ml", "bi"] },
+    mem: { fr: "Memory Networks", en: "Memory Networks", theme: ["llm"] },
+    had: { fr: "HADACA3", en: "HADACA3", theme: ["ml", "eval"] },
+    bird: { fr: "Biodiversité", en: "Biodiversity", theme: ["stats"] }
+  };
+  var TH = {
+    llm: { fr: "LLM et NLP", en: "LLMs and NLP" },
+    vision: { fr: "Vision", en: "Vision" },
+    eval: { fr: "Évaluation de modèles", en: "Model evaluation" },
+    ml: { fr: "Machine learning", en: "Machine learning" },
+    stats: { fr: "Statistiques", en: "Statistics" },
+    mining: { fr: "Data mining", en: "Data mining" },
+    web: { fr: "Web et APIs", en: "Web and APIs" },
+    bi: { fr: "BI et reporting", en: "BI and reporting" },
+    eng: { fr: "Data engineering", en: "Data engineering" }
+  };
+  // Tools: only links to projects where the tool is documented.
+  var TOOLS = [
+    { n: "Python", s: "model", p: ["lisn", "fair", "f1"] },
+    { n: "Pandas", s: "model", p: ["f1"] },
+    { n: "Scikit-learn", s: "model", p: ["f1"] },
+    { n: "XGBoost", s: "model", p: [] },
+    { n: "PyTorch", s: "model", p: [] },
+    { n: "TensorFlow", s: "model", p: [] },
+    { n: "Mistral-7B", s: "llm", p: ["fair"] },
+    { n: "LLM", s: "llm", p: ["lisn", "fair"] },
+    { n: "Hugging Face", s: "llm", p: ["fair"] },
+    { n: "Zero-shot prompting", s: "llm", p: ["fair"] },
+    { n: "FastF1", s: "ingest", p: ["f1"] },
+    { n: "Excel", s: "ingest", p: ["cre"] },
+    { n: "SQL", s: "ingest", p: ["kle"] },
+    { n: "Jupyter", s: "ingest", p: ["fair"] },
+    { n: "PostgreSQL", s: "store", p: ["kle"] },
+    { n: "DBeaver", s: "store", p: ["kle"] },
+    { n: "ETL", s: "store", p: [] },
+    { n: "Spark", s: "store", p: [] },
+    { n: "FastAPI", s: "apps", p: ["lisn"] },
+    { n: "React", s: "apps", p: ["lisn"] },
+    { n: "TypeScript", s: "apps", p: ["lisn"] },
+    { n: "Vue.js", s: "apps", p: ["kle"] },
+    { n: ".NET", s: "apps", p: ["kle"] },
+    { n: "Docker", s: "apps", p: [] },
+    { n: "Git", s: "apps", p: [] },
+    { n: "Grist", s: "viz", p: ["cre"] },
+    { n: "Matplotlib", s: "viz", p: ["f1"] },
+    { n: "Seaborn", s: "viz", p: [] },
+    { n: "Power BI", s: "viz", p: [] },
+    { n: "Tableau", s: "viz", p: [] },
+    { n: "ROC-AUC · IoU", s: "eval", p: ["inp"] },
+    { n: "Difference-in-Differences", s: "eval", p: ["fair"] },
+    { n: "Bootstrap · LOESS", s: "eval", p: ["bird"] },
+    { n: "FP-Growth · Eclat", s: "eval", p: ["lisn"] },
+    { n: "Hyperparameter tuning", s: "eval", p: ["had"] },
+    { n: "Pretrained vision models", s: "eval", p: ["inp"] },
+    { n: "Attention · memory", s: "model", p: ["mem"] }
+  ];
+  var STAGES = [
+    { k: "ingest", fr: "Collecte", en: "Ingest" },
+    { k: "store", fr: "Stockage", en: "Store" },
+    { k: "model", fr: "Modélisation", en: "Model" },
+    { k: "llm", fr: "LLM", en: "LLMs" },
+    { k: "eval", fr: "Évaluation et statistiques", en: "Evaluation and statistics" },
+    { k: "apps", fr: "Applications", en: "Apps" },
+    { k: "viz", fr: "Visualisation", en: "Visualization" }
+  ];
+
+  /* ---------- Map (Fig. 1) ---------- */
+  var MAP_TOOLS = ["Python", "Mistral-7B", "Hugging Face", "LLM", "FastAPI", "React", "Excel", "Grist", ".NET", "PostgreSQL", "FastF1", "Scikit-learn", "Matplotlib", "ROC-AUC · IoU", "Pretrained vision models", "Difference-in-Differences", "Bootstrap · LOESS", "FP-Growth · Eclat", "Hyperparameter tuning", "Attention · memory"];
+  function drawMap() {
+    var W = 960, rowH = 26, top = 40;
+    var tools = TOOLS.filter(function (t) { return MAP_TOOLS.indexOf(t.n) > -1; });
+    var projs = Object.keys(P), themes = Object.keys(TH);
+    var H = top + tools.length * rowH + 10;
+    function ys(n) { var gap = (H - top - 10) / n; return function (i) { return top + gap * (i + .5); }; }
+    var yt = ys(tools.length), yp = ys(projs.length), yh = ys(themes.length);
+    var xT = 20, wT = 190, xP = 400, wP = 170, xH = 760;
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Map">';
+    s += '<text class="colhead" x="' + xT + '" y="20">' + (L() === "fr" ? "Outils" : "Tools") + '</text>';
+    s += '<text class="colhead" x="' + xP + '" y="20">' + (L() === "fr" ? "Projets" : "Projects") + '</text>';
+    s += '<text class="colhead" x="' + xH + '" y="20">' + (L() === "fr" ? "Thèmes" : "Themes") + '</text>';
+    tools.forEach(function (t, i) {
+      t.p.forEach(function (pk) {
+        var j = projs.indexOf(pk), x1 = xT + wT, y1 = yt(i), x2 = xP, y2 = yp(j);
+        s += '<path class="edge" data-a="t' + i + '" data-b="p-' + pk + '" d="M' + x1 + ' ' + y1 + ' C' + (x1 + 100) + ' ' + y1 + ',' + (x2 - 100) + ' ' + y2 + ',' + x2 + ' ' + y2 + '"/>';
+      });
+    });
+    projs.forEach(function (pk, j) {
+      P[pk].theme.forEach(function (hk) {
+        var k = themes.indexOf(hk), x1 = xP + wP, y1 = yp(j), x2 = xH - 6, y2 = yh(k);
+        s += '<path class="edge" data-a="p-' + pk + '" data-b="h-' + hk + '" d="M' + x1 + ' ' + y1 + ' C' + (x1 + 90) + ' ' + y1 + ',' + (x2 - 90) + ' ' + y2 + ',' + x2 + ' ' + y2 + '"/>';
+      });
+    });
+    tools.forEach(function (t, i) {
+      s += '<g class="node tool" tabindex="0" data-id="t' + i + '"><rect x="' + xT + '" y="' + (yt(i) - 10) + '" width="' + wT + '" height="20" rx="4"/><text x="' + (xT + 8) + '" y="' + (yt(i) + 4) + '">' + esc(t.n) + '</text></g>';
+    });
+    projs.forEach(function (pk, j) {
+      s += '<g class="node proj" tabindex="0" data-id="p-' + pk + '"><rect x="' + xP + '" y="' + (yp(j) - 13) + '" width="' + wP + '" height="26" rx="13"/><text x="' + (xP + 12) + '" y="' + (yp(j) + 4) + '">' + esc(P[pk][L()]) + '</text></g>';
+    });
+    themes.forEach(function (hk, k) {
+      s += '<g class="node theme" tabindex="0" data-id="h-' + hk + '"><rect x="' + (xH - 6) + '" y="' + (yh(k) - 12) + '" width="190" height="24"/><text x="' + xH + '" y="' + (yh(k) + 5) + '">' + esc(TH[hk][L()]) + '</text></g>';
+    });
+    s += '</svg>';
+    var box = document.getElementById("map");
+    box.innerHTML = s;
+    var edges = box.querySelectorAll(".edge");
+    function focus(id) {
+      var hotN = {}; hotN[id] = 1;
+      // walk one step left and right through edges, and two steps for a project's tools/themes chain
+      var frontier = [id];
+      for (var step = 0; step < 2; step++) {
+        var next = [];
+        edges.forEach(function (e) {
+          var a = e.getAttribute("data-a"), b = e.getAttribute("data-b");
+          frontier.forEach(function (f) {
+            if (a === f || b === f) {
+              // do not spread from a tool to other tools through a project, or from a theme to other themes
+              var other = a === f ? b : a;
+              if (step === 1 && id.charAt(0) !== "p") {
+                if (id.charAt(0) === "t" && other.charAt(0) === "t") return;
+                if (id.charAt(0) === "h" && other.charAt(0) === "h") return;
+              }
+              if (step === 1 && id.charAt(0) === "p") return;
+              e.classList.add("hot"); hotN[a] = 1; hotN[b] = 1; next.push(other);
+            }
+          });
+        });
+        frontier = next;
+      }
+      box.classList.add("focus");
+      box.querySelectorAll(".node").forEach(function (n) { n.classList.toggle("hot", !!hotN[n.getAttribute("data-id")]); });
+    }
+    function clear() {
+      box.classList.remove("focus");
+      box.querySelectorAll(".hot").forEach(function (n) { n.classList.remove("hot"); });
+    }
+    box.querySelectorAll(".node").forEach(function (n) {
+      var id = n.getAttribute("data-id");
+      n.addEventListener("mouseenter", function () { clear(); focus(id); });
+      n.addEventListener("focus", function () { clear(); focus(id); });
+      n.addEventListener("click", function () { clear(); focus(id); });
+      n.addEventListener("mouseleave", clear);
+      n.addEventListener("blur", clear);
+    });
+  }
+
+  /* ---------- Benchmark charts (Fig. 4, 5) ---------- */
+  // Source: report Tables 1-3 (TGIF test set, mean over three resamples).
+  var BENCH = [
+    { m: "TruFor", auc: 0.98, iou: 0.72, params: 68.7 },
+    { m: "PSCC-Net", auc: 0.50, iou: 0.21, iou02: 0.33, params: 3.7 },
+    { m: "ForMa", auc: 0.48, iou: 0.21, params: 37.3 },
+    { m: "AEROBLADE", auc: 0.51, iou: 0.07, params: 98.4 }
+  ];
+  var benchMode = "auc", lowThr = false;
+  function pscc() { return lowThr ? 0.33 : 0.21; }
+  function drawBench() {
+    var W = 620, rowH = 44, left = 110, right = 60, top = 14, H = top + BENCH.length * rowH + 34;
+    var plotW = W - left - right, ref = benchMode === "auc" ? 0.50 : 0.06;
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="' + (benchMode === "auc" ? "ROC-AUC" : "IoU") + '">';
+    [0, .25, .5, .75, 1].forEach(function (t) {
+      var x = left + t * plotW;
+      s += '<line class="grid" x1="' + x + '" x2="' + x + '" y1="' + top + '" y2="' + (H - 28) + '"/>';
+      s += '<text x="' + x + '" y="' + (H - 10) + '" text-anchor="middle">' + num(t, t % .5 === 0 ? 1 : 2) + '</text>';
+    });
+    BENCH.forEach(function (d, i) {
+      var v = benchMode === "auc" ? d.auc : (d.m === "PSCC-Net" ? pscc() : d.iou);
+      var y = top + i * rowH + 8, w = v * plotW;
+      s += '<text class="lbl" x="' + (left - 12) + '" y="' + (y + 18) + '" text-anchor="end">' + d.m + '</text>';
+      s += '<rect class="bar' + (d.m === "TruFor" ? " best" : "") + '" x="' + left + '" y="' + y + '" width="' + w + '" height="26" rx="2"/>';
+      s += '<text class="lbl" x="' + (left + w + 8) + '" y="' + (y + 18) + '">' + num(v) + '</text>';
+    });
+    var rx = left + ref * plotW;
+    s += '<line class="ref" x1="' + rx + '" x2="' + rx + '" y1="' + (top - 4) + '" y2="' + (H - 28) + '"/>';
+    s += '</svg>';
+    document.getElementById("chart-bench").innerHTML = s;
+  }
+  function drawScatter() {
+    var W = 620, H = 300, l = 56, r = 24, t = 18, b = 46, pw = W - l - r, ph = H - t - b;
+    function X(v) { return l + v / 100 * pw; } function Y(v) { return t + (1 - v / 0.8) * ph; }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="Params vs IoU">';
+    [0, 25, 50, 75, 100].forEach(function (v) { s += '<line class="grid" x1="' + X(v) + '" x2="' + X(v) + '" y1="' + t + '" y2="' + (t + ph) + '"/><text x="' + X(v) + '" y="' + (t + ph + 18) + '" text-anchor="middle">' + v + '</text>'; });
+    [0, .2, .4, .6, .8].forEach(function (v) { s += '<line class="grid" x1="' + l + '" x2="' + (l + pw) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text x="' + (l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + num(v, 1) + '</text>'; });
+    s += '<text x="' + (l + pw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + (L() === "fr" ? "Paramètres (millions)" : "Parameters (millions)") + '</text>';
+    s += '<text x="14" y="' + (t + ph / 2) + '" text-anchor="middle" transform="rotate(-90 14 ' + (t + ph / 2) + ')">IoU</text>';
+    s += '<line class="ref" x1="' + l + '" x2="' + (l + pw) + '" y1="' + Y(0.06) + '" y2="' + Y(0.06) + '"/>';
+    BENCH.forEach(function (d) {
+      var v = d.m === "PSCC-Net" ? pscc() : d.iou, cx = X(d.params), cy = Y(v);
+      var anchor = d.params > 80 ? "end" : "start", dx = d.params > 80 ? -10 : 10;
+      s += '<circle class="pt' + (d.m === "TruFor" ? " best" : "") + '" cx="' + cx + '" cy="' + cy + '" r="6"/>';
+      s += '<text class="lbl" x="' + (cx + dx) + '" y="' + (cy - 8) + '" text-anchor="' + anchor + '">' + d.m + ' · ' + num(v) + '</text>';
+    });
+    s += '</svg>';
+    document.getElementById("chart-scatter").innerHTML = s;
+  }
+
+  /* ---------- Fairness cases (Fig. 6) ---------- */
+  // Source: Fairness in AI report, Tables 1 and 2.
+  var CASES = [
+    { region: { fr: "États-Unis", en: "USA" }, target: "CNN", ctrl: ["MSNBC", "Fox News"], event: { fr: "Fusion Warner Bros. Discovery, nouveau PDG", en: "Warner Bros. Discovery merger, new CEO" }, win: "2022", subj: ["Donald Trump", "Hunter Biden", "Border + Crisis/Migrants"] },
+    { region: { fr: "Inde", en: "India" }, target: "NDTV", ctrl: ["Times of India", "Hindustan Times"], event: { fr: "Rachat par le groupe Adani", en: "Adani Group takeover" }, win: "2022–23", subj: ["Narendra Modi", "Rahul Gandhi", "Adani"] },
+    { region: { fr: "Royaume-Uni", en: "UK" }, target: "The Independent", ctrl: ["The Guardian", "BBC News"], event: { fr: "Investissement saoudien", en: "Saudi investment" }, win: "2017–19", subj: ["Saudi Arabia", "Arms Sales", "Saudi + Women"] }
+  ];
+  var caseI = 0;
+  function drawCase() {
+    var c = CASES[caseI], fr = L() === "fr";
+    var h = '<div><dt>' + (fr ? "Cas " : "Case ") + (caseI + 1) + ' / 3</dt><dd><b>' + c.region[L()] + '</b> · ' + c.win + '</dd></div>';
+    h += '<div><dt>' + (fr ? "Événement" : "Event") + '</dt><dd>' + c.event[L()] + '</dd></div>';
+    h += '<div><dt>' + (fr ? "Média ciblé contre groupe témoin" : "Target outlet against control group") + '</dt><dd class="vs"><span class="outlet target">' + c.target + '</span><span>vs</span>' + c.ctrl.map(function (o) { return '<span class="outlet">' + o + '</span>'; }).join("") + '</dd></div>';
+    h += '<div><dt>' + (fr ? "Sujets suivis" : "Subjects tracked") + '</dt><dd>' + c.subj.join(" · ") + '</dd></div>';
+    document.getElementById("case-box").innerHTML = h;
+  }
+
+  /* ---------- Timeline (Fig. 7) ---------- */
+  var SPANS = [
+    { fr: "EPITA, Bachelor", en: "EPITA, B.Sc.", a: [2022, 8], b: [2025, 7], k: "edu" },
+    { fr: "Paris-Saclay, Master", en: "Paris-Saclay, M.Sc.", a: [2025, 8], b: [2027, 7], k: "edu" },
+    { fr: "Klesia", en: "Klesia", a: [2025, 1], b: [2025, 7], k: "job" },
+    { fr: "LISN", en: "LISN", a: [2026, 0], b: [2026, 4], k: "job" },
+    { fr: "Créteil", en: "Créteil", a: [2026, 4], b: [2026, 6], k: "job" },
+    { fr: "Stage recherché", en: "Internship sought", a: [2027, 2], b: [2027, 7], k: "next" }
+  ];
+  function drawTime() {
+    var W = 640, l = 150, r = 16, t = 10, rowH = 30, H = t + SPANS.length * rowH + 30, pw = W - l - r;
+    var t0 = 2022 + 8 / 12, t1 = 2027 + 8 / 12;
+    function X(y, m) { return l + ((y + m / 12) - t0) / (t1 - t0) * pw; }
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="Timeline">';
+    [2023, 2024, 2025, 2026, 2027].forEach(function (y) { var x = X(y, 0); s += '<line class="grid" x1="' + x + '" x2="' + x + '" y1="' + t + '" y2="' + (H - 24) + '"/><text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle">' + y + '</text>'; });
+    SPANS.forEach(function (d, i) {
+      var y = t + i * rowH + 6, x1 = X(d.a[0], d.a[1]), x2 = X(d.b[0], d.b[1] + 1);
+      s += '<text class="lbl" x="' + (l - 10) + '" y="' + (y + 13) + '" text-anchor="end">' + d[L()] + '</text>';
+      if (d.k === "next") s += '<rect x="' + x1 + '" y="' + y + '" width="' + (x2 - x1) + '" height="18" rx="3" fill="none" stroke="var(--accent)" stroke-dasharray="4 3" stroke-width="1.5"/>';
+      else s += '<rect class="bar' + (d.k === "job" ? " best" : "") + '" x="' + x1 + '" y="' + y + '" width="' + Math.max(4, x2 - x1) + '" height="18" rx="3"/>';
+    });
+    var now = new Date(), nx = X(now.getFullYear(), now.getMonth() + now.getDate() / 31);
+    if (nx > l && nx < l + pw) s += '<line x1="' + nx + '" x2="' + nx + '" y1="' + t + '" y2="' + (H - 24) + '" stroke="var(--ink)" stroke-width="1.5"/><text x="' + (nx + 4) + '" y="' + (t + 8) + '">' + (L() === "fr" ? "aujourd'hui" : "today") + '</text>';
+    s += '</svg>';
+    document.getElementById("chart-time").innerHTML = s;
+  }
+
+  /* ---------- Skills and tracing ---------- */
+  var tracedProj = null;
+  function drawSkills() {
+    var box = document.getElementById("stages");
+    box.innerHTML = STAGES.map(function (st) {
+      return '<div class="stage"><h5>' + st[L()] + '</h5><div class="tools">' + TOOLS.filter(function (t) { return t.s === st.k; }).map(function (t) {
+        return '<button class="tool" type="button" data-p="' + t.p.join(" ") + '">' + esc(t.n) + '</button>';
+      }).join("") + '</div></div>';
+    }).join("");
+    var chips = document.getElementById("pchips");
+    chips.innerHTML = Object.keys(P).map(function (k) { return '<button class="pchip" type="button" data-k="' + k + '" aria-pressed="' + (tracedProj === k) + '">' + esc(P[k][L()]) + '</button>'; }).join("");
+    box.querySelectorAll(".tool").forEach(function (b) {
+      b.addEventListener("mouseenter", function () { if (!tracedProj) showTool(b); });
+      b.addEventListener("focus", function () { if (!tracedProj) showTool(b); });
+      b.addEventListener("click", function () { tracedProj = null; syncChips(); showTool(b); });
+      b.addEventListener("mouseleave", function () { if (!tracedProj) out(""); });
+    });
+    chips.querySelectorAll(".pchip").forEach(function (c) {
+      c.addEventListener("click", function () { var k = c.getAttribute("data-k"); tracedProj = tracedProj === k ? null : k; syncChips(); traceProject(); });
+    });
+    traceProject();
+  }
+  function out(h) { document.getElementById("trace-out").innerHTML = h; }
+  function showTool(b) {
+    var ps = b.getAttribute("data-p").split(" ").filter(Boolean), fr = L() === "fr";
+    document.getElementById("stages").classList.remove("tracing");
+    document.querySelectorAll(".tool").forEach(function (t) { t.classList.toggle("hot", t === b); });
+    out(ps.length ? "<b>" + esc(b.textContent) + "</b> " + (fr ? "utilisé dans : " : "used in: ") + ps.map(function (k) { return esc(P[k][L()]); }).join(" · ")
+      : "<b>" + esc(b.textContent) + "</b> " + (fr ? ": vu en cours, pas encore dans un projet présenté ici." : ": learned in courses, not yet in a project shown here."));
+  }
+  function syncChips() { document.querySelectorAll(".pchip").forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-k") === tracedProj); }); }
+  function traceProject() {
+    var box = document.getElementById("stages");
+    if (!tracedProj) { box.classList.remove("tracing"); document.querySelectorAll(".tool").forEach(function (t) { t.classList.remove("hot"); }); out(""); return; }
+    box.classList.add("tracing");
+    var n = 0;
+    document.querySelectorAll(".tool").forEach(function (t) { var hit = t.getAttribute("data-p").split(" ").indexOf(tracedProj) > -1; t.classList.toggle("hot", hit); if (hit) n++; });
+    out("<b>" + esc(P[tracedProj][L()]) + "</b> " + (L() === "fr" ? "utilise " + n + " des outils ci-dessus." : "uses " + n + " of the tools above."));
+  }
+
+  /* ---------- Role matcher ---------- */
+  var ROLES = [
+    { k: "ds", n: "Data Scientist", p: ["inp", "fair", "f1"], fr: "Évaluation rigoureuse de modèles, LLM et modélisation prédictive.", en: "Rigorous model evaluation, LLMs and predictive modeling." },
+    { k: "da", n: "Data Analyst", p: ["cre", "fair", "bird"], fr: "Tableaux de bord en production, analyse causale et statistiques.", en: "Dashboards in production, causal analysis and statistics." },
+    { k: "de", n: "Data Engineer", p: ["lisn", "kle", "cre"], fr: "Pipelines de données, API FastAPI et bases PostgreSQL.", en: "Data pipelines, FastAPI services and PostgreSQL databases." },
+    { k: "ai", n: { fr: "Ingénieur IA", en: "AI Engineer" }, p: ["lisn", "fair", "inp"], fr: "LLM en local, génération de données et benchmark de modèles de vision.", en: "Local LLMs, data generation and vision model benchmarking." }
+  ];
+  var role = null;
+  function drawRoles() {
+    var box = document.getElementById("roles");
+    box.innerHTML = ROLES.map(function (r) { return '<button class="act" type="button" data-k="' + r.k + '" aria-pressed="' + (role === r.k) + '">' + (typeof r.n === "string" ? r.n : r.n[L()]) + '</button>'; }).join("");
+    box.querySelectorAll(".act").forEach(function (b) { b.addEventListener("click", function () { role = b.getAttribute("data-k"); drawRoles(); }); });
+    var r = ROLES.filter(function (x) { return x.k === role; })[0], o = document.getElementById("match-out");
+    if (!r) { o.innerHTML = '<span style="color:var(--muted)">' + (L() === "fr" ? "Choisissez un poste pour voir les trois travaux les plus pertinents." : "Pick a role to see the three most relevant pieces of work.") + '</span>'; return; }
+    o.innerHTML = '<div>' + r[L()] + '</div><ol>' + r.p.map(function (k) { return "<li>" + esc(P[k][L()]) + "</li>"; }).join("") + '</ol>';
+  }
+
+  /* ---------- Pipelines ---------- */
+  document.querySelectorAll("[data-run]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var steps = document.getElementById(b.getAttribute("data-run")).querySelectorAll(".step"), i = 0;
+      steps.forEach(function (s) { s.classList.remove("on"); });
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) { steps.forEach(function (s) { s.classList.add("on"); }); return; }
+      (function tick() { if (i > 0) steps[i - 1].classList.remove("on"); if (i < steps.length) { steps[i].classList.add("on"); i++; setTimeout(tick, 550); } else steps[steps.length - 1].classList.add("on"); })();
+    });
+  });
+
+  /* ---------- Controls ---------- */
+  document.getElementById("b-det").addEventListener("click", function () { benchMode = "auc"; this.setAttribute("aria-pressed", "true"); document.getElementById("b-loc").setAttribute("aria-pressed", "false"); drawBench(); });
+  document.getElementById("b-loc").addEventListener("click", function () { benchMode = "iou"; this.setAttribute("aria-pressed", "true"); document.getElementById("b-det").setAttribute("aria-pressed", "false"); drawBench(); });
+  document.getElementById("b-thr").addEventListener("click", function () { lowThr = !lowThr; this.setAttribute("aria-pressed", String(lowThr)); drawScatter(); drawBench(); });
+  document.getElementById("b-case").addEventListener("click", function () { caseI = (caseI + 1) % CASES.length; drawCase(); });
+  document.getElementById("copy").addEventListener("click", function () {
+    var b = this;
+    try { navigator.clipboard.writeText("sathyaerwangnanou@gmail.com").then(function () { b.dataset.ok = "1"; b.firstChild.textContent = "Copié"; b.lastChild.textContent = "Copied"; setTimeout(function () { b.firstChild.textContent = "Copier"; b.lastChild.textContent = "Copy"; }, 1600); }, function () {}); } catch (e) {}
+  });
+
+  function renderAll() { drawMap(); drawBench(); drawScatter(); drawCase(); drawTime(); drawSkills(); drawRoles(); }
+
+  function setLang(l) {
+    html.setAttribute("data-lang", l); html.lang = l;
+    document.getElementById("tog-lang").textContent = l === "fr" ? "EN" : "FR";
+    try { localStorage.setItem("sg-lang", l); } catch (e) {}
+    renderAll();
+  }
+  document.getElementById("tog-lang").addEventListener("click", function () { setLang(L() === "fr" ? "en" : "fr"); });
+
+  function isDark() {
+    var t = html.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function syncThemeBtn() {
+    var b = document.getElementById("tog-theme"), d = isDark();
+    b.querySelector(".fr").textContent = d ? "Clair" : "Sombre";
+    b.querySelector(".en").textContent = d ? "Light" : "Dark";
+  }
+  document.getElementById("tog-theme").addEventListener("click", function () {
+    html.setAttribute("data-theme", isDark() ? "light" : "dark");
+    try { localStorage.setItem("sg-theme", html.getAttribute("data-theme")); } catch (e) {}
+    syncThemeBtn();
+  });
+
+  var savedL = null, savedT = null;
+  try { savedL = localStorage.getItem("sg-lang"); savedT = localStorage.getItem("sg-theme"); } catch (e) {}
+  if (savedT === "dark" || savedT === "light") html.setAttribute("data-theme", savedT);
+  syncThemeBtn();
+  setLang(savedL === "en" ? "en" : "fr");
+})();
+</script>
+</body>
+</html>
