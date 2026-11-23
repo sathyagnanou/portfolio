@@ -147,21 +147,55 @@ svg .pt.best { fill: var(--accent); }
 .pcard p { margin: 4px 0 0; font-size: 15px; }
 .pcard .stack { margin-top: auto; padding-top: 10px; }
 
-/* Map */
-#map svg { display: block; width: 100%; height: auto; min-width: 680px; }
-#map .edge { stroke: var(--line); stroke-width: 1.2; fill: none; transition: stroke .2s, stroke-width .2s, opacity .2s; }
-#map .edge.hot { stroke: var(--accent); stroke-width: 1.8; }
-#map.focus .edge:not(.hot) { opacity: .25; }
-#map .node rect { fill: var(--paper); stroke: var(--line); }
-#map .node text { fill: var(--ink); font-size: 11.5px; }
-#map .node.proj rect { fill: var(--bg); stroke: var(--ink); }
-#map .node.theme text { font-family: var(--display); font-style: italic; font-size: 14px; }
-#map .node.theme rect { stroke: transparent; fill: transparent; }
-#map .node { cursor: pointer; }
-#map .node.hot rect { stroke: var(--accent); }
-#map .node.hot text { fill: var(--accent); }
-#map.focus .node:not(.hot) { opacity: .35; }
-.colhead { font-family: var(--mono); font-size: 11px; fill: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+/* Map: a cartographic map. Regions = themes, cities = projects, villages = tools. */
+#map { padding: 0; overflow-x: auto; }
+#map svg { display: block; width: 100%; height: auto; min-width: 680px; border-radius: 9px; }
+#map .sea { fill: color-mix(in srgb, var(--data-soft) 28%, var(--bg)); }
+#map .grat { stroke: var(--data-soft); stroke-width: .7; stroke-dasharray: 1 5; opacity: .9; }
+#map .grat.on-land { stroke: var(--muted); opacity: .22; pointer-events: none; }
+#map .ripple { fill: none; stroke: var(--data-soft); stroke-linejoin: round; opacity: .9; }
+#map .ripple-gap { fill: none; stroke: color-mix(in srgb, var(--data-soft) 28%, var(--bg)); stroke-linejoin: round; }
+#map .isle { fill: var(--paper); stroke: var(--ink); stroke-width: 1; }
+#map .cell { stroke: none; transition: fill .25s; }
+#map .rg0 { fill: color-mix(in srgb, var(--data-soft) 16%, var(--paper)); }
+#map .rg1 { fill: color-mix(in srgb, var(--data-soft) 34%, var(--paper)); }
+#map .rg2 { fill: color-mix(in srgb, #d9b45a 18%, var(--paper)); }
+#map .rg3 { fill: color-mix(in srgb, var(--accent) 9%, var(--paper)); }
+#map .band { fill: none; stroke: var(--data); stroke-width: 9; opacity: .16; transition: stroke .25s, opacity .25s; }
+#map .region.hot .cell { fill: color-mix(in srgb, var(--accent) 20%, var(--paper)); }
+#map .region.hot .band { stroke: var(--accent); opacity: .45; }
+#map .border { fill: none; stroke: var(--muted); stroke-width: .8; stroke-dasharray: 6 3 1.5 3; opacity: .7; pointer-events: none; }
+#map .coast { fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; pointer-events: none; }
+#map .halo { paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; stroke-linejoin: round; }
+#map .rname { font-family: var(--display); font-style: italic; font-size: 13.5px; letter-spacing: .16em; fill: var(--muted); stroke-opacity: .7; }
+#map .road { fill: none; stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 2 3; stroke-linecap: round; transition: stroke .2s, stroke-width .2s, opacity .2s; }
+#map .road.hot { stroke: var(--accent); stroke-width: 2.2; stroke-dasharray: none; }
+#map .hit { fill: transparent; }
+#map .vil { fill: var(--data); stroke: var(--paper); stroke-width: 1; }
+#map .vname { font-family: var(--mono); font-size: 10.5px; fill: var(--ink); }
+#map .city { fill: var(--paper); stroke: var(--ink); stroke-width: 1.6; }
+#map .city-dot { fill: var(--ink); }
+#map .cname { font-family: var(--display); font-weight: 500; font-size: 15px; fill: var(--ink); }
+#map .node { cursor: pointer; transition: opacity .2s; }
+#map .node:focus { outline: none; }
+#map .node.hot .vname, #map .node.hot .cname, #map .node.hot .rname { fill: var(--accent); }
+#map .node.hot .vil { fill: var(--accent); }
+#map .node.hot .city { stroke: var(--accent); }
+#map .node.hot .city-dot { fill: var(--accent); }
+#map.focus .node:not(.hot) { opacity: .3; }
+#map.focus .road:not(.hot) { opacity: .15; }
+#map .cart { fill: var(--paper); stroke: var(--ink); stroke-width: .9; }
+#map .cart-in { fill: none; stroke: var(--line); stroke-width: .8; }
+#map .cart-t { font-family: var(--display); font-style: italic; font-size: 21px; fill: var(--ink); }
+#map .cart-s, #map .scale-l { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; fill: var(--muted); }
+#map .leg { font-family: var(--mono); font-size: 10.5px; fill: var(--ink); }
+#map .rose { fill: var(--paper); stroke: var(--ink); stroke-width: .9; stroke-linejoin: round; }
+#map .rose-n { fill: var(--accent); }
+#map .rose-ring { fill: none; stroke: var(--ink); stroke-width: .7; opacity: .6; }
+#map .rose-l { font-family: var(--display); font-size: 15px; font-weight: 500; fill: var(--ink); }
+#map .sea-name { font-family: var(--display); font-style: italic; font-size: 17px; letter-spacing: .22em; fill: var(--data); opacity: .8; }
+#map .sb-a { fill: var(--ink); } #map .sb-b { fill: var(--paper); stroke: var(--ink); stroke-width: .8; }
+#map .deco, #map .sea-name { pointer-events: none; }
 
 /* Skills */
 .stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 26px; }
@@ -244,11 +278,11 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <div class="col" style="padding:0">
     <div class="kicker"><span class="fr">Vue d'ensemble</span><span class="en">Overview</span></div>
     <h2 id="map-h"><span class="fr">La carte</span><span class="en">The map</span></h2>
-    <p class="sub"><span class="fr">Les outils à gauche, les projets au centre, les thèmes à droite. Survolez ou touchez un élément pour suivre ses liens.</span><span class="en">Tools on the left, projects in the middle, themes on the right. Hover or tap any item to follow its links.</span></p>
+    <p class="sub"><span class="fr">Chaque thème est une région, chaque projet une ville, chaque outil un village relié par la route aux projets où je l'ai utilisé. Survolez ou touchez un lieu pour suivre ses routes.</span><span class="en">Each theme is a region, each project a city, each tool a village linked by road to the projects where I used it. Hover or tap any place to follow its roads.</span></p>
   </div>
   <figure class="fig">
     <div class="fig-box" id="map"></div>
-    <figcaption><b>Fig. 1</b> <span class="fr">Chaque trait relie un outil à un projet où je l'ai réellement utilisé, puis le projet à son thème.</span><span class="en">Each line links a tool to a project where I actually used it, then the project to its theme.</span></figcaption>
+    <figcaption><b>Fig. 1</b> <span class="fr">Chaque route relie un outil à un projet où je l'ai réellement utilisé. Une ville posée près d'une frontière touche plusieurs thèmes.</span><span class="en">Each road links a tool to a project where I actually used it. A city near a border belongs to several themes.</span></figcaption>
   </figure>
 </section>
 
@@ -574,69 +608,176 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   ];
 
   /* ---------- Map (Fig. 1) ---------- */
-  var MAP_TOOLS = ["Python", "Mistral-7B", "Hugging Face", "LLM", "FastAPI", "React", "Excel", "Grist", ".NET", "PostgreSQL", "FastF1", "Scikit-learn", "Matplotlib", "ROC-AUC · IoU", "Pretrained vision models", "Difference-in-Differences", "Bootstrap · LOESS", "FP-Growth · Eclat", "Hyperparameter tuning", "Attention · memory"];
+  // A cartographic map: themes are regions, projects are cities, tools are villages linked by roads.
+  var GEO = {
+    // Region seeds (a Voronoi cell per theme, clipped to the continent) and label positions.
+    site: { vision: [215, 175], llm: [420, 165], mining: [650, 150], eval: [170, 345], stats: [470, 335], web: [745, 290], ml: [320, 470], bi: [560, 495], eng: [740, 450] },
+    lab: { vision: [200, 172], llm: [470, 98], mining: [690, 132], eval: [165, 368], stats: [578, 338], web: [805, 282], ml: [282, 472], bi: [560, 545], eng: [782, 470] },
+    tint: { vision: 0, llm: 1, mining: 2, eval: 2, stats: 3, web: 2, ml: 1, bi: 2, eng: 0 },
+    // Cities: [x, y, label side]
+    city: { mem: [370, 175, "r"], fair: [440, 255, "r"], lisn: [600, 235, "r"], inp: [230, 250, "r"], had: [250, 390, "r"], bird: [490, 375, "r"], f1: [420, 460, "r"], cre: [545, 470, "r"], kle: [700, 380, "r"] },
+    vil: {
+      "Attention · memory": [330, 130, "r"], "Mistral-7B": [500, 185, "r"], "LLM": [545, 212, "r"], "Hugging Face": [360, 285, "l"],
+      "Python": [530, 288, "r"], "Difference-in-Differences": [400, 316, "l"], "FP-Growth · Eclat": [640, 172, "r"], "FastAPI": [672, 204, "r"],
+      "React": [655, 276, "r"], "ROC-AUC · IoU": [150, 292, "r"], "Pretrained vision models": [240, 207, "r"], "Hyperparameter tuning": [190, 432, "r"],
+      "Scikit-learn": [470, 507, "r"], "FastF1": [362, 505, "l"], "Matplotlib": [455, 422, "r"], "Bootstrap · LOESS": [548, 407, "r"],
+      "Excel": [605, 507, "r"], "Grist": [640, 440, "r"], ".NET": [772, 342, "r"], "PostgreSQL": [752, 415, "r"]
+    }
+  };
+  var MAP_TOOLS = Object.keys(GEO.vil);
   function drawMap() {
-    var W = 960, rowH = 26, top = 40;
+    var W = 960, H = 620, fr = L() === "fr";
     var tools = TOOLS.filter(function (t) { return MAP_TOOLS.indexOf(t.n) > -1; });
     var projs = Object.keys(P), themes = Object.keys(TH);
-    var H = top + tools.length * rowH + 10;
-    function ys(n) { var gap = (H - top - 10) / n; return function (i) { return top + gap * (i + .5); }; }
-    var yt = ys(tools.length), yp = ys(projs.length), yh = ys(themes.length);
-    var xT = 20, wT = 190, xP = 400, wP = 170, xH = 760;
-    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Map">';
-    s += '<text class="colhead" x="' + xT + '" y="20">' + (L() === "fr" ? "Outils" : "Tools") + '</text>';
-    s += '<text class="colhead" x="' + xP + '" y="20">' + (L() === "fr" ? "Projets" : "Projects") + '</text>';
-    s += '<text class="colhead" x="' + xH + '" y="20">' + (L() === "fr" ? "Thèmes" : "Themes") + '</text>';
-    tools.forEach(function (t, i) {
-      t.p.forEach(function (pk) {
-        var j = projs.indexOf(pk), x1 = xT + wT, y1 = yt(i), x2 = xP, y2 = yp(j);
-        s += '<path class="edge" data-a="t' + i + '" data-b="p-' + pk + '" d="M' + x1 + ' ' + y1 + ' C' + (x1 + 100) + ' ' + y1 + ',' + (x2 - 100) + ' ' + y2 + ',' + x2 + ' ' + y2 + '"/>';
+    function f1(v) { return Math.round(v * 10) / 10; }
+    function pathOf(pts) { return "M" + pts.map(function (p) { return f1(p[0]) + " " + f1(p[1]); }).join("L") + "Z"; }
+
+    // Continent outline: a noisy ellipse, deterministic so it never changes between renders.
+    var land = [], N = 200, cx = 480, cy = 318, rx = 400, ry = 262;
+    for (var i = 0; i < N; i++) {
+      var a = i / N * Math.PI * 2;
+      var r = 1 + .055 * Math.sin(3 * a + 1) + .04 * Math.sin(5 * a + 2) + .022 * Math.sin(9 * a + .5) + .01 * Math.sin(17 * a + 3);
+      land.push([cx + Math.cos(a) * rx * r, cy + Math.sin(a) * ry * r]);
+    }
+    var landD = pathOf(land);
+    // Two islets, for the look only.
+    function islet(x, y, s, seed) {
+      var pts = [];
+      for (var i = 0; i < 40; i++) { var a = i / 40 * Math.PI * 2, r = 1 + .18 * Math.sin(3 * a + seed) + .08 * Math.sin(7 * a + seed * 2); pts.push([x + Math.cos(a) * s * r * 1.4, y + Math.sin(a) * s * r]); }
+      return pathOf(pts);
+    }
+    var isles = [islet(908, 190, 15, 1), islet(70, 120, 11, 2.5)];
+
+    // Region cells: clip the continent by the bisector with every other seed.
+    function clip(poly, a, b) {
+      var mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1], out = [];
+      function f(p) { return (p[0] - mx) * dx + (p[1] - my) * dy; }
+      for (var i = 0; i < poly.length; i++) {
+        var p = poly[i], q = poly[(i + 1) % poly.length], fp = f(p), fq = f(q);
+        if (fp <= 0) out.push(p);
+        if ((fp < 0 && fq > 0) || (fp > 0 && fq < 0)) { var t = fp / (fp - fq); out.push([p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])]); }
+      }
+      return out;
+    }
+    var cells = {};
+    themes.forEach(function (hk) {
+      var poly = land;
+      themes.forEach(function (ok) { if (ok !== hk) poly = clip(poly, GEO.site[hk], GEO.site[ok]); });
+      cells[hk] = pathOf(poly);
+    });
+
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + (fr ? "Carte des projets, outils et thèmes" : "Map of projects, tools and themes") + '"><defs>';
+    themes.forEach(function (hk, k) { s += '<clipPath id="mapc' + k + '"><path d="' + cells[hk] + '"/></clipPath>'; });
+    s += '</defs>';
+
+    // Sea, graticule, coastal ripples.
+    s += '<rect class="sea" x="0" y="0" width="' + W + '" height="' + H + '"/>';
+    for (var gx = 80; gx < W; gx += 80) s += '<line class="grat" x1="' + gx + '" x2="' + gx + '" y1="0" y2="' + H + '"/>';
+    for (var gy = 80; gy < H; gy += 80) s += '<line class="grat" x1="0" x2="' + W + '" y1="' + gy + '" y2="' + gy + '"/>';
+    [46, 32, 18].forEach(function (w) {
+      [landD].concat(isles).forEach(function (d) {
+        s += '<path class="ripple" d="' + d + '" stroke-width="' + (w * (d === landD ? 1 : .45)) + '"/>';
+        s += '<path class="ripple-gap" d="' + d + '" stroke-width="' + (w * (d === landD ? 1 : .45) - 2.2) + '"/>';
       });
     });
-    projs.forEach(function (pk, j) {
-      P[pk].theme.forEach(function (hk) {
-        var k = themes.indexOf(hk), x1 = xP + wP, y1 = yp(j), x2 = xH - 6, y2 = yh(k);
-        s += '<path class="edge" data-a="p-' + pk + '" data-b="h-' + hk + '" d="M' + x1 + ' ' + y1 + ' C' + (x1 + 90) + ' ' + y1 + ',' + (x2 - 90) + ' ' + y2 + ',' + x2 + ' ' + y2 + '"/>';
-      });
-    });
-    tools.forEach(function (t, i) {
-      s += '<g class="node tool" tabindex="0" data-id="t' + i + '"><rect x="' + xT + '" y="' + (yt(i) - 10) + '" width="' + wT + '" height="20" rx="4"/><text x="' + (xT + 8) + '" y="' + (yt(i) + 4) + '">' + esc(t.n) + '</text></g>';
-    });
-    projs.forEach(function (pk, j) {
-      s += '<g class="node proj" tabindex="0" data-id="p-' + pk + '"><rect x="' + xP + '" y="' + (yp(j) - 13) + '" width="' + wP + '" height="26" rx="13"/><text x="' + (xP + 12) + '" y="' + (yp(j) + 4) + '">' + esc(P[pk][L()]) + '</text></g>';
-    });
+    isles.forEach(function (d) { s += '<path class="isle" d="' + d + '"/>'; });
+
+    // Regions with an inner shaded band along their borders.
     themes.forEach(function (hk, k) {
-      s += '<g class="node theme" tabindex="0" data-id="h-' + hk + '"><rect x="' + (xH - 6) + '" y="' + (yh(k) - 12) + '" width="190" height="24"/><text x="' + xH + '" y="' + (yh(k) + 5) + '">' + esc(TH[hk][L()]) + '</text></g>';
+      s += '<g class="region" data-h="' + hk + '"><path class="cell rg' + GEO.tint[hk] + '" d="' + cells[hk] + '"/>';
+      s += '<path class="band" d="' + cells[hk] + '" clip-path="url(#mapc' + k + ')"/></g>';
     });
+    themes.forEach(function (hk) { s += '<path class="border" d="' + cells[hk] + '"/>'; });
+    s += '<path class="coast" d="' + landD + '"/>';
+    for (gx = 80; gx < W; gx += 80) s += '<line class="grat on-land" x1="' + gx + '" x2="' + gx + '" y1="0" y2="' + H + '"/>';
+    for (gy = 80; gy < H; gy += 80) s += '<line class="grat on-land" x1="0" x2="' + W + '" y1="' + gy + '" y2="' + gy + '"/>';
+
+    // Region names.
+    themes.forEach(function (hk) {
+      var name = TH[hk][L()].toUpperCase(), p = GEO.lab[hk], words = name.split(" "), lines = [name];
+      if (name.length > 13 && words.length > 1) {
+        var best = 1, bestLen = 1e9;
+        for (var m = 1; m < words.length; m++) { var len = Math.max(words.slice(0, m).join(" ").length, words.slice(m).join(" ").length); if (len < bestLen) { bestLen = len; best = m; } }
+        lines = [words.slice(0, best).join(" "), words.slice(best).join(" ")];
+      }
+      s += '<g class="node theme" tabindex="0" data-id="h-' + hk + '"><text class="rname halo" x="' + p[0] + '" y="' + (p[1] - (lines.length - 1) * 7) + '" text-anchor="middle">';
+      lines.forEach(function (ln, i) { s += '<tspan x="' + p[0] + '" dy="' + (i ? 15 : 0) + '">' + esc(ln) + '</tspan>'; });
+      s += '</text></g>';
+    });
+
+    // Roads from villages to cities.
+    tools.forEach(function (t, i) {
+      var v = GEO.vil[t.n];
+      t.p.forEach(function (pk) {
+        var c = GEO.city[pk], mx = (v[0] + c[0]) / 2, my = (v[1] + c[1]) / 2, dx = c[0] - v[0], dy = c[1] - v[1];
+        s += '<path class="road" data-t="' + i + '" data-p="' + pk + '" d="M' + v[0] + ' ' + v[1] + ' Q' + f1(mx - dy * .18) + ' ' + f1(my + dx * .18) + ' ' + c[0] + ' ' + c[1] + '"/>';
+      });
+    });
+
+    // Villages (tools).
+    tools.forEach(function (t, i) {
+      var v = GEO.vil[t.n], left = v[2] === "l", w = t.n.length * 6.4 + 14;
+      s += '<g class="node tool" tabindex="0" data-id="t' + i + '"><rect class="hit" x="' + (left ? v[0] - w + 4 : v[0] - 6) + '" y="' + (v[1] - 9) + '" width="' + (w + 2) + '" height="18"/>';
+      s += '<rect class="vil" x="' + (v[0] - 3.5) + '" y="' + (v[1] - 3.5) + '" width="7" height="7"/>';
+      s += '<text class="vname halo" x="' + (v[0] + (left ? -8 : 8)) + '" y="' + (v[1] + 4) + '" text-anchor="' + (left ? "end" : "start") + '">' + esc(t.n) + '</text></g>';
+    });
+
+    // Cities (projects).
+    projs.forEach(function (pk) {
+      var c = GEO.city[pk], left = c[2] === "l", name = P[pk][L()], w = name.length * 7.6 + 20;
+      s += '<g class="node proj" tabindex="0" data-id="p-' + pk + '"><rect class="hit" x="' + (left ? c[0] - w + 8 : c[0] - 9) + '" y="' + (c[1] - 11) + '" width="' + w + '" height="22"/>';
+      s += '<circle class="city" cx="' + c[0] + '" cy="' + c[1] + '" r="6.5"/><circle class="city-dot" cx="' + c[0] + '" cy="' + c[1] + '" r="2.6"/>';
+      s += '<text class="cname halo" x="' + (c[0] + (left ? -11 : 11)) + '" y="' + (c[1] + 5) + '" text-anchor="' + (left ? "end" : "start") + '">' + esc(name) + '</text></g>';
+    });
+
+    // Cartouche.
+    s += '<g class="deco"><rect class="cart" x="22" y="22" width="232" height="62"/><rect class="cart-in" x="26" y="26" width="224" height="54"/>';
+    s += '<text class="cart-t" x="138" y="52" text-anchor="middle">' + (fr ? "Carte des travaux" : "A map of the work") + '</text>';
+    s += '<text class="cart-s" x="138" y="70" text-anchor="middle">S. GNANOU · MMXXVI</text></g>';
+
+    // Compass rose.
+    var ccx = 892, ccy = 92, star = [];
+    for (var k = 0; k < 16; k++) { var ang = k / 16 * Math.PI * 2 - Math.PI / 2, rr = k % 4 === 0 ? 36 : (k % 2 === 0 ? 18 : 6); star.push([ccx + Math.cos(ang) * rr, ccy + Math.sin(ang) * rr]); }
+    s += '<g class="deco"><circle class="rose-ring" cx="' + ccx + '" cy="' + ccy + '" r="26"/><circle class="rose-ring" cx="' + ccx + '" cy="' + ccy + '" r="22"/>';
+    s += '<path class="rose" d="' + pathOf(star) + '"/>';
+    s += '<path class="rose-n" d="M' + ccx + ' ' + (ccy - 36) + 'L' + (ccx + 6 * Math.cos(-Math.PI / 2 + Math.PI / 8)) + ' ' + (ccy + 6 * Math.sin(-Math.PI / 2 + Math.PI / 8)) + 'L' + ccx + ' ' + ccy + 'Z"/>';
+    s += '<text class="rose-l" x="' + ccx + '" y="' + (ccy - 42) + '" text-anchor="middle">N</text></g>';
+
+    // Sea name and scale bar.
+    s += '<text class="sea-name" x="128" y="566" text-anchor="middle">' + (fr ? "Mer des Données" : "Sea of Data") + '</text>';
+    s += '<g class="deco">';
+    for (k = 0; k < 4; k++) s += '<rect class="' + (k % 2 ? "sb-b" : "sb-a") + '" x="' + (40 + k * 30) + '" y="590" width="30" height="5"/>';
+    s += '<text class="scale-l" x="40" y="584">' + (fr ? "ÉCHELLE LIBRE" : "NOT TO SCALE") + '</text></g>';
+
+    // Legend.
+    var lx = 776, ly = 520;
+    s += '<g class="deco"><rect class="cart" x="' + lx + '" y="' + ly + '" width="166" height="84"/>';
+    s += '<circle class="city" cx="' + (lx + 16) + '" cy="' + (ly + 16) + '" r="5"/><circle class="city-dot" cx="' + (lx + 16) + '" cy="' + (ly + 16) + '" r="2"/><text class="leg" x="' + (lx + 32) + '" y="' + (ly + 20) + '">' + (fr ? "Projet" : "Project") + '</text>';
+    s += '<rect class="vil" x="' + (lx + 13) + '" y="' + (ly + 31) + '" width="6" height="6"/><text class="leg" x="' + (lx + 32) + '" y="' + (ly + 38) + '">' + (fr ? "Outil" : "Tool") + '</text>';
+    s += '<line class="road" x1="' + (lx + 6) + '" x2="' + (lx + 26) + '" y1="' + (ly + 52) + '" y2="' + (ly + 52) + '"/><text class="leg" x="' + (lx + 32) + '" y="' + (ly + 56) + '">' + (fr ? "Utilisé dans" : "Used in") + '</text>';
+    s += '<rect class="cell rg1" x="' + (lx + 8) + '" y="' + (ly + 64) + '" width="16" height="10"/><text class="leg" x="' + (lx + 32) + '" y="' + (ly + 74) + '">' + (fr ? "Thème" : "Theme") + '</text></g>';
+
     s += '</svg>';
     var box = document.getElementById("map");
     box.innerHTML = s;
-    var edges = box.querySelectorAll(".edge");
+
     function focus(id) {
-      var hotN = {}; hotN[id] = 1;
-      // walk one step left and right through edges, and two steps for a project's tools/themes chain
-      var frontier = [id];
-      for (var step = 0; step < 2; step++) {
-        var next = [];
-        edges.forEach(function (e) {
-          var a = e.getAttribute("data-a"), b = e.getAttribute("data-b");
-          frontier.forEach(function (f) {
-            if (a === f || b === f) {
-              // do not spread from a tool to other tools through a project, or from a theme to other themes
-              var other = a === f ? b : a;
-              if (step === 1 && id.charAt(0) !== "p") {
-                if (id.charAt(0) === "t" && other.charAt(0) === "t") return;
-                if (id.charAt(0) === "h" && other.charAt(0) === "h") return;
-              }
-              if (step === 1 && id.charAt(0) === "p") return;
-              e.classList.add("hot"); hotN[a] = 1; hotN[b] = 1; next.push(other);
-            }
-          });
-        });
-        frontier = next;
+      var hotT = {}, hotP = {}, hotH = {}, kind = id.charAt(0), key = id.replace(/^[tph]-?/, "");
+      if (kind === "t") { hotT[key] = 1; tools[key].p.forEach(function (p) { hotP[p] = 1; }); }
+      if (kind === "p") { hotP[key] = 1; tools.forEach(function (t, i) { if (t.p.indexOf(key) > -1) hotT[i] = 1; }); }
+      if (kind === "h") {
+        hotH[key] = 1;
+        projs.forEach(function (p) { if (P[p].theme.indexOf(key) > -1) hotP[p] = 1; });
+        tools.forEach(function (t, i) { if (t.p.some(function (p) { return hotP[p]; })) hotT[i] = 1; });
       }
+      if (kind !== "h") Object.keys(hotP).forEach(function (p) { P[p].theme.forEach(function (h) { hotH[h] = 1; }); });
       box.classList.add("focus");
-      box.querySelectorAll(".node").forEach(function (n) { n.classList.toggle("hot", !!hotN[n.getAttribute("data-id")]); });
+      box.querySelectorAll(".road").forEach(function (e) { e.classList.toggle("hot", !!(hotT[e.getAttribute("data-t")] && hotP[e.getAttribute("data-p")])); });
+      box.querySelectorAll(".region").forEach(function (g) { g.classList.toggle("hot", !!hotH[g.getAttribute("data-h")]); });
+      box.querySelectorAll(".node").forEach(function (n) {
+        var nid = n.getAttribute("data-id"), c = nid.charAt(0), k2 = nid.replace(/^[tph]-?/, "");
+        n.classList.toggle("hot", c === "t" ? !!hotT[k2] : c === "p" ? !!hotP[k2] : !!hotH[k2]);
+      });
     }
     function clear() {
       box.classList.remove("focus");
