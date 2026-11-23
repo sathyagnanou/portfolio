@@ -258,6 +258,9 @@ svg .sep { stroke: var(--line); }
 .stage h5 { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
 .tools { display: flex; flex-wrap: wrap; gap: 6px; }
 .tool { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 5px; padding: 3px 9px; cursor: pointer; transition: opacity .2s, border-color .2s, color .2s; }
+.stage-soft { grid-column: 1 / -1; }
+.tool { text-align: left; }
+.softskill { font-family: var(--body); font-size: 13.5px; border: 1px solid var(--line); border-radius: 999px; padding: 3px 11px; color: var(--ink); }
 .tool:hover, .tool.hot { border-color: var(--accent); color: var(--accent); }
 .trace-out { margin-top: 18px; font-size: 14.5px; color: var(--muted); min-height: 24px; }
 
@@ -577,7 +580,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   <div class="col part-head">
     <div class="kicker"><span class="fr">Partie 2 sur 2</span><span class="en">Part 2 of 2</span></div>
     <h2 id="p2-h"><span class="fr">Parcours</span><span class="en">Background</span></h2>
-    <p class="sub"><span class="fr">Les outils, classés par étape du pipeline, puis la formation.</span><span class="en">Tools, grouped by pipeline stage, then education.</span></p>
+    <p class="sub"><span class="fr">Les compétences, classées par domaine, puis la formation.</span><span class="en">Skills, grouped by area, then education.</span></p>
   </div>
 
   <div class="col block">
@@ -677,57 +680,95 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     bi: { fr: "BI et reporting", en: "BI and reporting" },
     eng: { fr: "Data engineering", en: "Data engineering" }
   };
-  // Tools: only links to projects where the tool is documented.
+  // Skills, as listed in the CV. p = projects on this page where the skill is documented.
+  // Entries with s: "map" are not shown in the skills grid; they only feed the map (Fig. 1).
   var TOOLS = [
-    { n: "Python", s: "model", p: ["lisn", "fair", "f1"] },
-    { n: "Pandas", s: "model", p: ["f1"] },
-    { n: "Scikit-learn", s: "model", p: ["f1"] },
-    { n: "XGBoost", s: "model", p: [] },
-    { n: "PyTorch", s: "model", p: [] },
-    { n: "TensorFlow", s: "model", p: [] },
-    { n: "Mistral-7B", s: "llm", p: ["fair"] },
-    { n: "LLM", s: "llm", p: ["lisn", "fair"] },
-    { n: "Hugging Face", s: "llm", p: ["fair"] },
-    { n: "Llama 3.2", s: "llm", p: ["fair"] },
-    { n: "Zero-shot prompting", s: "llm", p: ["fair"] },
-    { n: "FastF1", s: "model", p: ["f1"] },
-    { n: "Excel", s: "viz", p: ["cre"] },
-    { n: "SQL", s: "model", p: ["kle"] },
-    { n: "Jupyter", s: "apps", p: ["fair"] },
-    { n: "PostgreSQL", s: "store", p: ["kle"] },
-    { n: "DBeaver", s: "store", p: ["kle"] },
-    { n: "NoSQL", s: "store", p: [] },
-    { n: "ETL", s: "store", p: [] },
-    { n: "Spark", s: "store", p: [] },
-    { n: "FastAPI", s: "apps", p: ["lisn"] },
-    { n: "React", s: "apps", p: ["lisn"] },
-    { n: "TypeScript", s: "apps", p: ["lisn"] },
-    { n: "Vue.js", s: "apps", p: ["kle"] },
-    { n: ".NET", s: "apps", p: ["kle"] },
-    { n: "C#", s: "apps", p: ["kle"] },
-    { n: "Java", s: "apps", p: [] },
-    { n: "Docker", s: "apps", p: [] },
-    { n: "Git", s: "apps", p: [] },
-    { n: "Grist", s: "viz", p: ["cre"] },
+    { n: "Python", s: "lang", p: ["lisn", "fair", "f1"] },
+    { n: "SQL", s: "lang", p: ["kle"] },
+    { n: "R", s: "lang", p: [] },
+    { n: "Java", s: "lang", p: [] },
+    { n: "C#", s: "lang", p: ["kle"] },
+    { n: "JavaScript/TypeScript", s: "lang", p: ["lisn"] },
+
+    { n: "React", s: "web", p: ["lisn"] },
+    { n: "Vue.js", s: "web", p: ["kle"] },
+    { n: "API", s: "web", p: ["lisn"] },
+    { n: ".NET", s: "web", p: ["kle"] },
+    { n: "HTML/CSS", s: "web", p: [] },
+
+    { n: "Git", s: "tools", p: [] },
+    { n: "Docker", s: "tools", p: [] },
+    { n: "Jupyter", s: "tools", p: ["fair"] },
+
+    { n: "Pandas", s: "ds", p: ["f1"] },
+    { n: "NumPy", s: "ds", p: ["lisn"] },
+    { n: "ETL pipelines", s: "ds", p: [] },
+    { n: { fr: "nettoyage et préparation des données", en: "data cleaning and preparation" }, s: "ds", p: ["cre", "f1"] },
+    { n: { fr: "qualité des données", en: "data quality" }, s: "ds", p: ["cre", "kle"] },
+
+    { n: "PostgreSQL", s: "db", p: ["kle"] },
+    { n: "SQL/NoSQL", s: "db", p: ["kle"] },
+    { n: "Redis", s: "db", p: [] },
+
+    { n: "Scikit-learn", s: "ml", p: ["f1"] },
+    { n: "XGBoost", s: "ml", p: [] },
+    { n: { fr: "ML supervisé/non supervisé", en: "supervised/unsupervised ML" }, s: "ml", p: ["f1"] },
+    { n: "feature engineering", s: "ml", p: ["f1"] },
+    { n: { fr: "évaluation de modèles", en: "model evaluation" }, s: "ml", p: ["inp", "had"] },
+    { n: "data/pattern mining", s: "ml", p: ["lisn"] },
+    { n: "PyTorch", s: "ml", p: ["inp"] },
+    { n: "TensorFlow", s: "ml", p: [] },
+
+    { n: "Hugging Face", s: "nlp", p: ["fair"] },
+    { n: "Mistral-7B", s: "nlp", p: ["fair"] },
+    { n: { fr: "prompting zero-shot", en: "zero-shot prompting" }, s: "nlp", p: ["fair"] },
+    { n: { fr: "sorties JSON", en: "JSON outputs" }, s: "nlp", p: ["fair", "lisn"] },
+    { n: { fr: "inférence locale", en: "local inference" }, s: "nlp", p: ["fair"] },
+    { n: "embeddings", s: "nlp", p: [] },
+    { n: { fr: "extraction d’informations", en: "information extraction" }, s: "nlp", p: ["fair"] },
+    { n: "Information Retrieval", s: "nlp", p: [] },
+
+    { n: "Spark", s: "big", p: [] },
+    { n: "Hadoop", s: "big", p: [] },
+    { n: "AWS", s: "big", p: [] },
+
     { n: "Matplotlib", s: "viz", p: ["f1"] },
     { n: "Seaborn", s: "viz", p: [] },
     { n: "Power BI", s: "viz", p: [] },
     { n: "Tableau", s: "viz", p: [] },
-    { n: "ROC-AUC · IoU", s: "eval", p: ["inp"] },
-    { n: "Difference-in-Differences", s: "eval", p: ["fair"] },
-    { n: "Bootstrap · LOESS", s: "eval", p: ["bird"] },
-    { n: "FP-Growth · Eclat", s: "eval", p: ["lisn"] },
-    { n: "Hyperparameter tuning", s: "eval", p: ["had"] },
-    { n: "Pretrained vision models", s: "eval", p: ["inp"] }
+    { n: { fr: "Excel (avancé)", en: "Excel (advanced)" }, s: "viz", p: ["cre"] },
+
+    { n: { fr: "Esprit d’analyse et de synthèse", en: "Analytical and synthesis skills" }, s: "soft", p: [] },
+    { n: { fr: "Rigueur scientifique", en: "Scientific rigour" }, s: "soft", p: [] },
+    { n: { fr: "Autonomie", en: "Autonomy" }, s: "soft", p: [] },
+    { n: { fr: "Communication technique/non technique", en: "Technical and non-technical communication" }, s: "soft", p: [] },
+
+    // Map only (Fig. 1)
+    { n: "LLM", s: "map", p: ["lisn", "fair"] },
+    { n: "FastAPI", s: "map", p: ["lisn"] },
+    { n: "Excel", s: "map", p: ["cre"] },
+    { n: "Grist", s: "map", p: ["cre"] },
+    { n: "FastF1", s: "map", p: ["f1"] },
+    { n: "ROC-AUC · IoU", s: "map", p: ["inp"] },
+    { n: "Pretrained vision models", s: "map", p: ["inp"] },
+    { n: "Difference-in-Differences", s: "map", p: ["fair"] },
+    { n: "Bootstrap · LOESS", s: "map", p: ["bird"] },
+    { n: "FP-Growth · Eclat", s: "map", p: ["lisn"] },
+    { n: "Hyperparameter tuning", s: "map", p: ["had"] }
   ];
   var STAGES = [
-    { k: "model", fr: "Modélisation", en: "Model" },
-    { k: "store", fr: "Bases de données", en: "Databases" },
-    { k: "llm", fr: "LLM", en: "LLMs" },
-    { k: "eval", fr: "Évaluation et statistiques", en: "Evaluation and statistics" },
-    { k: "apps", fr: "Applications", en: "Apps" },
-    { k: "viz", fr: "Visualisation", en: "Visualization" }
+    { k: "lang", fr: "Langages de programmation", en: "Programming languages" },
+    { k: "web", fr: "Web et backend", en: "Web and backend" },
+    { k: "tools", fr: "Outils et infrastructure", en: "Tools and infrastructure" },
+    { k: "ds", fr: "Data science", en: "Data science" },
+    { k: "db", fr: "Bases de données", en: "Databases" },
+    { k: "ml", fr: "Machine learning", en: "Machine learning" },
+    { k: "nlp", fr: "NLP et LLM", en: "NLP and LLMs" },
+    { k: "big", fr: "Big data et cloud", en: "Big data and cloud" },
+    { k: "viz", fr: "Visualisation", en: "Visualization" },
+    { k: "soft", fr: "Savoir-être", en: "Soft skills" }
   ];
+  function tname(t) { return typeof t.n === "string" ? t.n : t.n[L()]; }
 
   /* ---------- Map (Fig. 1) ---------- */
   // A cartographic map: themes are regions, projects are cities, tools are villages linked by roads.
@@ -1096,8 +1137,9 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   function drawSkills() {
     var box = document.getElementById("stages");
     box.innerHTML = STAGES.map(function (st) {
-      return '<div class="stage"><h5>' + st[L()] + '</h5><div class="tools">' + TOOLS.filter(function (t) { return t.s === st.k; }).map(function (t) {
-        return '<button class="tool" type="button" data-p="' + t.p.join(" ") + '">' + esc(t.n) + '</button>';
+      return '<div class="stage stage-' + st.k + '"><h5>' + st[L()] + '</h5><div class="tools">' + TOOLS.filter(function (t) { return t.s === st.k; }).map(function (t) {
+        if (t.s === "soft") return '<span class="softskill">' + esc(tname(t)) + '</span>';
+        return '<button class="tool" type="button" data-p="' + t.p.join(" ") + '">' + esc(tname(t)) + '</button>';
       }).join("") + '</div></div>';
     }).join("");
     box.querySelectorAll(".tool").forEach(function (b) {
