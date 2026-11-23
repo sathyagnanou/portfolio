@@ -425,13 +425,6 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
         <p class="stack"><span>FastF1</span><span>Scikit-learn</span><span>Matplotlib</span><span>Pandas</span></p>
       </article>
       <article class="pcard">
-        <span class="dates">Deep Learning · Master</span>
-        <h4>End-to-End Memory Networks</h4>
-        <p class="fr">Implémentation from scratch d'un réseau à mémoire explicite (Sukhbaatar et al., 2015), entraîné et évalué sur du question answering à raisonnement multi-hop.</p>
-        <p class="en">From-scratch implementation of an explicit-memory network (Sukhbaatar et al., 2015), trained and evaluated on multi-hop question answering.</p>
-        <p class="stack"><span>Deep Learning</span><span>Attention</span><span>NLP</span></p>
-      </article>
-      <article class="pcard">
         <span class="dates">Challenge HADACA3</span>
         <h4><span class="fr">Déconvolution multi-omique</span><span class="en">Multi-omics deconvolution</span></h4>
         <p class="fr">Estimer la composition cellulaire de tissus à partir de données RNA-seq et de méthylation, avec des références single-cell et une optimisation des hyperparamètres.</p>
@@ -540,7 +533,6 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     inp: { fr: "Benchmark inpainting", en: "Inpainting benchmark", theme: ["vision", "eval"] },
     fair: { fr: "Fairness in AI", en: "Fairness in AI", theme: ["llm", "stats"] },
     f1: { fr: "Prédiction F1", en: "F1 prediction", theme: ["ml", "bi"] },
-    mem: { fr: "Memory Networks", en: "Memory Networks", theme: ["llm"] },
     had: { fr: "HADACA3", en: "HADACA3", theme: ["ml", "eval"] },
     bird: { fr: "Biodiversité", en: "Biodiversity", theme: ["stats"] }
   };
@@ -592,8 +584,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     { n: "Bootstrap · LOESS", s: "eval", p: ["bird"] },
     { n: "FP-Growth · Eclat", s: "eval", p: ["lisn"] },
     { n: "Hyperparameter tuning", s: "eval", p: ["had"] },
-    { n: "Pretrained vision models", s: "eval", p: ["inp"] },
-    { n: "Attention · memory", s: "model", p: ["mem"] }
+    { n: "Pretrained vision models", s: "eval", p: ["inp"] }
   ];
   var STAGES = [
     { k: "ingest", fr: "Collecte", en: "Ingest" },
@@ -609,13 +600,13 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
   // A cartographic map: themes are regions, projects are cities, tools are villages linked by roads.
   var GEO = {
     // Region seeds (a Voronoi cell per theme, clipped to the continent) and label positions.
-    site: { vision: [215, 175], llm: [420, 165], mining: [650, 150], eval: [170, 345], stats: [470, 335], web: [745, 290], ml: [320, 470], bi: [560, 495], eng: [740, 450] },
+    site: { vision: [215, 175], llm: [430, 210], mining: [650, 150], eval: [170, 345], stats: [485, 372], web: [745, 290], ml: [320, 470], bi: [560, 495], eng: [740, 450] },
     lab: { vision: [200, 172], llm: [470, 98], mining: [690, 132], eval: [165, 368], stats: [578, 338], web: [805, 282], ml: [282, 472], bi: [560, 545], eng: [782, 470] },
     tint: { vision: 0, llm: 1, mining: 2, eval: 2, stats: 3, web: 2, ml: 1, bi: 2, eng: 0 },
     // Cities: [x, y, label side]
-    city: { mem: [370, 175, "r"], fair: [440, 255, "r"], lisn: [600, 235, "r"], inp: [230, 250, "r"], had: [250, 390, "r"], bird: [490, 375, "r"], f1: [420, 460, "r"], cre: [545, 470, "r"], kle: [700, 380, "r"] },
+    city: { fair: [440, 255, "r"], lisn: [600, 235, "r"], inp: [230, 250, "r"], had: [250, 390, "r"], bird: [490, 375, "r"], f1: [420, 460, "r"], cre: [545, 470, "r"], kle: [700, 380, "r"] },
     vil: {
-      "Attention · memory": [330, 130, "r"], "Mistral-7B": [500, 185, "r"], "LLM": [545, 212, "r"], "Hugging Face": [360, 285, "l"],
+      "Mistral-7B": [500, 185, "r"], "LLM": [545, 212, "r"], "Hugging Face": [360, 285, "l"],
       "Python": [530, 288, "r"], "Difference-in-Differences": [400, 316, "l"], "FP-Growth · Eclat": [640, 172, "r"], "FastAPI": [672, 204, "r"],
       "React": [655, 276, "r"], "ROC-AUC · IoU": [150, 292, "r"], "Pretrained vision models": [240, 207, "r"], "Hyperparameter tuning": [190, 432, "r"],
       "Scikit-learn": [470, 507, "r"], "FastF1": [362, 505, "l"], "Matplotlib": [455, 422, "r"], "Bootstrap · LOESS": [548, 407, "r"],
