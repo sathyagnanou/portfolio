@@ -6,7 +6,7 @@
 <title>Sathya Gnanou Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500&display=swap" rel="stylesheet">
 <style>
 /* Layout idea: a research paper you scroll through. Narrow reading column, figures that break out wider, "Fig. n" captions, three parts. */
 :root {
@@ -75,16 +75,40 @@ h4 { font-family: var(--body); font-weight: 600; font-size: 17px; margin: 0; tex
 .stack span + span::before { content: " · "; color: var(--line); }
 
 /* Hero */
-.hero { padding-top: 64px; padding-bottom: 40px; }
-.hero.col { max-width: 1000px; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 48px; align-items: start; }
-.hero-photo { display: block; margin: 0; }
-.hero-photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); }
+.hero { max-width: 1240px; margin: 0 auto; padding: 40px 24px 64px 60px; container-type: inline-size; }
+.board { --cell: calc(100cqw / 8); position: relative; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(4, var(--cell)) auto; }
+.board-grid { position: absolute; inset: 0; pointer-events: none; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell), var(--cell) var(--cell), calc(var(--cell) / 4) calc(var(--cell) / 4), calc(var(--cell) / 4) calc(var(--cell) / 4); }
+.cell-accent { grid-column: 7; grid-row: 1; background: color-mix(in srgb, var(--accent) 16%, transparent); }
+.axis-x { position: absolute; display: grid; font-family: var(--mono); font-size: 11.5px; color: var(--muted); pointer-events: none; }
+.axis-y { display: contents; }
+.axis-y span { position: relative; grid-column: 1; justify-self: start; align-self: center; margin-left: -36px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); pointer-events: none; }
+.axis-x { left: 0; right: 0; bottom: -30px; grid-template-columns: repeat(8, 1fr); justify-items: center; }
+.hero .descr { grid-column: 1 / 7; grid-row: 1; align-self: end; position: relative; font-family: var(--display); font-style: italic; font-size: clamp(20px, 2cqw, 26px); color: var(--muted); margin: 0 0 4px; }
+.hero h1 { grid-column: 1 / 7; grid-row: 2; align-self: center; position: relative; font-size: min(10.4cqw, 150px); line-height: .95; letter-spacing: -.035em; white-space: nowrap; }
+.hero-text { grid-column: 1 / 6; grid-row: 3 / 6; align-self: start; position: relative; padding: 22px 12px 8px 0; }
+.hero p.intro { font-size: clamp(18px, 1.85cqw, 23px); line-height: 1.55; margin: 0 0 22px; }
+.hero-photo { grid-column: 7 / 9; grid-row: 2 / 4; position: relative; margin: 0; }
+.hero-photo picture { display: block; height: 100%; }
+.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; border: 1px solid var(--ink); background: var(--paper); }
+.hero-photo .note { position: absolute; top: calc(100% + 12px); left: 6px; right: -16px; font-family: "Caveat", "Bradley Hand", cursive; font-size: clamp(19px, 1.9cqw, 24px); line-height: 1.15; color: var(--data); transform: rotate(-2deg); transform-origin: left top; }
 @media (max-width: 719px) {
-  .hero.col { grid-template-columns: 1fr; gap: 22px; }
-  .hero-photo { order: -1; width: 160px; justify-self: center; }
+  .hero { padding: 32px 16px 40px; }
+  .board { --cell: 48px; grid-template-columns: 1fr; grid-template-rows: none; padding: 20px 16px 28px; }
+  .cell-accent, .axis-y span, .axis-x { display: none; }
+  .hero-photo { grid-column: 1; grid-row: 1; width: 160px; justify-self: center; }
+  .hero-photo picture { height: auto; }
+  .hero-photo img { height: auto; aspect-ratio: 4 / 5; }
+  .hero-photo .note { position: static; margin-top: 10px; text-align: center; font-size: 19px; transform: none; width: 220px; margin-left: -30px; }
+  .hero .descr { grid-column: 1; grid-row: 3; margin: 0 0 6px; }
+  .hero h1 { grid-column: 1; grid-row: 2; font-size: clamp(44px, 13vw, 64px); white-space: normal; margin-top: 18px; }
+  .hero-text { grid-column: 1; grid-row: 4; padding: 14px 0 0; }
 }
-.hero .descr { font-family: var(--display); font-style: italic; font-size: 24px; color: var(--muted); margin: 10px 0 26px; }
-.hero p.intro { font-size: 19px; line-height: 1.6; margin: 0 0 24px; }
 .status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 26px; }
 .status .live { color: var(--ink); }
 .status .live::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #3fa66b; margin-right: 8px; vertical-align: 1px; }
@@ -269,7 +293,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
 <header class="topbar">
   <div class="wide">
-    <span class="loc">Paris, France</span>
+    <span class="loc">Paris, France<span id="clock"></span></span>
     <nav aria-label="Sections">
       <a href="#map-sec"><span class="fr">Carte</span><span class="en">Map</span></a>
       <a href="#travaux"><span class="fr">Travaux</span><span class="en">Work</span></a>
@@ -286,29 +310,38 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 <main id="top">
 
 <!-- HERO -->
-<section class="hero col" aria-labelledby="name">
-  <div class="hero-text">
-    <h1 id="name">Sathya Gnanou</h1>
+<section class="hero" aria-labelledby="name">
+  <div class="board">
+    <div class="board-grid" aria-hidden="true"></div>
+    <div class="cell-accent" aria-hidden="true"></div>
+    <div class="axis-y" aria-hidden="true"><span style="grid-row:1">0</span><span style="grid-row:2">1</span><span style="grid-row:3">2</span><span style="grid-row:4">3</span></div>
+    <div class="axis-x" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div>
     <p class="descr"><span class="fr">Data Science, Machine Learning et IA</span><span class="en">Data Science, Machine Learning and AI</span></p>
-    <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
-    <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
-    <div class="status">
-      <span class="live"><span class="fr">Recherche un stage de 6 mois – mars 2027</span><span class="en">Seeking a 6-month internship – March 2027</span></span>
+    <h1 id="name">Sathya Gnanou</h1>
+    <div class="hero-text">
+      <p class="intro fr">Étudiant en Master 2 Data Science à l'Université Paris-Saclay, après un Bachelor en informatique à l'EPITA. J'aime <mark>construire le pipeline de bout en bout</mark> : collecter et nettoyer les données, <mark>entraîner et surtout évaluer les modèles</mark>, puis livrer un outil que d'autres peuvent utiliser. J'ai travaillé sur des <mark>LLM</mark>, de la <mark>vision par ordinateur</mark> et des tableaux de bord en production.</p>
+      <p class="intro en">Master's student in Data Science at Université Paris-Saclay, after a B.Sc. in Computer Science at EPITA. I like <mark>building the pipeline end to end</mark>: collecting and cleaning data, <mark>training and, above all, evaluating models</mark>, then shipping a tool other people can use. I have worked on <mark>LLMs</mark>, <mark>computer vision</mark> and dashboards used in production.</p>
+      <div class="status">
+        <span class="live"><span class="fr">Recherche un stage de 6 mois – mars 2027</span><span class="en">Seeking a 6-month internship – March 2027</span></span>
+      </div>
+      <div class="tags">
+        <span>Machine Learning</span><span>LLMs</span><span>Computer Vision</span><span>Data Science</span>
+      </div>
+      <div class="btns">
+        <a class="btn" href="cv/SathyaGNANOU_CV_FR.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en français</span><span class="en">Download CV in French</span></a>
+        <a class="btn" href="cv/SathyaGNANOU_CV_EN.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en anglais</span><span class="en">Download CV in English</span></a>
+        <a class="btn ghost" href="https://github.com/sathyagnanou">GitHub</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+      </div>
     </div>
-    <div class="tags">
-      <span>Machine Learning</span><span>LLMs</span><span>Computer Vision</span><span>Data Science</span>
-    </div>
-    <div class="btns">
-      <a class="btn" href="cv/SathyaGNANOU_CV_FR.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en français</span><span class="en">Download CV in French</span></a>
-      <a class="btn" href="cv/SathyaGNANOU_CV_EN.pdf" download><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="fr">Télécharger le CV en anglais</span><span class="en">Download CV in English</span></a>
-      <a class="btn ghost" href="https://github.com/sathyagnanou">GitHub</a>
-      <a class="btn ghost" href="#contact">Contact</a>
-    </div>
+    <figure class="hero-photo">
+      <picture>
+        <source srcset="images/sathya.webp" type="image/webp">
+        <img id="hero-photo-img" src="images/sathya.jpg" width="600" height="750" alt="Photo de Sathya Gnanou" loading="eager" decoding="async">
+      </picture>
+      <figcaption class="note"><span class="fr">↑ Paris, avril 2026 : remise de mon Bachelor à l'EPITA</span><span class="en">↑ Paris, April 2026: graduating from EPITA</span></figcaption>
+    </figure>
   </div>
-  <picture class="hero-photo">
-    <source srcset="images/sathya.webp" type="image/webp">
-    <img id="hero-photo-img" src="images/sathya.jpg" width="600" height="750" alt="Photo de Sathya Gnanou" loading="eager" decoding="async">
-  </picture>
 </section>
 
 <!-- MAP -->
@@ -1119,6 +1152,12 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     var b = this;
     try { navigator.clipboard.writeText("sathyaerwangnanou@gmail.com").then(function () { b.dataset.ok = "1"; b.firstChild.textContent = "Copié"; b.lastChild.textContent = "Copied"; setTimeout(function () { b.firstChild.textContent = "Copier"; b.lastChild.textContent = "Copy"; }, 1600); }, function () {}); } catch (e) {}
   });
+
+  (function clock() {
+    var el = document.getElementById("clock");
+    function tick() { try { el.textContent = " · " + new Date().toLocaleTimeString("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit" }); } catch (e) {} }
+    tick(); setInterval(tick, 30000);
+  })();
 
   function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawDid(); drawTime(); drawSkills(); drawRoles(); }
 
