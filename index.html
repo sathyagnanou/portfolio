@@ -279,11 +279,6 @@ svg .sep { stroke: var(--line); }
 .links .k { font-family: var(--mono); font-size: 12px; color: var(--muted); display: inline-block; width: 90px; }
 .copy { margin-left: 10px; font-family: var(--mono); font-size: 11px; border: 1px solid var(--line); background: none; color: var(--muted); border-radius: 5px; padding: 2px 8px; cursor: pointer; }
 .copy:hover { color: var(--ink); border-color: var(--muted); }
-.matcher { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
-.matcher .q { font-family: var(--display); font-size: 21px; margin: 0 0 12px; }
-.match-out { margin-top: 16px; font-size: 15px; }
-.match-out ol { margin: 6px 0 0; padding-left: 20px; }
-.match-out li { margin-bottom: 4px; }
 footer { padding: 36px 0 50px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--muted); }
 </style>
 </head>
@@ -626,16 +621,11 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
 
 <!-- CONTACT -->
 <section class="contact col" id="contact" aria-labelledby="c-h">
-  <h2 id="c-h"><span class="fr">À vous de jouer.</span><span class="en">Your move.</span></h2>
+  <h2 id="c-h"><span class="fr">Un stage à me proposer ?</span><span class="en">An internship to offer me?</span></h2>
   <div class="links">
     <div><span class="k">Email</span><a href="mailto:sathyaerwangnanou@gmail.com">sathyaerwangnanou@gmail.com</a><button class="copy" type="button" id="copy"><span class="fr">Copier</span><span class="en">Copy</span></button></div>
     <div><span class="k">LinkedIn</span><a href="https://linkedin.com/in/sathya-gnanou">linkedin.com/in/sathya-gnanou</a></div>
     <div><span class="k">GitHub</span><a href="https://github.com/sathyagnanou">github.com/sathyagnanou</a></div>
-  </div>
-  <div class="matcher">
-    <p class="q"><span class="fr">Vous recrutez pour quel poste ?</span><span class="en">Which role are you hiring for?</span></p>
-    <div class="fig-actions" id="roles" style="margin-top:0"></div>
-    <div class="match-out" id="match-out" aria-live="polite"></div>
   </div>
   <footer>
     <span>© 2026 Sathya Gnanou</span>
@@ -1112,23 +1102,6 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
       : "<b>" + esc(b.textContent) + "</b> " + (fr ? ": vu en cours, pas encore dans un projet présenté ici." : ": learned in courses, not yet in a project shown here."));
   }
 
-  /* ---------- Role matcher ---------- */
-  var ROLES = [
-    { k: "ds", n: "Data Scientist", p: ["inp", "fair", "f1"], fr: "Évaluation rigoureuse de modèles, LLM et modélisation prédictive.", en: "Rigorous model evaluation, LLMs and predictive modeling." },
-    { k: "da", n: "Data Analyst", p: ["cre", "fair", "bird"], fr: "Tableaux de bord en production, analyse causale et statistiques.", en: "Dashboards in production, causal analysis and statistics." },
-    { k: "de", n: "Data Engineer", p: ["lisn", "kle", "cre"], fr: "Pipelines de données, API FastAPI et bases PostgreSQL.", en: "Data pipelines, FastAPI services and PostgreSQL databases." },
-    { k: "ai", n: { fr: "Ingénieur IA", en: "AI Engineer" }, p: ["lisn", "fair", "inp"], fr: "LLM en local, génération de données et benchmark de modèles de vision.", en: "Local LLMs, data generation and vision model benchmarking." }
-  ];
-  var role = null;
-  function drawRoles() {
-    var box = document.getElementById("roles");
-    box.innerHTML = ROLES.map(function (r) { return '<button class="act" type="button" data-k="' + r.k + '" aria-pressed="' + (role === r.k) + '">' + (typeof r.n === "string" ? r.n : r.n[L()]) + '</button>'; }).join("");
-    box.querySelectorAll(".act").forEach(function (b) { b.addEventListener("click", function () { role = b.getAttribute("data-k"); drawRoles(); }); });
-    var r = ROLES.filter(function (x) { return x.k === role; })[0], o = document.getElementById("match-out");
-    if (!r) { o.innerHTML = '<span style="color:var(--muted)">' + (L() === "fr" ? "Choisissez un poste pour voir les trois travaux les plus pertinents." : "Pick a role to see the three most relevant pieces of work.") + '</span>'; return; }
-    o.innerHTML = '<div>' + r[L()] + '</div><ol>' + r.p.map(function (k) { return "<li>" + esc(P[k][L()]) + "</li>"; }).join("") + '</ol>';
-  }
-
   /* ---------- Pipelines ---------- */
   document.querySelectorAll("[data-run]").forEach(function (b) {
     b.addEventListener("click", function () {
@@ -1158,7 +1131,7 @@ footer { padding: 36px 0 50px; display: flex; justify-content: space-between; ga
     tick(); setInterval(tick, 30000);
   })();
 
-  function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawDid(); drawTime(); drawSkills(); drawRoles(); }
+  function renderAll() { drawMap(); drawPrompt(); drawBench(); drawScatter(); drawCase(); drawDid(); drawTime(); drawSkills(); }
 
   function setLang(l) {
     html.setAttribute("data-lang", l); html.lang = l;
